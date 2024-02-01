@@ -8,6 +8,8 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  schedule:
+    - cron: '0 0 * * SUN'
 
 jobs:
   build:
@@ -21,8 +23,8 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ./"CSharp Utils"/
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build ./"CSharp Utils"/ --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test ./"CSharp Utils"/ --no-build --verbosity normal
