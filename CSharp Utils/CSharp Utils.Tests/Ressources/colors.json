@@ -1,4 +1,17 @@
 ﻿{
+    "ColorCS": {
+        "ColorContext": null,
+        "A": 255,
+        "R": 255,
+        "G": 0,
+        "B": 0,
+        "ScA": 1,
+        "ScR": 1,
+        "ScG": 0,
+        "ScB": 0
+    },
+    "ColorHEX": "#FF0000",
+    "ColorHTML": "255:0:0",
     "ColorJson": {
         "R": 255,
         "G": 0,
@@ -9,17 +22,6 @@
         "IsNamedColor": true,
         "IsSystemColor": false,
         "Name": "Red"
-    },
-    "ColorOther": {
-        "ColorContext": null,
-        "A": 255,
-        "R": 255,
-        "G": 0,
-        "B": 0,
-        "ScA": 1,
-        "ScR": 1,
-        "ScG": 0,
-        "ScB": 0
     },
     "ColorRGBA": "rgba(255,0,0,1)"
 }

@@ -6,6 +6,15 @@ using System.Text.Json;
 
 namespace CSharp_Utils.Tests.Helpers
 {
+    public class Config
+    {
+        public Color ColorCS { get; set; }
+        public Color ColorHEX { get; set; }
+        public Color ColorHTML { get; set; }
+        public Color ColorJson { get; set; }
+        public Color ColorRGBA { get; set; }
+    }
+
     public class RgbaColorConverterTests : RgbaColorConverter
     {
         private JsonSerializerOptions _serializeOptions;
@@ -25,34 +34,29 @@ namespace CSharp_Utils.Tests.Helpers
         [TestCase("Red", "rgba(255,0,0,1)")]
         [TestCase("Lime", "rgba(0,255,0,1)")]
         [TestCase("Blue", "rgba(0,0,255,1)")]
-        public void Test_RGBColorToString(string color, string rgba)
+        public void Test_ColorToString(string color, string rgba)
         {
             Assert.Multiple(() =>
             {
                 Assert.That(FormatRgbaString(Color.FromName(color)), Is.EqualTo(rgba));
-                Assert.That(ParseRgbaString(rgba).ToArgb(), Is.EqualTo(Color.FromName(color).ToArgb()));
+                Assert.That(ParseString(rgba).ToArgb(), Is.EqualTo(Color.FromName(color).ToArgb()));
             });
         }
 
         [Test]
-        public void Test_LoadJson()
+        public void Test_JsonLoad()
         {
-            string path = "Ressources/config_rgba.json";
+            string path = "Ressources/colors.json";
             Config result = JsonSerializer.Deserialize<Config>(File.ReadAllText(path), _serializeOptions);
 
             Assert.Multiple(() =>
             {
+                Assert.That(result.ColorCS.ToArgb(), Is.EqualTo(Color.Red.ToArgb()));
+                Assert.That(result.ColorHEX.ToArgb(), Is.EqualTo(Color.Red.ToArgb()));
+                Assert.That(result.ColorHTML.ToArgb(), Is.EqualTo(Color.Red.ToArgb()));
                 Assert.That(result.ColorJson.ToArgb(), Is.EqualTo(Color.Red.ToArgb()));
-                Assert.That(result.ColorOther.ToArgb(), Is.EqualTo(Color.Red.ToArgb()));
                 Assert.That(result.ColorRGBA.ToArgb(), Is.EqualTo(Color.Red.ToArgb()));
             });
         }
-    }
-
-    public class Config
-    {
-        public Color ColorJson { get; set; }
-        public Color ColorOther { get; set; }
-        public Color ColorRGBA { get; set; }
     }
 }

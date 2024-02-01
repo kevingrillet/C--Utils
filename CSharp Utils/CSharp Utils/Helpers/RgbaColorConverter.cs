@@ -30,26 +30,19 @@ namespace CSharp_Utils.Helpers
     /// </example>
     public class RgbaColorConverter : JsonConverter<Color>
     {
-        private static readonly char[] separator = ['(', ',', ')', ' '];
+        private static readonly char[] separator = [' ', '#', '(', ')', ',', ':'];
 
         public override Color Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             switch (reader.TokenType)
             {
                 case JsonTokenType.StartObject:
-                    JsonDocument doc = JsonDocument.ParseValue(ref reader);
-                    var root = doc.RootElement;
-
-                    int r = root.TryGetProperty("R", out var rValue) ? rValue.GetInt32() : 0;
-                    int g = root.TryGetProperty("G", out var gValue) ? gValue.GetInt32() : 0;
-                    int b = root.TryGetProperty("B", out var bValue) ? bValue.GetInt32() : 0;
-                    int a = root.TryGetProperty("A", out var aValue) ? aValue.GetInt32() : 0;
-
-                    return Color.FromArgb(a, r, g, b);
+                    var doc = JsonDocument.ParseValue(ref reader);
+                    return ParseJsonDoc(doc);
 
                 case JsonTokenType.String:
-                    string rgbaString = reader.GetString() ?? string.Empty;
-                    return ParseRgbaString(rgbaString);
+                    string str = reader.GetString() ?? string.Empty;
+                    return ParseString(str);
             }
             throw new JsonException("Unable to parse color.");
         }
@@ -65,21 +58,48 @@ namespace CSharp_Utils.Helpers
             return $"rgba({color.R},{color.G},{color.B},{color.A / 255f})";
         }
 
-        protected virtual Color ParseRgbaString(string rgbaString)
+        protected virtual Color ParseJsonDoc(JsonDocument doc)
         {
-            string[] components = rgbaString.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+            var root = doc.RootElement;
 
-            if (components.Length != 5 || !components[0].Equals("rgba", StringComparison.OrdinalIgnoreCase))
+            int r = root.TryGetProperty("R", out var rValue) ? rValue.GetInt32() : 0;
+            int g = root.TryGetProperty("G", out var gValue) ? gValue.GetInt32() : 0;
+            int b = root.TryGetProperty("B", out var bValue) ? bValue.GetInt32() : 0;
+            int a = root.TryGetProperty("A", out var aValue) ? aValue.GetInt32() : 0;
+
+            return Color.FromArgb(a, r, g, b);
+        }
+
+        protected virtual Color ParseString(string str)
+        {
+            string[] components = str.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+
+            // "rgba(255,0,0,1)"
+            if (components.Length == 5 && components[0].Equals("rgba", StringComparison.OrdinalIgnoreCase))
             {
-                throw new JsonException("Invalid RGBA string format");
+                int r = int.Parse(components[1]);
+                int g = int.Parse(components[2]);
+                int b = int.Parse(components[3]);
+                float a = float.Parse(components[4]);
+
+                return Color.FromArgb((int)(a * 255), r, g, b);
+            }
+            // "255:0:0"
+            else if (components.Length == 3)
+            {
+                int r = int.Parse(components[0]);
+                int g = int.Parse(components[1]);
+                int b = int.Parse(components[2]);
+
+                return Color.FromArgb(255, r, g, b);
+            }
+            // #FF0000
+            else if (components.Length == 1 && str[0] == '#')
+            {
+                return ColorTranslator.FromHtml(str);
             }
 
-            int r = int.Parse(components[1]);
-            int g = int.Parse(components[2]);
-            int b = int.Parse(components[3]);
-            float a = float.Parse(components[4]);
-
-            return Color.FromArgb((int)(a * 255), r, g, b);
+            throw new JsonException("Invalid RGBA string format");
         }
     }
 }
