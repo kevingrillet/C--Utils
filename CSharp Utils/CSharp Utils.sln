@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharp Utils", "CSharp Utils\CSharp Utils.csproj", "{13B74656-96EA-4B06-906C-FC0DF94077D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSharp Utils", "CSharp Utils\CSharp Utils.csproj", "{13B74656-96EA-4B06-906C-FC0DF94077D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharp Utils.Tests", "CSharp Utils.Tests\CSharp Utils.Tests.csproj", "{90A718A2-C632-4E7E-A10C-6064AF1BE39A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSharp Utils.Tests", "CSharp Utils.Tests\CSharp Utils.Tests.csproj", "{90A718A2-C632-4E7E-A10C-6064AF1BE39A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
