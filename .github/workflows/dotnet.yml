@@ -5,15 +5,20 @@ name: .NET
 
 on:
   push:
-    branches: [ "main" ]
+    paths:
+      - 'CSharp Utils/**'
   pull_request:
-    branches: [ "main" ]
+    paths:
+      - 'CSharp Utils/**'
   schedule:
     - cron: '0 0 * * SUN'
 
+defaults:
+  run:
+    working-directory: 'CSharp Utils'
+
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -23,8 +28,15 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore ./"CSharp Utils"/
+      run: dotnet restore
     - name: Build
-      run: dotnet build ./"CSharp Utils"/ --no-restore
+      run: dotnet build --no-restore
     - name: Test
-      run: dotnet test ./"CSharp Utils"/ --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal --logger trx --results-directory TestResults
+    - name: Upload dotnet test results
+      uses: actions/upload-artifact@v4
+      with:
+        name: dotnet-results
+        path: TestResults
+      # Use always() to always run this step to publish test results when there are test failures
+      if: ${{ always() }}
