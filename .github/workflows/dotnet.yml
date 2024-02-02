@@ -33,10 +33,11 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal --logger trx --results-directory TestResults
-    - name: Upload dotnet test results
-      uses: actions/upload-artifact@v4
+    - name: Test Report
+      uses: dorny/test-reporter@v1
+      if: always()
       with:
-        name: dotnet-results
-        path: 'CSharp Utils/TestResults'
-      # Use always() to always run this step to publish test results when there are test failures
-      if: ${{ always() }}
+        name: DotNET Tests
+        path: "**/TestResults.trx"                            
+        reporter: dotnet-trx
+        fail-on-error: true
