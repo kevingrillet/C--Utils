@@ -8,11 +8,12 @@ namespace CSharp_Utils.Tests.Helpers
 {
     public class Config
     {
-        public Color ColorCS { get; set; }
-        public Color ColorHEX { get; set; }
-        public Color ColorHTML { get; set; }
-        public Color ColorJson { get; set; }
-        public Color ColorRGBA { get; set; }
+        public Color? Color { get; set; }
+        public Color? ColorCS { get; set; }
+        public Color? ColorHTML { get; set; }
+        public Color? ColorJson { get; set; }
+        public Color? ColorRGB { get; set; }
+        public Color? ColorRGBA { get; set; }
     }
 
     public class RgbaColorConverterTests : RgbaColorConverter
@@ -31,10 +32,34 @@ namespace CSharp_Utils.Tests.Helpers
             _serializeOptions.Converters.Add(new RgbaColorConverter());
         }
 
+        [TestCase("Red", "#FF0000")]
+        [TestCase("Lime", "#00FF00")]
+        [TestCase("Blue", "#0000FF")]
+        public void Test_ColorToStringHtml(string color, string rgba)
+        {
+            Assert.Multiple(() =>
+            {
+                Assert.That(FormatHtmlString(Color.FromName(color)), Is.EqualTo(rgba));
+                Assert.That(ParseString(rgba).ToArgb(), Is.EqualTo(Color.FromName(color).ToArgb()));
+            });
+        }
+
+        [TestCase("Red", "255:0:0")]
+        [TestCase("Lime", "0:255:0")]
+        [TestCase("Blue", "0:0:255")]
+        public void Test_ColorToStringRgb(string color, string rgba)
+        {
+            Assert.Multiple(() =>
+            {
+                Assert.That(FormatRgbString(Color.FromName(color)), Is.EqualTo(rgba));
+                Assert.That(ParseString(rgba).ToArgb(), Is.EqualTo(Color.FromName(color).ToArgb()));
+            });
+        }
+
         [TestCase("Red", "rgba(255,0,0,1)")]
         [TestCase("Lime", "rgba(0,255,0,1)")]
         [TestCase("Blue", "rgba(0,0,255,1)")]
-        public void Test_ColorToString(string color, string rgba)
+        public void Test_ColorToStringRGBA(string color, string rgba)
         {
             Assert.Multiple(() =>
             {
@@ -51,11 +76,32 @@ namespace CSharp_Utils.Tests.Helpers
 
             Assert.Multiple(() =>
             {
-                Assert.That(result.ColorCS.ToArgb(), Is.EqualTo(Color.Red.ToArgb()));
-                Assert.That(result.ColorHEX.ToArgb(), Is.EqualTo(Color.Red.ToArgb()));
-                Assert.That(result.ColorHTML.ToArgb(), Is.EqualTo(Color.Red.ToArgb()));
-                Assert.That(result.ColorJson.ToArgb(), Is.EqualTo(Color.Red.ToArgb()));
-                Assert.That(result.ColorRGBA.ToArgb(), Is.EqualTo(Color.Red.ToArgb()));
+                Assert.That(result.Color, Is.Null);
+                Assert.That(result.ColorCS.Value.ToArgb(), Is.EqualTo(Color.Red.ToArgb()));
+                Assert.That(result.ColorHTML.Value.ToArgb(), Is.EqualTo(Color.Red.ToArgb()));
+                Assert.That(result.ColorJson.Value.ToArgb(), Is.EqualTo(Color.Red.ToArgb()));
+                Assert.That(result.ColorRGB.Value.ToArgb(), Is.EqualTo(Color.Red.ToArgb()));
+                Assert.That(result.ColorRGBA.Value.ToArgb(), Is.EqualTo(Color.Red.ToArgb()));
+            });
+        }
+
+        [Test]
+        public void Test_JsonSave()
+        {
+            string path = "Ressources/colors_save.json";
+            Config expected = new() { Color = Color.Red };
+            File.WriteAllText(path, JsonSerializer.Serialize(expected, _serializeOptions));
+            Config result = JsonSerializer.Deserialize<Config>(File.ReadAllText(path), _serializeOptions);
+            File.Delete(path);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(result.Color.Value.ToArgb(), Is.EqualTo(expected.Color.Value.ToArgb()));
+                Assert.That(result.ColorCS, Is.Null);
+                Assert.That(result.ColorHTML, Is.Null);
+                Assert.That(result.ColorJson, Is.Null);
+                Assert.That(result.ColorRGB, Is.Null);
+                Assert.That(result.ColorRGBA, Is.Null);
             });
         }
     }

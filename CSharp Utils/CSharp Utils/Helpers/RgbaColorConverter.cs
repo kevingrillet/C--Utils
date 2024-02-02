@@ -2,16 +2,28 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Globalization;
 
 namespace CSharp_Utils.Helpers
 {
+    public enum RgbaColorConverterMode
+    {
+        RGBA = 0,
+        RGB = 1,
+        HTML = 2,
+    }
+
     /// <summary>
-    /// Represents a JSON converter for converting between Color objects and RGBA color strings.
+    /// Represents a custom JSON converter for the Color class that converts RGBA color values to and from JSON strings.
     /// </summary>
     /// <remarks>
-    /// This converter is used to serialize and deserialize Color objects to and from RGBA color strings in JSON.
-    /// It provides methods for reading and writing Color objects from and to JSON using the Utf8JsonReader and Utf8JsonWriter classes.
-    /// The converter supports both object and string representations of colors.
+    /// This converter supports three different formats for representing RGBA colors in JSON:
+    /// <list type="bullet">
+    /// <item>Native object structure.</item>
+    /// <item>"rgba(255,0,0,1)": Represents an RGBA color using the red, green, blue, and alpha components as integers ranging from 0 to 255.</item>
+    /// <item>"255:0:0": Represents an RGBA color using the red, green, and blue components as integers ranging from 0 to 255, with an alpha value of 255 (fully opaque).</item>
+    /// <item>"#FF0000": Represents an RGBA color using a hexadecimal string in the format "#RRGGBB", where RR, GG, and BB are two-digit hexadecimal values representing the red, green, and blue components respectively.</item>
+    /// </list>
     /// </remarks>
     /// <example>
     /// The following example demonstrates how to use the RgbaColorConverter to serialize and deserialize Color objects to and from JSON:
@@ -21,15 +33,16 @@ namespace CSharp_Utils.Helpers
     /// options.Converters.Add(new RgbaColorConverter());
     ///
     /// // Serialize a Color object to JSON
-    /// Color color = Color.FromArgb(255, 0, 0, 255);
+    /// Color color = Color.FromArgb(255, 0, 0);
     /// string json = JsonSerializer.Serialize(color, options);
     ///
-    /// // Deserialize a Color object from JSON
+    /// // Deserialize the JSON back to a Color object
     /// Color deserializedColor = JsonSerializer.Deserialize<![CDATA[<Color>]]>(json, options);
     /// </code>
     /// </example>
     public class RgbaColorConverter : JsonConverter<Color>
     {
+        protected RgbaColorConverterMode mode = RgbaColorConverterMode.RGBA;
         private static readonly char[] separator = [' ', '#', '(', ')', ',', ':'];
 
         public override Color Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -49,13 +62,37 @@ namespace CSharp_Utils.Helpers
 
         public override void Write(Utf8JsonWriter writer, Color value, JsonSerializerOptions options)
         {
-            string rgbaString = FormatRgbaString(value);
+            string rgbaString = null;
+            switch (mode)
+            {
+                case RgbaColorConverterMode.RGBA:
+                    rgbaString = FormatRgbaString(value);
+                    break;
+
+                case RgbaColorConverterMode.RGB:
+                    rgbaString = FormatRgbString(value);
+                    break;
+
+                case RgbaColorConverterMode.HTML:
+                    rgbaString = FormatHtmlString(value);
+                    break;
+            }
             writer.WriteStringValue(rgbaString);
+        }
+
+        protected virtual string FormatHtmlString(Color color)
+        {
+            return $"#{color.R:X2}{color.G:X2}{color.B:X2}";
         }
 
         protected virtual string FormatRgbaString(Color color)
         {
             return $"rgba({color.R},{color.G},{color.B},{color.A / 255f})";
+        }
+
+        protected virtual string FormatRgbString(Color color)
+        {
+            return $"{color.R}:{color.G}:{color.B}";
         }
 
         protected virtual Color ParseJsonDoc(JsonDocument doc)
@@ -80,7 +117,7 @@ namespace CSharp_Utils.Helpers
                 int r = int.Parse(components[1]);
                 int g = int.Parse(components[2]);
                 int b = int.Parse(components[3]);
-                float a = float.Parse(components[4]);
+                float a = float.Parse(components[4], CultureInfo.InvariantCulture);
 
                 return Color.FromArgb((int)(a * 255), r, g, b);
             }
@@ -94,12 +131,19 @@ namespace CSharp_Utils.Helpers
                 return Color.FromArgb(255, r, g, b);
             }
             // #FF0000
-            else if (components.Length == 1 && str[0] == '#')
+            else if (components.Length == 1 && str[0] == '#' && (components[0].Length == 3 || components[0].Length == 6))
             {
                 return ColorTranslator.FromHtml(str);
             }
 
-            throw new JsonException("Invalid RGBA string format");
+            try
+            {
+                return ColorTranslator.FromHtml(str);
+            }
+            catch
+            {
+                throw new JsonException("Invalid RGBA string format");
+            }
         }
     }
 }

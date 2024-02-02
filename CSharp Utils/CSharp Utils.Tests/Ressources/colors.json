@@ -10,8 +10,7 @@
         "ScG": 0,
         "ScB": 0
     },
-    "ColorHEX": "#FF0000",
-    "ColorHTML": "255:0:0",
+    "ColorHTML": "#FF0000",
     "ColorJson": {
         "R": 255,
         "G": 0,
@@ -23,5 +22,6 @@
         "IsSystemColor": false,
         "Name": "Red"
     },
+    "ColorRGB": "255:0:0",
     "ColorRGBA": "rgba(255,0,0,1)"
 }
