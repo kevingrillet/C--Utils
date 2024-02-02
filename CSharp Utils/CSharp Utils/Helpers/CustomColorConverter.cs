@@ -6,7 +6,7 @@ using System.Globalization;
 
 namespace CSharp_Utils.Helpers
 {
-    public enum RgbaColorConverterMode
+    public enum CustomColorConverterMode
     {
         RGBA = 0,
         RGB = 1,
@@ -26,11 +26,11 @@ namespace CSharp_Utils.Helpers
     /// </list>
     /// </remarks>
     /// <example>
-    /// The following example demonstrates how to use the RgbaColorConverter to serialize and deserialize Color objects to and from JSON:
+    /// The following example demonstrates how to use the CustomColorConverter to serialize and deserialize Color objects to and from JSON:
     /// <code>
-    /// // Create a JsonSerializerOptions object and configure it to use the RgbaColorConverter
+    /// // Create a JsonSerializerOptions object and configure it to use the CustomColorConverter
     /// var options = new JsonSerializerOptions();
-    /// options.Converters.Add(new RgbaColorConverter());
+    /// options.Converters.Add(new CustomColorConverter());
     ///
     /// // Serialize a Color object to JSON
     /// Color color = Color.FromArgb(255, 0, 0);
@@ -40,44 +40,25 @@ namespace CSharp_Utils.Helpers
     /// Color deserializedColor = JsonSerializer.Deserialize<![CDATA[<Color>]]>(json, options);
     /// </code>
     /// </example>
-    public class RgbaColorConverter : JsonConverter<Color>
+    public class CustomColorConverter : JsonConverter<Color>
     {
-        protected RgbaColorConverterMode mode = RgbaColorConverterMode.RGBA;
         private static readonly char[] separator = [' ', '#', '(', ')', ',', ':'];
+
+        protected virtual CustomColorConverterMode Mode { get; set; } = CustomColorConverterMode.RGBA;
 
         public override Color Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            switch (reader.TokenType)
+            return reader.TokenType switch
             {
-                case JsonTokenType.StartObject:
-                    var doc = JsonDocument.ParseValue(ref reader);
-                    return ParseJsonDoc(doc);
-
-                case JsonTokenType.String:
-                    string str = reader.GetString() ?? string.Empty;
-                    return ParseString(str);
-            }
-            throw new JsonException("Unable to parse color.");
+                JsonTokenType.StartObject => ParseJsonDoc(JsonDocument.ParseValue(ref reader)),
+                JsonTokenType.String => ParseString(reader.GetString() ?? string.Empty),
+                _ => throw new JsonException("Unable to parse color."),
+            };
         }
 
         public override void Write(Utf8JsonWriter writer, Color value, JsonSerializerOptions options)
         {
-            string rgbaString = null;
-            switch (mode)
-            {
-                case RgbaColorConverterMode.RGBA:
-                    rgbaString = FormatRgbaString(value);
-                    break;
-
-                case RgbaColorConverterMode.RGB:
-                    rgbaString = FormatRgbString(value);
-                    break;
-
-                case RgbaColorConverterMode.HTML:
-                    rgbaString = FormatHtmlString(value);
-                    break;
-            }
-            writer.WriteStringValue(rgbaString);
+            writer.WriteStringValue(FormatString(value));
         }
 
         protected virtual string FormatHtmlString(Color color)
@@ -93,6 +74,17 @@ namespace CSharp_Utils.Helpers
         protected virtual string FormatRgbString(Color color)
         {
             return $"{color.R}:{color.G}:{color.B}";
+        }
+
+        protected virtual string FormatString(Color color)
+        {
+            return Mode switch
+            {
+                CustomColorConverterMode.RGBA => FormatRgbaString(color),
+                CustomColorConverterMode.RGB => FormatRgbString(color),
+                CustomColorConverterMode.HTML => FormatHtmlString(color),
+                _ => null,
+            };
         }
 
         protected virtual Color ParseJsonDoc(JsonDocument doc)
@@ -130,7 +122,7 @@ namespace CSharp_Utils.Helpers
 
                 return Color.FromArgb(255, r, g, b);
             }
-            // #FF0000
+            // #F00 or #FF0000
             else if (components.Length == 1 && str[0] == '#' && (components[0].Length == 3 || components[0].Length == 6))
             {
                 return ColorTranslator.FromHtml(str);
@@ -138,6 +130,7 @@ namespace CSharp_Utils.Helpers
 
             try
             {
+                // Red
                 return ColorTranslator.FromHtml(str);
             }
             catch

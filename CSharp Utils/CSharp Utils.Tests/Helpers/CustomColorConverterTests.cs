@@ -1,5 +1,7 @@
 ﻿using CSharp_Utils.Helpers;
+using Microsoft.VisualStudio.CodeCoverage;
 using NUnit.Framework;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Text.Json;
@@ -16,43 +18,55 @@ namespace CSharp_Utils.Tests.Helpers
         public Color? ColorRGBA { get; set; }
     }
 
-    public class RgbaColorConverterTests : RgbaColorConverter
+    public class CustomColorConverterTests : CustomColorConverter
     {
         private JsonSerializerOptions _serializeOptions;
 
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            _serializeOptions = new JsonSerializerOptions()
-            {
-                AllowTrailingCommas = true,
-                PropertyNameCaseInsensitive = true,
-                WriteIndented = true,
-            };
-            _serializeOptions.Converters.Add(new RgbaColorConverter());
+            _serializeOptions = new JsonSerializerOptions();
+            _serializeOptions.Converters.Add(new CustomColorConverter());
         }
 
-        [TestCase("Red", "#FF0000")]
-        [TestCase("Lime", "#00FF00")]
-        [TestCase("Blue", "#0000FF")]
-        public void Test_ColorToStringHtml(string color, string rgba)
+        [SetUp]
+        public void SetUp()
+        {
+            Mode = CustomColorConverterMode.RGBA;
+        }
+
+        [TestCase("Red")]
+        [TestCase("Lime")]
+        [TestCase("Blue")]
+        public void Test_ColorToString(string color)
+        {
+            Assert.That(ParseString(color).ToArgb(), Is.EqualTo(Color.FromName(color).ToArgb()));
+        }
+
+        [TestCase("Red", "#F00", "#FF0000")]
+        [TestCase("Red", null, "#FF0000")]
+        [TestCase("Lime", "#0F0", "#00FF00")]
+        [TestCase("Lime", null, "#00FF00")]
+        [TestCase("Blue", "#00F", "#0000FF")]
+        [TestCase("Blue", null, "#0000FF")]
+        public void Test_ColorToStringHtml(string color, string shtml, string html)
         {
             Assert.Multiple(() =>
             {
-                Assert.That(FormatHtmlString(Color.FromName(color)), Is.EqualTo(rgba));
-                Assert.That(ParseString(rgba).ToArgb(), Is.EqualTo(Color.FromName(color).ToArgb()));
+                Assert.That(FormatHtmlString(Color.FromName(color)), Is.EqualTo(html));
+                Assert.That(ParseString(shtml ?? html).ToArgb(), Is.EqualTo(Color.FromName(color).ToArgb()));
             });
         }
 
         [TestCase("Red", "255:0:0")]
         [TestCase("Lime", "0:255:0")]
         [TestCase("Blue", "0:0:255")]
-        public void Test_ColorToStringRgb(string color, string rgba)
+        public void Test_ColorToStringRgb(string color, string rgb)
         {
             Assert.Multiple(() =>
             {
-                Assert.That(FormatRgbString(Color.FromName(color)), Is.EqualTo(rgba));
-                Assert.That(ParseString(rgba).ToArgb(), Is.EqualTo(Color.FromName(color).ToArgb()));
+                Assert.That(FormatRgbString(Color.FromName(color)), Is.EqualTo(rgb));
+                Assert.That(ParseString(rgb).ToArgb(), Is.EqualTo(Color.FromName(color).ToArgb()));
             });
         }
 
@@ -66,6 +80,12 @@ namespace CSharp_Utils.Tests.Helpers
                 Assert.That(FormatRgbaString(Color.FromName(color)), Is.EqualTo(rgba));
                 Assert.That(ParseString(rgba).ToArgb(), Is.EqualTo(Color.FromName(color).ToArgb()));
             });
+        }
+
+        [Test]
+        public void Test_InvalidColorToString()
+        {
+            Assert.Throws<JsonException>(() => ParseString("Lorem"));
         }
 
         [Test]
@@ -103,6 +123,14 @@ namespace CSharp_Utils.Tests.Helpers
                 Assert.That(result.ColorRGB, Is.Null);
                 Assert.That(result.ColorRGBA, Is.Null);
             });
+        }
+
+        [TestCase(CustomColorConverterMode.HTML, "#FF0000")]
+        [TestCase(CustomColorConverterMode.RGB, "255:0:0")]
+        public void Test_OverrideMode(CustomColorConverterMode mode, string expected)
+        {
+            Mode = mode;
+            Assert.That(FormatString(Color.FromName("Red")), Is.EqualTo(expected));
         }
     }
 }
