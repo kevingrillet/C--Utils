@@ -8,7 +8,7 @@ namespace CSharp_Utils.Helpers
     /// Helper class for loading and saving JSON.
     /// </summary>
     /// <typeparam name="TType">The type of object to load or save.</typeparam>
-    public class JsonHelpers<TType> where TType : class, new()
+    public static class JsonHelpers<TType> where TType : class, new()
     {
         /// <summary>
         /// Deserializes JSON data from a file into an object of type TType.
@@ -17,7 +17,7 @@ namespace CSharp_Utils.Helpers
         /// <param name="jsonSerializerOptions">The JSON serializer options.</param>
         /// <returns>The deserialized object.</returns>
         /// <exception cref="ArgumentNullException">Thrown when pathConfig is null or empty.</exception>
-        public TType Load(string pathConfig, JsonSerializerOptions jsonSerializerOptions = null)
+        public static TType Load(string pathConfig, JsonSerializerOptions jsonSerializerOptions = null)
         {
             if (string.IsNullOrWhiteSpace(pathConfig))
             {
@@ -40,7 +40,7 @@ namespace CSharp_Utils.Helpers
         /// <param name="config">The object to save.</param>
         /// <param name="jsonSerializerOptions">The JSON serializer options.</param>
         /// <exception cref="ArgumentNullException">Thrown when pathConfig or config is null.</exception>
-        public void Save(string pathConfig, TType config, JsonSerializerOptions jsonSerializerOptions = null)
+        public static void Save(string pathConfig, TType config, JsonSerializerOptions jsonSerializerOptions = null)
         {
             ArgumentNullException.ThrowIfNull(config);
 
@@ -54,7 +54,7 @@ namespace CSharp_Utils.Helpers
         /// <param name="pathConfig">The path to the config file.</param>
         /// <param name="json">The JSON string to save.</param>
         /// <exception cref="ArgumentNullException">Thrown when pathConfig or json is null or empty.</exception>
-        public virtual void SaveToFile(string pathConfig, string json)
+        public static void SaveToFile(string pathConfig, string json)
         {
             if (string.IsNullOrWhiteSpace(pathConfig))
             {
