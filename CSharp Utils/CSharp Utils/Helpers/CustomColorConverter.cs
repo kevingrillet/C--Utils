@@ -8,9 +8,10 @@ namespace CSharp_Utils.Helpers
 {
     public enum CustomColorConverterMode
     {
-        RGBA = 0,
-        RGB = 1,
-        HTML = 2,
+        Object = 0,
+        RGBA = 1,
+        RGB = 2,
+        HTML = 3,
     }
 
     /// <summary>
@@ -58,12 +59,17 @@ namespace CSharp_Utils.Helpers
 
         public override void Write(Utf8JsonWriter writer, Color value, JsonSerializerOptions options)
         {
-            writer.WriteStringValue(FormatString(value));
+            writer.WriteRawValue(FormatString(value));
         }
 
         protected virtual string FormatHtmlString(Color color)
         {
             return $"#{color.R:X2}{color.G:X2}{color.B:X2}";
+        }
+
+        protected virtual string FormatObjectString(Color color)
+        {
+            return JsonSerializer.Serialize(color);
         }
 
         protected virtual string FormatRgbaString(Color color)
@@ -80,9 +86,10 @@ namespace CSharp_Utils.Helpers
         {
             return Mode switch
             {
-                CustomColorConverterMode.RGBA => FormatRgbaString(color),
-                CustomColorConverterMode.RGB => FormatRgbString(color),
-                CustomColorConverterMode.HTML => FormatHtmlString(color),
+                CustomColorConverterMode.HTML => string.Format("\"{0}\"", FormatHtmlString(color)),
+                CustomColorConverterMode.Object => FormatObjectString(color),
+                CustomColorConverterMode.RGB => string.Format("\"{0}\"", FormatRgbString(color)),
+                CustomColorConverterMode.RGBA => string.Format("\"{0}\"", FormatRgbaString(color)),
                 _ => null,
             };
         }

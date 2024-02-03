@@ -1,7 +1,5 @@
 ﻿using CSharp_Utils.Helpers;
-using Microsoft.VisualStudio.CodeCoverage;
 using NUnit.Framework;
-using System;
 using System.Drawing;
 using System.IO;
 using System.Text.Json;
@@ -125,6 +123,7 @@ namespace CSharp_Utils.Tests.Helpers
             });
         }
 
+        [TestCase(CustomColorConverterMode.Object, "{\"R\":255,\"G\":0,\"B\":0,\"A\":255,\"IsKnownColor\":true,\"IsEmpty\":false,\"IsNamedColor\":true,\"IsSystemColor\":false,\"Name\":\"Red\"}")]
         [TestCase(CustomColorConverterMode.HTML, "#FF0000")]
         [TestCase(CustomColorConverterMode.RGB, "255:0:0")]
         public void Test_OverrideMode(CustomColorConverterMode mode, string expected)
