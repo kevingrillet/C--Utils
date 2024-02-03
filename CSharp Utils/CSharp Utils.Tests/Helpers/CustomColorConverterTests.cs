@@ -124,8 +124,9 @@ namespace CSharp_Utils.Tests.Helpers
         }
 
         [TestCase(CustomColorConverterMode.Object, "{\"R\":255,\"G\":0,\"B\":0,\"A\":255,\"IsKnownColor\":true,\"IsEmpty\":false,\"IsNamedColor\":true,\"IsSystemColor\":false,\"Name\":\"Red\"}")]
-        [TestCase(CustomColorConverterMode.HTML, "#FF0000")]
-        [TestCase(CustomColorConverterMode.RGB, "255:0:0")]
+        [TestCase(CustomColorConverterMode.HTML, "\"#FF0000\"")]
+        [TestCase(CustomColorConverterMode.RGB, "\"255:0:0\"")]
+        [TestCase(CustomColorConverterMode.RGBA, "\"rgba(255,0,0,1)\"")]
         public void Test_OverrideMode(CustomColorConverterMode mode, string expected)
         {
             Mode = mode;
