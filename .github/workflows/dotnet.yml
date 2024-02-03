@@ -17,6 +17,11 @@ defaults:
   run:
     working-directory: 'CSharp Utils'
 
+permissions:
+  contents: read
+  actions: read
+  checks: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
