@@ -1,4 +1,5 @@
 ﻿using CSharp_Utils.Helpers;
+using CSharp_Utils.Tests.Entities;
 using NUnit.Framework;
 using System.Drawing;
 using System.IO;
@@ -6,16 +7,6 @@ using System.Text.Json;
 
 namespace CSharp_Utils.Tests.Helpers
 {
-    public class Config
-    {
-        public Color? Color { get; set; }
-        public Color? ColorCS { get; set; }
-        public Color? ColorHTML { get; set; }
-        public Color? ColorJson { get; set; }
-        public Color? ColorRGB { get; set; }
-        public Color? ColorRGBA { get; set; }
-    }
-
     public class CustomColorConverterTests : CustomColorConverter
     {
         private JsonSerializerOptions _serializeOptions;
@@ -90,7 +81,7 @@ namespace CSharp_Utils.Tests.Helpers
         public void Test_JsonLoad()
         {
             string path = "Ressources/colors.json";
-            Config result = JsonSerializer.Deserialize<Config>(File.ReadAllText(path), _serializeOptions);
+            TypeColorTest result = JsonSerializer.Deserialize<TypeColorTest>(File.ReadAllText(path), _serializeOptions);
 
             Assert.Multiple(() =>
             {
@@ -107,9 +98,9 @@ namespace CSharp_Utils.Tests.Helpers
         public void Test_JsonSave()
         {
             string path = "Ressources/colors_save.json";
-            Config expected = new() { Color = Color.Red };
+            TypeColorTest expected = new() { Color = Color.Red };
             File.WriteAllText(path, JsonSerializer.Serialize(expected, _serializeOptions));
-            Config result = JsonSerializer.Deserialize<Config>(File.ReadAllText(path), _serializeOptions);
+            TypeColorTest result = JsonSerializer.Deserialize<TypeColorTest>(File.ReadAllText(path), _serializeOptions);
             File.Delete(path);
 
             Assert.Multiple(() =>
