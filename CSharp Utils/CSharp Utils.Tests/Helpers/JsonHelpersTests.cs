@@ -7,16 +7,9 @@ using System.Text.Json;
 
 namespace CSharp_Utils.Tests.Helpers
 {
+    [TestFixture]
     internal class JsonHelpersTests
     {
-        private JsonHelpers<TypeJsonTest> _jsonHelpers;
-
-        [OneTimeSetUp]
-        public void OneTimeSetUp()
-        {
-            _jsonHelpers = new();
-        }
-
         [Test]
         public void Test_Load_NonExistentFile_ThrowsFileNotFoundException()
         {
@@ -24,7 +17,7 @@ namespace CSharp_Utils.Tests.Helpers
             string path = "nonexistent.json";
 
             // Act and Assert
-            Assert.Throws<FileNotFoundException>(() => _jsonHelpers.Load(path));
+            Assert.Throws<FileNotFoundException>(() => JsonHelpers<TypeJsonTest>.Load(path));
         }
 
         // Loading a valid JSON file returns the deserialized object.
@@ -36,7 +29,7 @@ namespace CSharp_Utils.Tests.Helpers
             TypeJsonTest expected = new();
 
             // Act
-            TypeJsonTest result = _jsonHelpers.Load(path);
+            TypeJsonTest result = JsonHelpers<TypeJsonTest>.Load(path);
 
             // Assert
             Assert.That(result, Is.EqualTo(expected));
@@ -48,7 +41,7 @@ namespace CSharp_Utils.Tests.Helpers
         public void Test_Load_With_Empty_Or_Null_Path_Throws_ArgumentNullException(string path)
         {
             // Act and Assert
-            Assert.Throws<ArgumentNullException>(() => _jsonHelpers.Load(path));
+            Assert.Throws<ArgumentNullException>(() => JsonHelpers<TypeJsonTest>.Load(path));
         }
 
         [Test]
@@ -59,7 +52,7 @@ namespace CSharp_Utils.Tests.Helpers
             TypeJsonTest config = null;
 
             // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => _jsonHelpers.Save(path, config));
+            Assert.Throws<ArgumentNullException>(() => JsonHelpers<TypeJsonTest>.Save(path, config));
         }
 
         [TestCase("valid.json", null)]
@@ -68,7 +61,7 @@ namespace CSharp_Utils.Tests.Helpers
         public void Test_Save_Null_Path_Or_Empty_Json_String_To_Valid_Path_Throws_ArgumentNullException(string path, string json)
         {
             // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => _jsonHelpers.SaveToFile(path, json));
+            Assert.Throws<ArgumentNullException>(() => JsonHelpers<TypeJsonTest>.SaveToFile(path, json));
         }
 
         // Saving to a read-only file throws an UnauthorizedAccessException.
@@ -82,7 +75,7 @@ namespace CSharp_Utils.Tests.Helpers
             File.SetAttributes(path, FileAttributes.ReadOnly);
 
             // Act and Assert
-            Assert.Throws<UnauthorizedAccessException>(() => _jsonHelpers.Save(path, config));
+            Assert.Throws<UnauthorizedAccessException>(() => JsonHelpers<TypeJsonTest>.Save(path, config));
             File.SetAttributes(path, FileAttributes.Normal);
         }
 
@@ -94,7 +87,7 @@ namespace CSharp_Utils.Tests.Helpers
             string json = "{\"key\":\"value\"}";
 
             // Act
-            _jsonHelpers.SaveToFile(path, json);
+            JsonHelpers<TypeJsonTest>.SaveToFile(path, json);
             string result = File.ReadAllText(path);
 
             // Assert
@@ -111,7 +104,7 @@ namespace CSharp_Utils.Tests.Helpers
             string expectedJson = JsonSerializer.Serialize(config);
 
             // Act
-            _jsonHelpers.Save(path, config);
+            JsonHelpers<TypeJsonTest>.Save(path, config);
 
             // Assert
             Assert.Multiple(() =>

@@ -7,7 +7,8 @@ using System.Text.Json;
 
 namespace CSharp_Utils.Tests.Helpers
 {
-    public class CustomColorConverterTests : CustomColorConverter
+    [TestFixture]
+    internal class CustomColorConverterTests : CustomColorConverter
     {
         private JsonSerializerOptions _serializeOptions;
 

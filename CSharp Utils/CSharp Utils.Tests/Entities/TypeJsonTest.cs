@@ -1,6 +1,6 @@
 ﻿namespace CSharp_Utils.Tests.Entities
 {
-    public class TypeJsonTest
+    internal class TypeJsonTest
     {
         public string Key { get; set; }
     }

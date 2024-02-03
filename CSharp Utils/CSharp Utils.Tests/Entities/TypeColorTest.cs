@@ -2,7 +2,7 @@
 
 namespace CSharp_Utils.Tests.Entities
 {
-    public class TypeColorTest
+    internal class TypeColorTest
     {
         public Color? Color { get; set; }
         public Color? ColorCS { get; set; }
