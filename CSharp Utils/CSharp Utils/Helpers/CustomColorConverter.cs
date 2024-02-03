@@ -45,7 +45,7 @@ namespace CSharp_Utils.Helpers
     {
         private static readonly char[] separator = [' ', '#', '(', ')', ',', ':'];
 
-        protected virtual CustomColorConverterMode Mode { get; set; } = CustomColorConverterMode.RGBA;
+        public virtual CustomColorConverterMode Mode { get; set; } = CustomColorConverterMode.RGBA;
 
         public override Color Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
