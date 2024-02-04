@@ -1,0 +1,62 @@
+﻿{
+    "Aspects": [
+        "Aspect of Disobedience",
+        "Aspect of Serration",
+        "Juggernaut's Aspect",
+        "Wind Striker Aspect",
+        "Splintering Aspect",
+        "Aspect of Grasping Veins",
+        "Shattered Spirit's Aspect",
+        "Edgemaster's Aspect"
+    ],
+    "Helm": [],
+    "ChestArmor": [
+        "Total Armor",
+        "Damage Reduction",
+        "Damage Reduction From Distant Enemies",
+        "Damage Reduction From Close Enemies"
+    ],
+    "Gloves": [
+        "Ranks Of Bone Spear",
+        "Lucky Hit Chance",
+        "Critical Strike Chance",
+        "Lucky Hit: Chance To Restore [X]% Primary Resource"
+    ],
+    "Pants": [
+        "Total Armor",
+        "Damage Reduction From Distant Enemies",
+        "Damage Reduction From Close Enemies",
+        "Damage Reduction"
+    ],
+    "Boots": [
+        "Ranks Of Corpse Tendrils",
+        "Movement Speed",
+        "Essence Cost Reduction",
+        "Intelligence"
+    ],
+    "Amulet": [
+        "Ranks Of The Evulsion Passive",
+        "Essence Cost Reduction",
+        "Movement Speed",
+        "Cooldown Reduction"
+    ],
+    "Ring1": [
+        "Vulnerable Damage",
+        "Critical Strike Chance",
+        "Maximum Essence",
+        "Resource Generation"
+    ],
+    "Ring2": [
+        "Vulnerable Damage",
+        "Critical Strike Chance",
+        "Resource Generation",
+        "Maximum Essence"
+    ],
+    "Weapon": [
+        "Critical Strike Damage",
+        "Vulnerable Damage",
+        "Intelligence",
+        "Critical Strike Damage With Bone Skills"
+    ],
+    "Offhand": []
+}
