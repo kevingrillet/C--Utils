@@ -1,15 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using CSharp_Utils.Tests.Entities.D4Companion;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CSharp_Utils.Tests.Entities
 {
     internal class D4BuildsExport
     {
+        public string Name { get; set; }
         public IEnumerable<string> Amulet { get; set; }
         public IEnumerable<string> Aspects { get; set; }
         public IEnumerable<string> BludgeoningWeapon { get; set; }
         public IEnumerable<string> Boots { get; set; }
         public IEnumerable<string> ChestArmor { get; set; }
+        public D4Class D4Class { get; set; }
         public IEnumerable<string> Gloves { get; set; }
         public IEnumerable<string> Helm { get; set; }
         public IEnumerable<string> Offhand { get; set; }

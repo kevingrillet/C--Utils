@@ -3,9 +3,14 @@ using CSharp_Utils.Tests.Entities;
 using CSharp_Utils.Tests.Entities.D4Companion;
 using FuzzySharp;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Threading;
 
 namespace CSharp_Utils.Tests.Experiments
 {
@@ -16,6 +21,7 @@ namespace CSharp_Utils.Tests.Experiments
         private AffixPreset _affixPreset;
         private List<AspectInfo> _aspectInfos;
         private D4BuildsExport _d4BuildExport;
+        private WebDriver _driver;
 
         [OneTimeSetUp]
         public void AA_OneTimeSetUp()
@@ -28,20 +34,199 @@ namespace CSharp_Utils.Tests.Experiments
 
             _affixPreset = new()
             {
-                Name = "Rob's Bone Spear (S3)"
+                Name = _d4BuildExport.Name
             };
+
+            // Create Driver
+            AA_CreateDriver();
+            _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromMilliseconds(10 * 1000);
         }
 
-        public void BuildAffixes(IEnumerable<string> affixes, string type)
+        [OneTimeTearDown]
+        public virtual void AA_TearDown()
         {
-            foreach (var affix in affixes)
+            // Close & Destroy driver
+            _driver?.Close();
+            _driver?.Dispose();
+            _driver?.Quit();
+        }
+
+        [Test]
+        public void Test_0_Init()
+        {
+            Assert.Multiple(() =>
             {
-                _affixPreset.ItemAffixes.Add(new ItemAffix()
-                {
-                    Id = _affixInfos.Find(a => a.Description == Process.ExtractOne(affix, _affixInfos.Select(a => a.Description)).Value).IdName,
-                    Type = type
-                });
-            }
+                Assert.That(_affixInfos, Is.Not.Null);
+                Assert.That(_aspectInfos, Is.Not.Null);
+                Assert.That(_d4BuildExport, Is.Not.Null);
+                Assert.That(_affixPreset, Is.Not.Null);
+            });
+        }
+
+        [Test]
+        [Ignore("Just to slow between 5s and 2 min for no reason...")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S2925:\"Thread.Sleep\" should not be used in tests", Justification = "<En attente>")]
+        public void Test_10_GetPageSelenium()
+        {
+            D4BuildsExport d4BuildExport = new();
+            _driver.Navigate().GoToUrl("https://d4builds.gg/builds/660881f7-cb6a-4162-be62-29f0afeb37bf/");
+            Thread.Sleep(2500);
+
+            // Name
+            d4BuildExport.Name = _driver.FindElement(By.Id("renameBuild")).GetAttribute("value");
+
+            // Class
+            d4BuildExport.D4Class = (D4Class)Enum.Parse(typeof(D4Class), _driver.FindElement(By.ClassName("builder__header__description")).Text.Split(" ")[^1]);
+
+            // Aspects
+            d4BuildExport.Aspects = _driver.FindElements(By.ClassName("builder__gear__name")).Select(e => e.Text).Where(e => e.Contains("Aspect")).ToList();
+
+            // Armor
+            d4BuildExport.Helm = _driver.FindElement(By.ClassName("Helm")).FindElements(By.ClassName("filled")).Select(e => e.Text).ToList();
+            d4BuildExport.ChestArmor = _driver.FindElement(By.ClassName("ChestArmor")).FindElements(By.ClassName("filled")).Select(e => e.Text).ToList();
+            d4BuildExport.Gloves = _driver.FindElement(By.ClassName("Gloves")).FindElements(By.ClassName("filled")).Select(e => e.Text).ToList();
+            d4BuildExport.Pants = _driver.FindElement(By.ClassName("Pants")).FindElements(By.ClassName("filled")).Select(e => e.Text).ToList();
+            d4BuildExport.Boots = _driver.FindElement(By.ClassName("Boots")).FindElements(By.ClassName("filled")).Select(e => e.Text).ToList();
+
+            // Accessories
+            d4BuildExport.Amulet = _driver.FindElement(By.ClassName("Amulet")).FindElements(By.ClassName("filled")).Select(e => e.Text).ToList();
+            d4BuildExport.Ring1 = _driver.FindElement(By.ClassName("Ring1")).FindElements(By.ClassName("filled")).Select(e => e.Text).ToList();
+            d4BuildExport.Ring1 = _driver.FindElement(By.ClassName("Ring2")).FindElements(By.ClassName("filled")).Select(e => e.Text).ToList();
+
+            // Weapons
+            if (_driver.FindElements(By.ClassName("Weapon")).Count > 0)
+                d4BuildExport.Weapon = _driver.FindElement(By.ClassName("Weapon")).FindElements(By.ClassName("filled")).Select(e => e.Text).ToList();
+            if (_driver.FindElements(By.ClassName("Offhand")).Count > 0)
+                d4BuildExport.Weapon = _driver.FindElement(By.ClassName("Offhand")).FindElements(By.ClassName("filled")).Select(e => e.Text).ToList();
+            if (_driver.FindElements(By.ClassName("RangedWeapon")).Count > 0)
+                d4BuildExport.Weapon = _driver.FindElement(By.ClassName("RangedWeapon")).FindElements(By.ClassName("filled")).Select(e => e.Text).ToList();
+            if (_driver.FindElements(By.ClassName("BludgeoningWeapon")).Count > 0)
+                d4BuildExport.Weapon = _driver.FindElement(By.ClassName("BludgeoningWeapon")).FindElements(By.ClassName("filled")).Select(e => e.Text).ToList();
+            if (_driver.FindElements(By.ClassName("SlashingWeapon")).Count > 0)
+                d4BuildExport.Weapon = _driver.FindElement(By.ClassName("SlashingWeapon")).FindElements(By.ClassName("filled")).Select(e => e.Text).ToList();
+            if (_driver.FindElements(By.ClassName("WieldWeapon1")).Count > 0)
+                d4BuildExport.Weapon = _driver.FindElement(By.ClassName("WieldWeapon1")).FindElements(By.ClassName("filled")).Select(e => e.Text).ToList();
+            if (_driver.FindElements(By.ClassName("WieldWeapon2")).Count > 0)
+                d4BuildExport.Weapon = _driver.FindElement(By.ClassName("WieldWeapon2")).FindElements(By.ClassName("filled")).Select(e => e.Text).ToList();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(d4BuildExport.Name, Is.Not.Empty);
+                Assert.That(d4BuildExport.D4Class, Is.EqualTo(D4Class.Necromancer));
+                Assert.That(d4BuildExport.Aspects, Is.Not.Empty);
+                Assert.That(d4BuildExport.Helm, Is.Empty);
+                Assert.That(d4BuildExport.ChestArmor, Is.Not.Empty);
+                Assert.That(d4BuildExport.Gloves, Is.Not.Empty);
+                Assert.That(d4BuildExport.Pants, Is.Not.Empty);
+                Assert.That(d4BuildExport.Boots, Is.Not.Empty);
+                Assert.That(d4BuildExport.Amulet, Is.Not.Empty);
+                Assert.That(d4BuildExport.Ring1, Is.Not.Empty);
+                Assert.That(d4BuildExport.Ring2, Is.Not.Empty);
+                Assert.That(d4BuildExport.Weapon, Is.Not.Empty);
+                Assert.That(d4BuildExport.Offhand, Is.Empty);
+                Assert.That(d4BuildExport.RangedWeapon, Is.Empty);
+                Assert.That(d4BuildExport.BludgeoningWeapon, Is.Empty);
+                Assert.That(d4BuildExport.SlashingWeapon, Is.Empty);
+                Assert.That(d4BuildExport.WieldWeapon1, Is.Empty);
+                Assert.That(d4BuildExport.WieldWeapon2, Is.Empty);
+            });
+        }
+
+        [Test]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S2925:\"Thread.Sleep\" should not be used in tests", Justification = "<En attente>")]
+        public void Test_11_GetPageSeleniumJS()
+        {
+            _driver.Navigate().GoToUrl("https://d4builds.gg/builds/660881f7-cb6a-4162-be62-29f0afeb37bf/");
+            Thread.Sleep(2500);
+
+            var res = (string)_driver.ExecuteScript("""
+                function getAllAffixes(category) {
+                    var res = [];
+                    document.querySelectorAll(`:scope .${category} .filled`).forEach((e) => res.push(e.innerText));
+                    return res;
+                }
+
+                function getAllAspects() {
+                    var res = [];
+                    document.querySelectorAll(`:scope .builder__gear__name`).forEach((e) => res.push(e.innerText));
+                    res = res.filter(function (e) {
+                        return e.includes('Aspect');
+                    });
+                    return res;
+                }
+
+                function getClass() {
+                    switch (document.querySelector('.builder__header__description').lastChild.textContent) {
+                        case 'Sorcerer':
+                            return 0;
+
+                        case 'Druid':
+                            return 1;
+
+                        case 'Barbarian':
+                            return 2;
+
+                        case 'Rogue':
+                            return 3;
+
+                        case 'Necromancer':
+                            return 4;
+
+                        default:
+                            return null;
+                    }
+                }
+
+                var result = {};
+                result.Name = document.querySelector('#renameBuild').value;
+                result.D4Class = getClass();
+
+                result.Aspects = getAllAspects();
+
+                result.Helm = getAllAffixes('Helm');
+                result.ChestArmor = getAllAffixes('ChestArmor');
+                result.Gloves = getAllAffixes('Gloves');
+                result.Pants = getAllAffixes('Pants');
+                result.Boots = getAllAffixes('Boots');
+                result.Amulet = getAllAffixes('Amulet');
+                result.Ring1 = getAllAffixes('Ring1');
+                result.Ring2 = getAllAffixes('Ring2');
+
+                if (document.querySelector('.Weapon')) result.Weapon = getAllAffixes('Weapon');
+                if (document.querySelector('.Offhand')) result.Offhand = getAllAffixes('Offhand');
+                if (document.querySelector('.RangedWeapon')) result.Weapon = getAllAffixes('RangedWeapon');
+                if (document.querySelector('.BludgeoningWeapon')) result.BludgeoningWeapon = getAllAffixes('BludgeoningWeapon');
+                if (document.querySelector('.SlashingWeapon')) result.SlashingWeapon = getAllAffixes('SlashingWeapon');
+                if (document.querySelector('.WieldWeapon1')) result.WieldWeapon1 = getAllAffixes('WieldWeapon1');
+                if (document.querySelector('.WieldWeapon2')) result.WieldWeapon2 = getAllAffixes('WieldWeapon2');
+
+                return JSON.stringify(result, null, 2);
+                """);
+
+            Assert.That(res, Is.Not.Null);
+            var d4BuildExport = JsonSerializer.Deserialize<D4BuildsExport>(res);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(d4BuildExport.Name, Is.Not.Empty);
+                Assert.That(d4BuildExport.D4Class, Is.EqualTo(D4Class.Necromancer));
+                Assert.That(d4BuildExport.Aspects, Is.Not.Empty);
+                Assert.That(d4BuildExport.Helm, Is.Empty);
+                Assert.That(d4BuildExport.ChestArmor, Is.Not.Empty);
+                Assert.That(d4BuildExport.Gloves, Is.Not.Empty);
+                Assert.That(d4BuildExport.Pants, Is.Not.Empty);
+                Assert.That(d4BuildExport.Boots, Is.Not.Empty);
+                Assert.That(d4BuildExport.Amulet, Is.Not.Empty);
+                Assert.That(d4BuildExport.Ring1, Is.Not.Empty);
+                Assert.That(d4BuildExport.Ring2, Is.Not.Empty);
+                Assert.That(d4BuildExport.Weapon, Is.Not.Empty);
+                Assert.That(d4BuildExport.Offhand, Is.Empty);
+                Assert.That(d4BuildExport.RangedWeapon, Is.Empty);
+                Assert.That(d4BuildExport.BludgeoningWeapon, Is.Empty);
+                Assert.That(d4BuildExport.SlashingWeapon, Is.Empty);
+                Assert.That(d4BuildExport.WieldWeapon1, Is.Empty);
+                Assert.That(d4BuildExport.WieldWeapon2, Is.Empty);
+            });
         }
 
         [Test]
@@ -74,18 +259,11 @@ namespace CSharp_Utils.Tests.Experiments
         }
 
         [Test]
-        public void Test_20_Aspects()
+        public void Test_21_Aspects()
         {
-            foreach (var aspect in _d4BuildExport.Aspects)
-            {
-                _affixPreset.ItemAspects.Add(new ItemAffix()
-                {
-                    Id = _aspectInfos.Find(a => a.Name == Process.ExtractOne(aspect, _aspectInfos.Select(a => a.Name)).Value).IdName,
-                    Type = "aspect"
-                });
-            }
+            BuildAspects(_d4BuildExport.Aspects);
 
-            Assert.That(_affixPreset.ItemAspects.Count, Is.EqualTo(_d4BuildExport.Aspects.Count()));
+            Assert.That(_affixPreset.ItemAspects, Has.Count.EqualTo(_d4BuildExport.Aspects.Count()));
         }
 
         [Test]
@@ -93,6 +271,48 @@ namespace CSharp_Utils.Tests.Experiments
         {
             JsonHelpers<AffixPreset>.Save("Ressources/d4builds_export.json", _affixPreset, new JsonSerializerOptions() { WriteIndented = true });
             Assert.Pass();
+        }
+
+        private void AA_CreateDriver()
+        {
+            // Options: Headless, size, security, ...
+            var options = new ChromeOptions();
+            //options.AddArgument("--headless");
+            //options.AddArgument("--disable-gpu"); // Applicable to windows os only
+            options.AddArgument("--disable-extensions");
+            options.AddArgument("--disable-popup-blocking");
+            options.AddArgument("--disable-notifications");
+            options.AddArgument("--dns-prefetch-disable");
+            options.AddArgument("--disable-dev-shm-usage"); // Overcome limited resource problems
+            options.AddArgument("--no-sandbox"); // Bypass OS security model
+            options.AddArgument("--window-size=1600,900");
+
+            // Create driver
+            _driver = new ChromeDriver(options: options);
+        }
+
+        private void BuildAffixes(IEnumerable<string> affixes, string type)
+        {
+            foreach (var affix in affixes)
+            {
+                _affixPreset.ItemAffixes.Add(new ItemAffix()
+                {
+                    Id = _affixInfos.Find(a => a.Description == Process.ExtractOne(affix, _affixInfos.Where(aa => aa.AllowedForPlayerClass[(int)_d4BuildExport.D4Class] == 1).Select(aa => aa.Description)).Value).IdName,
+                    Type = type
+                });
+            }
+        }
+
+        private void BuildAspects(IEnumerable<string> aspects, string type = "aspect")
+        {
+            foreach (var aspect in aspects)
+            {
+                _affixPreset.ItemAspects.Add(new ItemAffix()
+                {
+                    Id = _aspectInfos.Find(a => a.Name == Process.ExtractOne(aspect, _aspectInfos.Where(aa => aa.AllowedForPlayerClass[(int)_d4BuildExport.D4Class] == 1).Select(a => a.Name)).Value).IdName,
+                    Type = type
+                });
+            }
         }
     }
 }
