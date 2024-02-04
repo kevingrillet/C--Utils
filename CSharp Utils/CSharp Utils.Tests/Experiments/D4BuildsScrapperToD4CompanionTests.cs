@@ -1,28 +1,27 @@
-﻿using CSharp_Utils.Helpers;
+﻿using CSharp_Utils.Tests.Entities.D4Companion;
 using CSharp_Utils.Tests.Entities;
-using CSharp_Utils.Tests.Entities.D4Companion;
-using FuzzySharp;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
 using System.Threading;
+using CSharp_Utils.Helpers;
+using OpenQA.Selenium.Chrome;
+using System.Text.Json;
+using FuzzySharp;
 
 namespace CSharp_Utils.Tests.Experiments
 {
-    [TestFixture]
-    internal class D4BuildsToDiablo4CompanionTests
+    [TestFixture, Category("NotOnGitHub")]
+    internal class D4BuildsScrapperToD4CompanionTests
     {
         private List<AffixInfo> _affixInfos;
         private AffixPreset _affixPreset;
         private List<AspectInfo> _aspectInfos;
         private D4BuildsExport _d4BuildExport;
         private WebDriver _driver;
-        protected virtual bool Headless { get; set; } = false;
+        protected virtual bool Headless { get; set; } = true;
 
         [OneTimeSetUp]
         public void AA_OneTimeSetUp()
@@ -30,13 +29,8 @@ namespace CSharp_Utils.Tests.Experiments
             // From: https://github.com/josdemmers/Diablo4Companion
             _affixInfos = JsonHelpers<List<AffixInfo>>.Load("Ressources/D4Companion/Affixes.enUS.json") ?? [];
             _aspectInfos = JsonHelpers<List<AspectInfo>>.Load("Ressources/D4Companion/Aspects.enUS.json") ?? [];
-            // Generated with https://raw.githubusercontent.com/kevingrillet/Userscripts/main/user.js/[D4Builds]%20JsonExporterForDiablo4Companion.user.js
-            _d4BuildExport = JsonHelpers<D4BuildsExport>.Load("Ressources/D4Builds.Rob's Bone Spear (S3).json") ?? new();
 
-            _affixPreset = new()
-            {
-                Name = _d4BuildExport.Name
-            };
+            _affixPreset = new();
 
             // Create Driver
             AA_CreateDriver();
@@ -44,7 +38,7 @@ namespace CSharp_Utils.Tests.Experiments
         }
 
         [OneTimeTearDown]
-        public virtual void AA_TearDown()
+        public void AA_TearDown()
         {
             // Close & Destroy driver
             _driver?.Close();
@@ -52,19 +46,7 @@ namespace CSharp_Utils.Tests.Experiments
             _driver?.Quit();
         }
 
-        [Test]
-        public void Test_0_Init()
-        {
-            Assert.Multiple(() =>
-            {
-                Assert.That(_affixInfos, Is.Not.Null);
-                Assert.That(_aspectInfos, Is.Not.Null);
-                Assert.That(_d4BuildExport, Is.Not.Null);
-                Assert.That(_affixPreset, Is.Not.Null);
-            });
-        }
-
-        [Test, Category("NotOnGitHub"), Ignore("Just to slow between 5s and 2 min for no reason...")]
+        [Test, Ignore("Just to slow between 5s and 2 min for no reason...")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S2925:\"Thread.Sleep\" should not be used in tests", Justification = "<En attente>")]
         public void Test_10_GetPageSelenium()
         {
@@ -132,7 +114,7 @@ namespace CSharp_Utils.Tests.Experiments
             });
         }
 
-        [Test, Category("NotOnGitHub")]
+        [Test]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S2925:\"Thread.Sleep\" should not be used in tests", Justification = "<En attente>")]
         public void Test_11_GetPageSeleniumJS()
         {
@@ -204,33 +186,41 @@ namespace CSharp_Utils.Tests.Experiments
                 """);
 
             Assert.That(res, Is.Not.Null);
-            var d4BuildExport = JsonSerializer.Deserialize<D4BuildsExport>(res);
+            _d4BuildExport = JsonSerializer.Deserialize<D4BuildsExport>(res);
 
             Assert.Multiple(() =>
             {
-                Assert.That(d4BuildExport.Name, Is.Not.Empty);
-                Assert.That(d4BuildExport.D4Class, Is.EqualTo(D4Class.Necromancer));
-                Assert.That(d4BuildExport.Aspects, Is.Not.Empty);
-                Assert.That(d4BuildExport.Helm, Is.Empty);
-                Assert.That(d4BuildExport.ChestArmor, Is.Not.Empty);
-                Assert.That(d4BuildExport.Gloves, Is.Not.Empty);
-                Assert.That(d4BuildExport.Pants, Is.Not.Empty);
-                Assert.That(d4BuildExport.Boots, Is.Not.Empty);
-                Assert.That(d4BuildExport.Amulet, Is.Not.Empty);
-                Assert.That(d4BuildExport.Ring1, Is.Not.Empty);
-                Assert.That(d4BuildExport.Ring2, Is.Not.Empty);
-                Assert.That(d4BuildExport.Weapon, Is.Not.Empty);
-                Assert.That(d4BuildExport.Offhand, Is.Empty);
-                Assert.That(d4BuildExport.RangedWeapon, Is.Empty);
-                Assert.That(d4BuildExport.BludgeoningWeapon, Is.Empty);
-                Assert.That(d4BuildExport.SlashingWeapon, Is.Empty);
-                Assert.That(d4BuildExport.WieldWeapon1, Is.Empty);
-                Assert.That(d4BuildExport.WieldWeapon2, Is.Empty);
+                Assert.That(_d4BuildExport.Name, Is.Not.Empty);
+                Assert.That(_d4BuildExport.D4Class, Is.EqualTo(D4Class.Necromancer));
+                Assert.That(_d4BuildExport.Aspects, Is.Not.Empty);
+                Assert.That(_d4BuildExport.Helm, Is.Empty);
+                Assert.That(_d4BuildExport.ChestArmor, Is.Not.Empty);
+                Assert.That(_d4BuildExport.Gloves, Is.Not.Empty);
+                Assert.That(_d4BuildExport.Pants, Is.Not.Empty);
+                Assert.That(_d4BuildExport.Boots, Is.Not.Empty);
+                Assert.That(_d4BuildExport.Amulet, Is.Not.Empty);
+                Assert.That(_d4BuildExport.Ring1, Is.Not.Empty);
+                Assert.That(_d4BuildExport.Ring2, Is.Not.Empty);
+                Assert.That(_d4BuildExport.Weapon, Is.Not.Empty);
+                Assert.That(_d4BuildExport.Offhand, Is.Empty);
+                Assert.That(_d4BuildExport.RangedWeapon, Is.Empty);
+                Assert.That(_d4BuildExport.BludgeoningWeapon, Is.Empty);
+                Assert.That(_d4BuildExport.SlashingWeapon, Is.Empty);
+                Assert.That(_d4BuildExport.WieldWeapon1, Is.Empty);
+                Assert.That(_d4BuildExport.WieldWeapon2, Is.Empty);
             });
         }
 
         [Test]
-        public void Test_20_Affixes()
+        public void Test_20_Base()
+        {
+            _affixPreset.Name = _d4BuildExport.Name;
+
+            Assert.That(_affixPreset.Name, Is.EqualTo(_d4BuildExport.Name));
+        }
+
+        [Test]
+        public void Test_21_Affixes()
         {
             BuildAffixes(_d4BuildExport.Helm, "helm");
             BuildAffixes(_d4BuildExport.ChestArmor, "chest");
@@ -259,7 +249,7 @@ namespace CSharp_Utils.Tests.Experiments
         }
 
         [Test]
-        public void Test_21_Aspects()
+        public void Test_22_Aspects()
         {
             BuildAspects(_d4BuildExport.Aspects);
 
@@ -269,7 +259,7 @@ namespace CSharp_Utils.Tests.Experiments
         [Test]
         public void Test_30_Save()
         {
-            JsonHelpers<AffixPreset>.Save("Ressources/d4builds_export.json", _affixPreset, new JsonSerializerOptions() { WriteIndented = true });
+            JsonHelpers<AffixPreset>.Save("Ressources/d4buildsscrapper_export.json", _affixPreset, new JsonSerializerOptions() { WriteIndented = true });
             Assert.Pass();
         }
 
