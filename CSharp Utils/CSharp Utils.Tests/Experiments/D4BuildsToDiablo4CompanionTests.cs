@@ -22,6 +22,7 @@ namespace CSharp_Utils.Tests.Experiments
         private List<AspectInfo> _aspectInfos;
         private D4BuildsExport _d4BuildExport;
         private WebDriver _driver;
+        protected virtual bool Headless { get; set; } = false;
 
         [OneTimeSetUp]
         public void AA_OneTimeSetUp()
@@ -63,8 +64,7 @@ namespace CSharp_Utils.Tests.Experiments
             });
         }
 
-        [Test]
-        [Ignore("Just to slow between 5s and 2 min for no reason...")]
+        [Test, Category("NotOnGitHub"), Ignore("Just to slow between 5s and 2 min for no reason...")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S2925:\"Thread.Sleep\" should not be used in tests", Justification = "<En attente>")]
         public void Test_10_GetPageSelenium()
         {
@@ -132,7 +132,7 @@ namespace CSharp_Utils.Tests.Experiments
             });
         }
 
-        [Test]
+        [Test, Category("NotOnGitHub")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S2925:\"Thread.Sleep\" should not be used in tests", Justification = "<En attente>")]
         public void Test_11_GetPageSeleniumJS()
         {
@@ -277,8 +277,11 @@ namespace CSharp_Utils.Tests.Experiments
         {
             // Options: Headless, size, security, ...
             var options = new ChromeOptions();
-            //options.AddArgument("--headless");
-            //options.AddArgument("--disable-gpu"); // Applicable to windows os only
+            if (Headless)
+            {
+                options.AddArgument("--headless");
+                options.AddArgument("--disable-gpu"); // Applicable to windows os only
+            }
             options.AddArgument("--disable-extensions");
             options.AddArgument("--disable-popup-blocking");
             options.AddArgument("--disable-notifications");
