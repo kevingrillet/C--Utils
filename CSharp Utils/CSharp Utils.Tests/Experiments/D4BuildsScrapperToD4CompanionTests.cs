@@ -10,6 +10,7 @@ using CSharp_Utils.Helpers;
 using OpenQA.Selenium.Chrome;
 using System.Text.Json;
 using FuzzySharp;
+using OpenQA.Selenium.Support.UI;
 
 namespace CSharp_Utils.Tests.Experiments
 {
@@ -21,6 +22,7 @@ namespace CSharp_Utils.Tests.Experiments
         private List<AspectInfo> _aspectInfos;
         private D4BuildsExport _d4BuildExport;
         private WebDriver _driver;
+        private WebDriverWait _driverWait;
         protected virtual bool Headless { get; set; } = true;
 
         [OneTimeSetUp]
@@ -34,6 +36,7 @@ namespace CSharp_Utils.Tests.Experiments
 
             // Create Driver
             AA_CreateDriver();
+            _driverWait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromMilliseconds(10 * 1000);
         }
 
@@ -46,13 +49,14 @@ namespace CSharp_Utils.Tests.Experiments
             _driver?.Quit();
         }
 
-        [Test, Ignore("Just to slow between 5s and 2 min for no reason...")]
+        [Test, Ignore("Just to slow between 5s and infinity (minutes) for no reason...")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S2925:\"Thread.Sleep\" should not be used in tests", Justification = "<En attente>")]
         public void Test_10_GetPageSelenium()
         {
             D4BuildsExport d4BuildExport = new();
             _driver.Navigate().GoToUrl("https://d4builds.gg/builds/660881f7-cb6a-4162-be62-29f0afeb37bf/");
-            Thread.Sleep(2500);
+            _driverWait.Until(e => !string.IsNullOrEmpty(e.FindElement(By.Id("renameBuild")).GetAttribute("value")));
+            Thread.Sleep(250);
 
             // Name
             d4BuildExport.Name = _driver.FindElement(By.Id("renameBuild")).GetAttribute("value");
@@ -119,7 +123,8 @@ namespace CSharp_Utils.Tests.Experiments
         public void Test_11_GetPageSeleniumJS()
         {
             _driver.Navigate().GoToUrl("https://d4builds.gg/builds/660881f7-cb6a-4162-be62-29f0afeb37bf/");
-            Thread.Sleep(2500);
+            _driverWait.Until(e => !string.IsNullOrEmpty(e.FindElement(By.Id("renameBuild")).GetAttribute("value")));
+            Thread.Sleep(250);
 
             var res = (string)_driver.ExecuteScript("""
                 function getAllAffixes(category) {
