@@ -18,6 +18,7 @@ namespace CSharp_Utils.Tests.Experiments
         private AffixPreset _affixPreset;
         private List<AspectInfo> _aspectInfos;
         private D4BuildsExport _d4BuildExport;
+        private List<D4ItemType> _itemTypes;
 
         [OneTimeSetUp]
         public void AA_OneTimeSetUp()
@@ -25,6 +26,8 @@ namespace CSharp_Utils.Tests.Experiments
             // From: https://github.com/josdemmers/Diablo4Companion
             _affixInfos = JsonHelpers<List<AffixInfo>>.Load("Ressources/D4Companion/Affixes.enUS.json") ?? [];
             _aspectInfos = JsonHelpers<List<AspectInfo>>.Load("Ressources/D4Companion/Aspects.enUS.json") ?? [];
+            // From: https://github.com/blizzhackers/d4data
+            _itemTypes = JsonHelpers<List<D4ItemType>>.Load("Ressources/d4data/ItemTypes.json") ?? [];
             // Generated with https://raw.githubusercontent.com/kevingrillet/Userscripts/main/user.js/[D4Builds]%20JsonExporterForDiablo4Companion.user.js
             _d4BuildExport = JsonHelpers<D4BuildsExport>.Load("Ressources/D4Builds.Rob's Bone Spear (S3).json") ?? new();
 
@@ -49,16 +52,16 @@ namespace CSharp_Utils.Tests.Experiments
         [Test]
         public void Test_20_Affixes()
         {
-            BuildAffixes(_d4BuildExport.Helm, "helm");
-            BuildAffixes(_d4BuildExport.ChestArmor, "chest");
-            BuildAffixes(_d4BuildExport.Gloves, "gloves");
-            BuildAffixes(_d4BuildExport.Pants, "pants");
-            BuildAffixes(_d4BuildExport.Boots, "boots");
-            BuildAffixes(_d4BuildExport.Amulet, "amulet");
-            BuildAffixes(_d4BuildExport.Rings, "ring");
-            BuildAffixes(_d4BuildExport.Weapons, "weapon");
-            BuildAffixes(_d4BuildExport.Offhand, "offhand");
-            BuildAffixes(_d4BuildExport.RangedWeapon, "ranged");
+            BuildAffixes(_d4BuildExport.Helm, "helm", "Helm");
+            BuildAffixes(_d4BuildExport.ChestArmor, "chest", "ChestArmor");
+            BuildAffixes(_d4BuildExport.Gloves, "gloves", "Gloves");
+            BuildAffixes(_d4BuildExport.Pants, "pants", "Legs");
+            BuildAffixes(_d4BuildExport.Boots, "boots", "Boots");
+            BuildAffixes(_d4BuildExport.Amulet, "amulet", "Amulet");
+            BuildAffixes(_d4BuildExport.Rings, "ring", "Ring");
+            BuildAffixes(_d4BuildExport.Weapons, "weapon", "Weapon");
+            BuildAffixes(_d4BuildExport.Offhand, "offhand", "Weapon");
+            BuildAffixes(_d4BuildExport.RangedWeapon, "ranged", "Weapon");
 
             Assert.Multiple(() =>
             {
@@ -90,13 +93,40 @@ namespace CSharp_Utils.Tests.Experiments
             Assert.Pass();
         }
 
-        private void BuildAffixes(IEnumerable<string> affixes, string type)
+        private void BuildAffixes(IEnumerable<string> affixes, string type, string itemType = null)
         {
+            var description = string.Empty;
             foreach (var affix in affixes)
             {
+                if (string.IsNullOrWhiteSpace(itemType))
+                {
+                    description = Process.ExtractOne(
+                        affix,
+                        _affixInfos.Where(aa =>
+                            aa.AllowedForPlayerClass[(int)_d4BuildExport.D4Class] == 1
+                        ).Select(aa => aa.Description)).Value;
+                }
+                if (itemType == "Weapon")
+                {
+                    description = Process.ExtractOne(
+                        affix,
+                        _affixInfos.Where(aa =>
+                            aa.AllowedForPlayerClass[(int)_d4BuildExport.D4Class] == 1
+                            && aa.AllowedItemLabels.Exists(ai => _itemTypes.Where(i => i.IsWeapon).SelectMany(i => i.ItemLabels).Distinct().Contains(ai))
+                        ).Select(aa => aa.Description)).Value;
+                }
+                else
+                {
+                    description = Process.ExtractOne(
+                        affix,
+                        _affixInfos.Where(aa =>
+                            aa.AllowedForPlayerClass[(int)_d4BuildExport.D4Class] == 1
+                            && aa.AllowedItemLabels.Exists(ai => _itemTypes.Find(i => i.TypeName == itemType).ItemLabels.Contains(ai))
+                        ).Select(aa => aa.Description)).Value;
+                }
                 _affixPreset.ItemAffixes.Add(new ItemAffix()
                 {
-                    Id = _affixInfos.Find(a => a.Description == Process.ExtractOne(affix, _affixInfos.Where(aa => aa.AllowedForPlayerClass[(int)_d4BuildExport.D4Class] == 1).Select(aa => aa.Description)).Value).IdName,
+                    Id = _affixInfos.Find(a => a.Description == description).IdName,
                     Type = type
                 });
             }

@@ -26,6 +26,11 @@
 
 Test things in .NET.
 
+## Thirdparty
+
+- Ressources from [d4data](<https://github.com/blizzhackers/d4data>)
+- Ressources & entities from [Diablo4Companion](<https://github.com/josdemmers/Diablo4Companion>)
+
 ## Licence
 
 ```text
