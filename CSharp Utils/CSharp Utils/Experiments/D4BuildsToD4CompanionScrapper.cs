@@ -39,10 +39,13 @@ namespace CSharp_Utils.Experiments
 
         public D4BuildsExport ExportVanilla()
         {
+            // Huge speed boost
+            _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromMilliseconds(0);
+
             D4BuildsExport d4BuildExport = new();
 
             // Name
-            d4BuildExport.Name = _driver.FindElement(By.Id("renameBuild")).GetAttribute("value");
+            d4BuildExport.Name = $"{_driver.FindElement(By.Id("renameBuild")).GetAttribute("value")} - {_driver.FindElement(By.CssSelector(".variant__button.active>:first-child>:first-child")).GetAttribute("value")}";
 
             // Class
             d4BuildExport.D4Class = (D4Class)Enum.Parse(typeof(D4Class), _driver.FindElement(By.ClassName("builder__header__description")).Text.Split(" ")[^1]);
@@ -63,20 +66,23 @@ namespace CSharp_Utils.Experiments
             d4BuildExport.Ring1 = _driver.FindElement(By.ClassName("Ring2")).FindElements(By.ClassName("filled")).Select(e => e.Text).ToList();
 
             // Weapons
-            if (_driver.FindElements(By.ClassName("Weapon")).Count > 0)
+            if (IsElementPresent(By.ClassName("Weapon")))
                 d4BuildExport.Weapon = _driver.FindElement(By.ClassName("Weapon")).FindElements(By.ClassName("filled")).Select(e => e.Text).ToList();
-            if (_driver.FindElements(By.ClassName("Offhand")).Count > 0)
+            if (IsElementPresent(By.ClassName("Offhand")))
                 d4BuildExport.Weapon = _driver.FindElement(By.ClassName("Offhand")).FindElements(By.ClassName("filled")).Select(e => e.Text).ToList();
-            if (_driver.FindElements(By.ClassName("RangedWeapon")).Count > 0)
+            if (IsElementPresent(By.ClassName("RangedWeapon")))
                 d4BuildExport.Weapon = _driver.FindElement(By.ClassName("RangedWeapon")).FindElements(By.ClassName("filled")).Select(e => e.Text).ToList();
-            if (_driver.FindElements(By.ClassName("BludgeoningWeapon")).Count > 0)
+            if (IsElementPresent(By.ClassName("BludgeoningWeapon")))
                 d4BuildExport.Weapon = _driver.FindElement(By.ClassName("BludgeoningWeapon")).FindElements(By.ClassName("filled")).Select(e => e.Text).ToList();
-            if (_driver.FindElements(By.ClassName("SlashingWeapon")).Count > 0)
+            if (IsElementPresent(By.ClassName("SlashingWeapon")))
                 d4BuildExport.Weapon = _driver.FindElement(By.ClassName("SlashingWeapon")).FindElements(By.ClassName("filled")).Select(e => e.Text).ToList();
-            if (_driver.FindElements(By.ClassName("WieldWeapon1")).Count > 0)
+            if (IsElementPresent(By.ClassName("WieldWeapon1")))
                 d4BuildExport.Weapon = _driver.FindElement(By.ClassName("WieldWeapon1")).FindElements(By.ClassName("filled")).Select(e => e.Text).ToList();
-            if (_driver.FindElements(By.ClassName("WieldWeapon2")).Count > 0)
+            if (IsElementPresent(By.ClassName("WieldWeapon2")))
                 d4BuildExport.Weapon = _driver.FindElement(By.ClassName("WieldWeapon2")).FindElements(By.ClassName("filled")).Select(e => e.Text).ToList();
+
+            // Reset Timeout
+            _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromMilliseconds(10 * 1000);
 
             return d4BuildExport;
         }
@@ -122,6 +128,19 @@ namespace CSharp_Utils.Experiments
 
             // Create driver
             _driver = new ChromeDriver(options: options);
+        }
+
+        protected bool IsElementPresent(By by)
+        {
+            try
+            {
+                _driver.FindElement(by);
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
         }
     }
 }
