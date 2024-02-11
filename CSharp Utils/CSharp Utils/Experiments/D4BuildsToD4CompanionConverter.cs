@@ -2,6 +2,7 @@
 using CSharp_Utils.Entities.D4Companion;
 using CSharp_Utils.Helpers;
 using FuzzySharp;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,6 +47,14 @@ namespace CSharp_Utils.Experiments
             result.ItemAffixes.AddRange(BuildAffixes(d4BuildsExport.D4Class, d4BuildsExport.RangedWeapon, "ranged", "Weapon"));
 
             return result;
+        }
+
+        public IEnumerable<AffixPreset> ConvertAll(IEnumerable<D4BuildsExport> d4BuildsExports)
+        {
+            foreach (var d4BuildsExport in d4BuildsExports)
+            {
+                yield return Convert(d4BuildsExport);
+            }
         }
 
         protected IEnumerable<ItemAffix> BuildAffixes(D4Class d4Class, IEnumerable<string> affixes, string type, string itemType = null)

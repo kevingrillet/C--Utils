@@ -6,15 +6,14 @@ using System.Text.Json;
 using CSharp_Utils.Entities.D4Companion;
 using CSharp_Utils.Entities;
 using CSharp_Utils.Experiments;
+using System.Collections.Generic;
 
 namespace CSharp_Utils.Tests.Experiments
 {
     [TestFixture, Category("NotOnGitHub")]
     internal class D4BuildsToD4CompanionScrapperTests
     {
-        private AffixPreset _affixPreset;
         private D4BuildsToD4CompanionConverter _converter;
-        private D4BuildsExport _d4BuildExport;
         private D4BuildsToD4CompanionScrapper _scrapper;
         protected virtual bool Headless { get; set; } = true;
 
@@ -41,60 +40,61 @@ namespace CSharp_Utils.Tests.Experiments
         }
 
         [Test]
-        public void Test_11_Export_V2_JS()
+        public void Test_11_Export()
         {
-            _d4BuildExport = _scrapper.Export();
+            var d4BuildExport = _scrapper.Export();
+            var affixPreset = _converter.Convert(d4BuildExport);
+            JsonHelpers<AffixPreset>.Save("Ressources/d4buildsscrapper_export.json", affixPreset, new JsonSerializerOptions() { WriteIndented = true });
 
             Assert.Multiple(() =>
             {
-                Assert.That(_d4BuildExport.Name, Is.Not.Empty);
-                Assert.That(_d4BuildExport.D4Class, Is.EqualTo(D4Class.Necromancer));
-                Assert.That(_d4BuildExport.Aspects, Is.Not.Empty);
-                Assert.That(_d4BuildExport.Helm, Is.Empty);
-                Assert.That(_d4BuildExport.ChestArmor, Is.Not.Empty);
-                Assert.That(_d4BuildExport.Gloves, Is.Not.Empty);
-                Assert.That(_d4BuildExport.Pants, Is.Not.Empty);
-                Assert.That(_d4BuildExport.Boots, Is.Not.Empty);
-                Assert.That(_d4BuildExport.Amulet, Is.Not.Empty);
-                Assert.That(_d4BuildExport.Ring1, Is.Not.Empty);
-                Assert.That(_d4BuildExport.Ring2, Is.Not.Empty);
-                Assert.That(_d4BuildExport.Weapon, Is.Not.Empty);
-                Assert.That(_d4BuildExport.Offhand, Is.Empty);
-                Assert.That(_d4BuildExport.RangedWeapon, Is.Empty);
-                Assert.That(_d4BuildExport.BludgeoningWeapon, Is.Empty);
-                Assert.That(_d4BuildExport.SlashingWeapon, Is.Empty);
-                Assert.That(_d4BuildExport.WieldWeapon1, Is.Empty);
-                Assert.That(_d4BuildExport.WieldWeapon2, Is.Empty);
+                // d4BuildExport
+                Assert.That(d4BuildExport.Name, Is.Not.Empty);
+                Assert.That(d4BuildExport.D4Class, Is.EqualTo(D4Class.Necromancer));
+                Assert.That(d4BuildExport.Aspects, Is.Not.Empty);
+                Assert.That(d4BuildExport.Helm, Is.Empty);
+                Assert.That(d4BuildExport.ChestArmor, Is.Not.Empty);
+                Assert.That(d4BuildExport.Gloves, Is.Not.Empty);
+                Assert.That(d4BuildExport.Pants, Is.Not.Empty);
+                Assert.That(d4BuildExport.Boots, Is.Not.Empty);
+                Assert.That(d4BuildExport.Amulet, Is.Not.Empty);
+                Assert.That(d4BuildExport.Ring1, Is.Not.Empty);
+                Assert.That(d4BuildExport.Ring2, Is.Not.Empty);
+                Assert.That(d4BuildExport.Weapon, Is.Not.Empty);
+                Assert.That(d4BuildExport.Offhand, Is.Empty);
+                Assert.That(d4BuildExport.RangedWeapon, Is.Empty);
+                Assert.That(d4BuildExport.BludgeoningWeapon, Is.Empty);
+                Assert.That(d4BuildExport.SlashingWeapon, Is.Empty);
+                Assert.That(d4BuildExport.WieldWeapon1, Is.Empty);
+                Assert.That(d4BuildExport.WieldWeapon2, Is.Empty);
+
+                // affixPreset
+                Assert.That(affixPreset.Name, Is.EqualTo(d4BuildExport.Name));
+                Assert.That(affixPreset.ItemAspects, Has.Count.EqualTo(d4BuildExport.Aspects.Count()));
+                Assert.That(affixPreset.ItemAffixes.Count(i => i.Type == "helm"), Is.EqualTo(d4BuildExport.Helm.Count()));
+                Assert.That(affixPreset.ItemAffixes.Count(i => i.Type == "chest"), Is.EqualTo(d4BuildExport.ChestArmor.Count()));
+                Assert.That(affixPreset.ItemAffixes.Count(i => i.Type == "gloves"), Is.EqualTo(d4BuildExport.Gloves.Count()));
+                Assert.That(affixPreset.ItemAffixes.Count(i => i.Type == "pants"), Is.EqualTo(d4BuildExport.Pants.Count()));
+                Assert.That(affixPreset.ItemAffixes.Count(i => i.Type == "boots"), Is.EqualTo(d4BuildExport.Boots.Count()));
+                Assert.That(affixPreset.ItemAffixes.Count(i => i.Type == "amulet"), Is.EqualTo(d4BuildExport.Amulet.Count()));
+                Assert.That(affixPreset.ItemAffixes.Count(i => i.Type == "ring"), Is.EqualTo(d4BuildExport.Rings.Count()));
+                Assert.That(affixPreset.ItemAffixes.Count(i => i.Type == "weapon"), Is.EqualTo(d4BuildExport.Weapons.Count()));
+                Assert.That(affixPreset.ItemAffixes.Count(i => i.Type == "ranged"), Is.EqualTo(d4BuildExport.RangedWeapon.Count()));
+                Assert.That(affixPreset.ItemAffixes.Count(i => i.Type == "offhand"), Is.EqualTo(d4BuildExport.Offhand.Count()));
             });
         }
 
         [Test]
-        public void Test_20_Convert()
+        public void Test_12_ExportAll()
         {
-            _affixPreset = _converter.Convert(_d4BuildExport);
+            var d4BuildExport = _scrapper.ExportAll();
+            var affixPreset = _converter.ConvertAll(d4BuildExport);
+            JsonHelpers<List<AffixPreset>>.Save("Ressources/d4buildsscrapper_exportall.json", affixPreset.ToList(), new JsonSerializerOptions() { WriteIndented = true });
 
             Assert.Multiple(() =>
             {
-                Assert.That(_affixPreset.Name, Is.EqualTo(_d4BuildExport.Name));
-                Assert.That(_affixPreset.ItemAspects, Has.Count.EqualTo(_d4BuildExport.Aspects.Count()));
-                Assert.That(_affixPreset.ItemAffixes.Count(i => i.Type == "helm"), Is.EqualTo(_d4BuildExport.Helm.Count()));
-                Assert.That(_affixPreset.ItemAffixes.Count(i => i.Type == "chest"), Is.EqualTo(_d4BuildExport.ChestArmor.Count()));
-                Assert.That(_affixPreset.ItemAffixes.Count(i => i.Type == "gloves"), Is.EqualTo(_d4BuildExport.Gloves.Count()));
-                Assert.That(_affixPreset.ItemAffixes.Count(i => i.Type == "pants"), Is.EqualTo(_d4BuildExport.Pants.Count()));
-                Assert.That(_affixPreset.ItemAffixes.Count(i => i.Type == "boots"), Is.EqualTo(_d4BuildExport.Boots.Count()));
-                Assert.That(_affixPreset.ItemAffixes.Count(i => i.Type == "amulet"), Is.EqualTo(_d4BuildExport.Amulet.Count()));
-                Assert.That(_affixPreset.ItemAffixes.Count(i => i.Type == "ring"), Is.EqualTo(_d4BuildExport.Rings.Count()));
-                Assert.That(_affixPreset.ItemAffixes.Count(i => i.Type == "weapon"), Is.EqualTo(_d4BuildExport.Weapons.Count()));
-                Assert.That(_affixPreset.ItemAffixes.Count(i => i.Type == "ranged"), Is.EqualTo(_d4BuildExport.RangedWeapon.Count()));
-                Assert.That(_affixPreset.ItemAffixes.Count(i => i.Type == "offhand"), Is.EqualTo(_d4BuildExport.Offhand.Count()));
+                Assert.That(d4BuildExport.Count(), Is.EqualTo(affixPreset.Count()));
             });
-        }
-
-        [Test]
-        public void Test_30_Save()
-        {
-            JsonHelpers<AffixPreset>.Save("Ressources/d4buildsscrapper_export.json", _affixPreset, new JsonSerializerOptions() { WriteIndented = true });
-            Assert.Pass();
         }
     }
 }
