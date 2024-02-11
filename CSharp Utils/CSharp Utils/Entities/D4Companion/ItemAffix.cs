@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 
 // From https://github.com/josdemmers/Diablo4Companion
-namespace CSharp_Utils.Tests.Entities.D4Companion
+namespace CSharp_Utils.Entities.D4Companion
 {
     public class ItemAffix
     {

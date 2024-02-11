@@ -1,41 +1,32 @@
-﻿using CSharp_Utils.Tests.Entities.D4Companion;
-using CSharp_Utils.Tests.Entities;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using CSharp_Utils.Helpers;
 using OpenQA.Selenium.Chrome;
 using System.Text.Json;
-using FuzzySharp;
 using OpenQA.Selenium.Support.UI;
+using CSharp_Utils.Entities.D4Companion;
+using CSharp_Utils.Entities;
+using CSharp_Utils.Experiments;
 
 namespace CSharp_Utils.Tests.Experiments
 {
     [TestFixture, Category("NotOnGitHub")]
     internal class D4BuildsScrapperToD4CompanionTests
     {
-        private List<AffixInfo> _affixInfos;
         private AffixPreset _affixPreset;
-        private List<AspectInfo> _aspectInfos;
         private D4BuildsExport _d4BuildExport;
         private WebDriver _driver;
         private WebDriverWait _driverWait;
-        private List<D4ItemType> _itemTypes;
+        private ConvertD4BuildsToD4Companion _exportD4BuildsToD4Companion;
         protected virtual bool Headless { get; set; } = true;
 
         [OneTimeSetUp]
         public void AA_OneTimeSetUp()
         {
-            // From: https://github.com/josdemmers/Diablo4Companion
-            _affixInfos = JsonHelpers<List<AffixInfo>>.Load("Ressources/D4Companion/Affixes.enUS.json") ?? [];
-            _aspectInfos = JsonHelpers<List<AspectInfo>>.Load("Ressources/D4Companion/Aspects.enUS.json") ?? [];
-            // From: https://github.com/blizzhackers/d4data
-            _itemTypes = JsonHelpers<List<D4ItemType>>.Load("Ressources/d4data/ItemTypes.json") ?? [];
-
-            _affixPreset = new();
+            _exportD4BuildsToD4Companion = new();
 
             // Create Driver
             AA_CreateDriver();
@@ -52,14 +43,21 @@ namespace CSharp_Utils.Tests.Experiments
             _driver?.Quit();
         }
 
-        [Test, Ignore("Just to slow between 5s and infinity (minutes) for no reason...")]
+        [Test]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S2925:\"Thread.Sleep\" should not be used in tests", Justification = "<En attente>")]
-        public void Test_10_GetPageSelenium()
+        public void Test_10_Navigate()
         {
-            D4BuildsExport d4BuildExport = new();
             _driver.Navigate().GoToUrl("https://d4builds.gg/builds/660881f7-cb6a-4162-be62-29f0afeb37bf/");
             _driverWait.Until(e => !string.IsNullOrEmpty(e.FindElement(By.Id("renameBuild")).GetAttribute("value")));
             Thread.Sleep(250);
+
+            Assert.Pass();
+        }
+
+        [Test, Ignore("Just to slow between 5s and infinity (minutes) for no reason...")]
+        public void Test_11_Export_V1()
+        {
+            D4BuildsExport d4BuildExport = new();
 
             // Name
             d4BuildExport.Name = _driver.FindElement(By.Id("renameBuild")).GetAttribute("value");
@@ -122,13 +120,8 @@ namespace CSharp_Utils.Tests.Experiments
         }
 
         [Test]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S2925:\"Thread.Sleep\" should not be used in tests", Justification = "<En attente>")]
-        public void Test_11_GetPageSeleniumJS()
+        public void Test_12_Export_V2_JS()
         {
-            _driver.Navigate().GoToUrl("https://d4builds.gg/builds/660881f7-cb6a-4162-be62-29f0afeb37bf/");
-            _driverWait.Until(e => !string.IsNullOrEmpty(e.FindElement(By.Id("renameBuild")).GetAttribute("value")));
-            Thread.Sleep(250);
-
             var res = (string)_driver.ExecuteScript("""
                 function getAllAffixes(category) {
                     var res = [];
@@ -220,29 +213,14 @@ namespace CSharp_Utils.Tests.Experiments
         }
 
         [Test]
-        public void Test_20_Base()
+        public void Test_20_Convert()
         {
-            _affixPreset.Name = _d4BuildExport.Name;
-
-            Assert.That(_affixPreset.Name, Is.EqualTo(_d4BuildExport.Name));
-        }
-
-        [Test]
-        public void Test_21_Affixes()
-        {
-            BuildAffixes(_d4BuildExport.Helm, "helm", "Helm");
-            BuildAffixes(_d4BuildExport.ChestArmor, "chest", "ChestArmor");
-            BuildAffixes(_d4BuildExport.Gloves, "gloves", "Gloves");
-            BuildAffixes(_d4BuildExport.Pants, "pants", "Legs");
-            BuildAffixes(_d4BuildExport.Boots, "boots", "Boots");
-            BuildAffixes(_d4BuildExport.Amulet, "amulet", "Amulet");
-            BuildAffixes(_d4BuildExport.Rings, "ring", "Ring");
-            BuildAffixes(_d4BuildExport.Weapons, "weapon", "Weapon");
-            BuildAffixes(_d4BuildExport.Offhand, "offhand", "Weapon");
-            BuildAffixes(_d4BuildExport.RangedWeapon, "ranged", "Weapon");
+            _affixPreset = _exportD4BuildsToD4Companion.Convert(_d4BuildExport);
 
             Assert.Multiple(() =>
             {
+                Assert.That(_affixPreset.Name, Is.EqualTo(_d4BuildExport.Name));
+                Assert.That(_affixPreset.ItemAspects, Has.Count.EqualTo(_d4BuildExport.Aspects.Count()));
                 Assert.That(_affixPreset.ItemAffixes.Count(i => i.Type == "helm"), Is.EqualTo(_d4BuildExport.Helm.Count()));
                 Assert.That(_affixPreset.ItemAffixes.Count(i => i.Type == "chest"), Is.EqualTo(_d4BuildExport.ChestArmor.Count()));
                 Assert.That(_affixPreset.ItemAffixes.Count(i => i.Type == "gloves"), Is.EqualTo(_d4BuildExport.Gloves.Count()));
@@ -254,14 +232,6 @@ namespace CSharp_Utils.Tests.Experiments
                 Assert.That(_affixPreset.ItemAffixes.Count(i => i.Type == "ranged"), Is.EqualTo(_d4BuildExport.RangedWeapon.Count()));
                 Assert.That(_affixPreset.ItemAffixes.Count(i => i.Type == "offhand"), Is.EqualTo(_d4BuildExport.Offhand.Count()));
             });
-        }
-
-        [Test]
-        public void Test_22_Aspects()
-        {
-            BuildAspects(_d4BuildExport.Aspects);
-
-            Assert.That(_affixPreset.ItemAspects, Has.Count.EqualTo(_d4BuildExport.Aspects.Count()));
         }
 
         [Test]
@@ -290,57 +260,6 @@ namespace CSharp_Utils.Tests.Experiments
 
             // Create driver
             _driver = new ChromeDriver(options: options);
-        }
-
-        private void BuildAffixes(IEnumerable<string> affixes, string type, string itemType = null)
-        {
-            var description = string.Empty;
-            foreach (var affix in affixes)
-            {
-                if (string.IsNullOrWhiteSpace(itemType))
-                {
-                    description = Process.ExtractOne(
-                        affix,
-                        _affixInfos.Where(aa =>
-                            aa.AllowedForPlayerClass[(int)_d4BuildExport.D4Class] == 1
-                        ).Select(aa => aa.Description)).Value;
-                }
-                if (itemType == "Weapon")
-                {
-                    description = Process.ExtractOne(
-                        affix,
-                        _affixInfos.Where(aa =>
-                            aa.AllowedForPlayerClass[(int)_d4BuildExport.D4Class] == 1
-                            && aa.AllowedItemLabels.Exists(ai => _itemTypes.Where(i => i.IsWeapon).SelectMany(i => i.ItemLabels).Distinct().Contains(ai))
-                        ).Select(aa => aa.Description)).Value;
-                }
-                else
-                {
-                    description = Process.ExtractOne(
-                        affix,
-                        _affixInfos.Where(aa =>
-                            aa.AllowedForPlayerClass[(int)_d4BuildExport.D4Class] == 1
-                            && aa.AllowedItemLabels.Exists(ai => _itemTypes.Find(i => i.TypeName == itemType).ItemLabels.Contains(ai))
-                        ).Select(aa => aa.Description)).Value;
-                }
-                _affixPreset.ItemAffixes.Add(new ItemAffix()
-                {
-                    Id = _affixInfos.Find(a => a.Description == description).IdName,
-                    Type = type
-                });
-            }
-        }
-
-        private void BuildAspects(IEnumerable<string> aspects, string type = "aspect")
-        {
-            foreach (var aspect in aspects)
-            {
-                _affixPreset.ItemAspects.Add(new ItemAffix()
-                {
-                    Id = _aspectInfos.Find(a => a.Name == Process.ExtractOne(aspect, _aspectInfos.Where(aa => aa.AllowedForPlayerClass[(int)_d4BuildExport.D4Class] == 1).Select(a => a.Name)).Value).IdName,
-                    Type = type
-                });
-            }
         }
     }
 }

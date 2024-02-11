@@ -1,6 +1,6 @@
-﻿namespace CSharp_Utils.Tests.Entities.D4Companion
+﻿namespace CSharp_Utils.Entities
 {
-    internal enum D4Class
+    public enum D4Class
     {
         Sorcerer = 0,
         Druid = 1,

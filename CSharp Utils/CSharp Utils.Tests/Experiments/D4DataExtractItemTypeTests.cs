@@ -1,5 +1,5 @@
-﻿using CSharp_Utils.Helpers;
-using CSharp_Utils.Tests.Entities.D4Companion;
+﻿using CSharp_Utils.Entities.D4Companion;
+using CSharp_Utils.Helpers;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;

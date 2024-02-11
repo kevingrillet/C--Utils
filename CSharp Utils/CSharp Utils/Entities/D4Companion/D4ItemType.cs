@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CSharp_Utils.Tests.Entities.D4Companion
+namespace CSharp_Utils.Entities.D4Companion
 {
-    internal class D4ItemType
+    public class D4ItemType
     {
         internal static readonly char[] separator = ['/', '.'];
         public bool IsWeapon { get; set; }
