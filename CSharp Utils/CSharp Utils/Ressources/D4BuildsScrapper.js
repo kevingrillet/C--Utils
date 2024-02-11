@@ -58,4 +58,5 @@ if (document.querySelector('.SlashingWeapon')) result.SlashingWeapon = getAllAff
 if (document.querySelector('.WieldWeapon1')) result.WieldWeapon1 = getAllAffixes('WieldWeapon1');
 if (document.querySelector('.WieldWeapon2')) result.WieldWeapon2 = getAllAffixes('WieldWeapon2');
 
+// console.debug(JSON.stringify(result, null, 2));
 return JSON.stringify(result, null, 2);
