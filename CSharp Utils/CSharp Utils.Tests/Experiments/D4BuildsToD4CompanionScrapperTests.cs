@@ -34,9 +34,7 @@ namespace CSharp_Utils.Tests.Experiments
         [Test]
         public void Test_10_Navigate()
         {
-            _scrapper.Navigate("660881f7-cb6a-4162-be62-29f0afeb37bf");
-
-            Assert.Pass();
+            Assert.DoesNotThrow(() => { _scrapper.Navigate("660881f7-cb6a-4162-be62-29f0afeb37bf"); });
         }
 
         [Test]
