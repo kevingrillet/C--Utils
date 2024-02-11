@@ -6,7 +6,7 @@
 
 function getAllAspects() {
     var res = [];
-    document.querySelectorAll(`:scope .builder__gear__name`).forEach((e) => res.push(e.innerText));
+    document.querySelectorAll(`.builder__gear__name`).forEach((e) => res.push(e.innerText));
     res = res.filter(function (e) {
         return e.includes('Aspect');
     });
