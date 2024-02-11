@@ -8,13 +8,13 @@ using System.Linq;
 
 namespace CSharp_Utils.Experiments
 {
-    public class ConvertD4BuildsToD4Companion
+    public class D4BuildsToD4CompanionConverter
     {
         private readonly List<AffixInfo> _affixInfos;
         private readonly List<AspectInfo> _aspectInfos;
         private readonly List<D4ItemType> _itemTypes;
 
-        public ConvertD4BuildsToD4Companion()
+        public D4BuildsToD4CompanionConverter()
         {
             // From: https://github.com/josdemmers/Diablo4Companion
             _affixInfos = JsonHelpers<List<AffixInfo>>.Load("Ressources/D4Companion/Affixes.enUS.json") ?? [];

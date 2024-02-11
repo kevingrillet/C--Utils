@@ -11,7 +11,7 @@ using System.Text.Json;
 namespace CSharp_Utils.Tests.Experiments
 {
     [TestFixture]
-    internal class ConvertD4BuildsToD4CompanionTests : ConvertD4BuildsToD4Companion
+    internal class D4BuildsToD4CompanionConverterTests : D4BuildsToD4CompanionConverter
     {
         private AffixPreset _affixPreset;
         private D4BuildsExport _d4BuildExport;
