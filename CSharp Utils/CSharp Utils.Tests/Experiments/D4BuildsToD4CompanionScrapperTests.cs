@@ -96,7 +96,13 @@ namespace CSharp_Utils.Tests.Experiments
         }
 
         [Test]
-        public void Test_13_ExportVanilla()
+        public void Test_20_Navigate()
+        {
+            Assert.DoesNotThrow(() => { _scrapper.Navigate("660881f7-cb6a-4162-be62-29f0afeb37bf"); });
+        }
+
+        [Test]
+        public void Test_21_ExportVanilla()
         {
             var d4BuildExport = _scrapper.ExportVanilla();
             var affixPreset = _converter.Convert(d4BuildExport);
@@ -115,8 +121,8 @@ namespace CSharp_Utils.Tests.Experiments
                 Assert.That(d4BuildExport.Boots, Is.Not.Empty);
                 Assert.That(d4BuildExport.Amulet, Is.Not.Empty);
                 Assert.That(d4BuildExport.Ring1, Is.Not.Empty);
-                Assert.That(d4BuildExport.Ring2, Is.Empty);
-                Assert.That(d4BuildExport.Weapon, Is.Empty);
+                Assert.That(d4BuildExport.Ring2, Is.Not.Empty);
+                Assert.That(d4BuildExport.Weapon, Is.Not.Empty);
                 Assert.That(d4BuildExport.Offhand, Is.Empty);
                 Assert.That(d4BuildExport.RangedWeapon, Is.Empty);
                 Assert.That(d4BuildExport.BludgeoningWeapon, Is.Empty);
@@ -137,6 +143,19 @@ namespace CSharp_Utils.Tests.Experiments
                 Assert.That(affixPreset.ItemAffixes.Count(i => i.Type == "weapon"), Is.EqualTo(d4BuildExport.Weapons.Count()));
                 Assert.That(affixPreset.ItemAffixes.Count(i => i.Type == "ranged"), Is.EqualTo(d4BuildExport.RangedWeapon.Count()));
                 Assert.That(affixPreset.ItemAffixes.Count(i => i.Type == "offhand"), Is.EqualTo(d4BuildExport.Offhand.Count()));
+            });
+        }
+
+        [Test]
+        public void Test_22_ExportVanillaAll()
+        {
+            var d4BuildExport = _scrapper.ExportVanillaAll();
+            var affixPreset = _converter.ConvertAll(d4BuildExport);
+            JsonHelpers<List<AffixPreset>>.Save("Ressources/d4buildsscrapper_exportvanillaall.json", affixPreset.ToList(), new JsonSerializerOptions() { WriteIndented = true });
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(d4BuildExport.Count(), Is.EqualTo(affixPreset.Count()));
             });
         }
     }
