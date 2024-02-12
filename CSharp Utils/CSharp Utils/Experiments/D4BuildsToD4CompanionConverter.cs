@@ -1,11 +1,11 @@
 ﻿using CSharp_Utils.Entities;
 using CSharp_Utils.Entities.D4Companion;
-using CSharp_Utils.Helpers;
 using FuzzySharp;
-using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
 
 namespace CSharp_Utils.Experiments
 {
@@ -18,10 +18,10 @@ namespace CSharp_Utils.Experiments
         public D4BuildsToD4CompanionConverter()
         {
             // From: https://github.com/josdemmers/Diablo4Companion
-            _affixInfos = JsonHelpers<List<AffixInfo>>.Load("Ressources/D4Companion/Affixes.enUS.json") ?? [];
-            _aspectInfos = JsonHelpers<List<AspectInfo>>.Load("Ressources/D4Companion/Aspects.enUS.json") ?? [];
+            _affixInfos = JsonSerializer.Deserialize<List<AffixInfo>>(File.ReadAllText("Ressources/D4Companion/Affixes.enUS.json")) ?? [];
+            _aspectInfos = JsonSerializer.Deserialize<List<AspectInfo>>(File.ReadAllText("Ressources/D4Companion/Aspects.enUS.json")) ?? [];
             // From: https://github.com/blizzhackers/d4data
-            _itemTypes = JsonHelpers<List<D4ItemType>>.Load("Ressources/d4data/ItemTypes.json") ?? [];
+            _itemTypes = JsonSerializer.Deserialize<List<D4ItemType>>(File.ReadAllText("Ressources/d4data/ItemTypes.json")) ?? [];
         }
 
         public AffixPreset Convert(D4BuildsExport d4BuildsExport)
@@ -62,6 +62,8 @@ namespace CSharp_Utils.Experiments
             var description = string.Empty;
             foreach (var affix in affixes)
             {
+                if (string.IsNullOrWhiteSpace(affix)) continue;
+
                 if (string.IsNullOrWhiteSpace(itemType))
                 {
                     description = Process.ExtractOne(
@@ -101,6 +103,8 @@ namespace CSharp_Utils.Experiments
             var Name = string.Empty;
             foreach (var aspect in aspects)
             {
+                if (string.IsNullOrWhiteSpace(aspect)) continue;
+
                 if (string.IsNullOrWhiteSpace(itemType))
                 {
                     Name = Process.ExtractOne(

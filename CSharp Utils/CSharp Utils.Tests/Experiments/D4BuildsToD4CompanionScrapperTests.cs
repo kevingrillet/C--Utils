@@ -7,6 +7,9 @@ using CSharp_Utils.Entities.D4Companion;
 using CSharp_Utils.Entities;
 using CSharp_Utils.Experiments;
 using System.Collections.Generic;
+using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace CSharp_Utils.Tests.Experiments
 {
@@ -29,6 +32,16 @@ namespace CSharp_Utils.Tests.Experiments
         public void AA_TearDown()
         {
             _scrapper.Stop();
+        }
+
+        [Test]
+        public void Test_0_Init()
+        {
+            Assert.Multiple(() =>
+            {
+                Assert.That(_converter, Is.Not.Null);
+                Assert.That(_scrapper, Is.Not.Null);
+            });
         }
 
         [Test]
@@ -157,6 +170,39 @@ namespace CSharp_Utils.Tests.Experiments
             {
                 Assert.That(d4BuildExport.Count(), Is.EqualTo(affixPreset.Count()));
             });
+        }
+
+        [Test]
+        public void Test_30_CompareExportResults()
+        {
+            var export = CalculateHash("Ressources/d4buildsscrapper_export.json");
+            var exportAll = CalculateHash("Ressources/d4buildsscrapper_exportall.json");
+            var exportVanilla = CalculateHash("Ressources/d4buildsscrapper_exportvanilla.json");
+            var exportVanillaAll = CalculateHash("Ressources/d4buildsscrapper_exportvanillaall.json");
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(export, Is.EqualTo(exportVanilla));
+                Assert.That(exportAll, Is.EqualTo(exportVanillaAll));
+                Assert.That(export, Is.Not.EqualTo(exportAll));
+                Assert.That(exportVanilla, Is.Not.EqualTo(exportVanillaAll));
+            });
+        }
+
+        private static string CalculateHash(string filePath)
+        {
+            var text = File.ReadAllText(filePath);
+
+            byte[] inputBytes = Encoding.UTF8.GetBytes(text);
+            byte[] hashBytes = MD5.HashData(inputBytes);
+
+            StringBuilder sb = new();
+            foreach (byte b in hashBytes)
+            {
+                sb.Append(b.ToString("x2"));
+            }
+
+            return sb.ToString();
         }
     }
 }

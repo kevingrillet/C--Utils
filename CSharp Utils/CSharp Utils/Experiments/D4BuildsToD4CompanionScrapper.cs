@@ -41,44 +41,38 @@ namespace CSharp_Utils.Experiments
             // Huge speed boost
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromMilliseconds(0);
 
-            D4BuildsExport d4BuildExport = new();
+            D4BuildsExport d4BuildExport = new()
+            {
+                // Name
+                Name = $"{_driver.FindElement(By.Id("renameBuild")).GetAttribute("value")} - {_driver.FindElement(By.CssSelector(".variant__button.active>:first-child>:first-child")).GetAttribute("value")}",
 
-            // Name
-            d4BuildExport.Name = $"{_driver.FindElement(By.Id("renameBuild")).GetAttribute("value")} - {_driver.FindElement(By.CssSelector(".variant__button.active>:first-child>:first-child")).GetAttribute("value")}";
+                // Class
+                D4Class = (D4Class)Enum.Parse(typeof(D4Class), _driver.FindElement(By.ClassName("builder__header__description")).GetAttribute("innerText").Split(" ")[^1]),
 
-            // Class
-            d4BuildExport.D4Class = (D4Class)Enum.Parse(typeof(D4Class), _driver.FindElement(By.ClassName("builder__header__description")).GetAttribute("innerText").Split(" ")[^1]);
+                // Aspects
+                Aspects = _driver.FindElements(By.ClassName("builder__gear__name")).Select(e => e.GetAttribute("innerText")).Where(e => e.Contains("Aspect")).ToList(),
 
-            // Aspects
-            d4BuildExport.Aspects = _driver.FindElements(By.ClassName("builder__gear__name")).Select(e => e.GetAttribute("innerText")).Where(e => e.Contains("Aspect")).ToList();
+                // Armor
+                Helm = _driver.FindElement(By.ClassName("Helm")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList(),
+                ChestArmor = _driver.FindElement(By.ClassName("ChestArmor")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList(),
+                Gloves = _driver.FindElement(By.ClassName("Gloves")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList(),
+                Pants = _driver.FindElement(By.ClassName("Pants")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList(),
+                Boots = _driver.FindElement(By.ClassName("Boots")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList(),
 
-            // Armor
-            d4BuildExport.Helm = _driver.FindElement(By.ClassName("Helm")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList();
-            d4BuildExport.ChestArmor = _driver.FindElement(By.ClassName("ChestArmor")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList();
-            d4BuildExport.Gloves = _driver.FindElement(By.ClassName("Gloves")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList();
-            d4BuildExport.Pants = _driver.FindElement(By.ClassName("Pants")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList();
-            d4BuildExport.Boots = _driver.FindElement(By.ClassName("Boots")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList();
+                // Accessories
+                Amulet = _driver.FindElement(By.ClassName("Amulet")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList(),
+                Ring1 = _driver.FindElement(By.ClassName("Ring1")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList(),
+                Ring2 = _driver.FindElement(By.ClassName("Ring2")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList(),
 
-            // Accessories
-            d4BuildExport.Amulet = _driver.FindElement(By.ClassName("Amulet")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList();
-            d4BuildExport.Ring1 = _driver.FindElement(By.ClassName("Ring1")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList();
-            d4BuildExport.Ring2 = _driver.FindElement(By.ClassName("Ring2")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList();
-
-            // Weapons
-            if (IsElementPresent(By.ClassName("Weapon")))
-                d4BuildExport.Weapon = _driver.FindElement(By.ClassName("Weapon")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList();
-            if (IsElementPresent(By.ClassName("Offhand")))
-                d4BuildExport.Offhand = _driver.FindElement(By.ClassName("Offhand")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList();
-            if (IsElementPresent(By.ClassName("RangedWeapon")))
-                d4BuildExport.RangedWeapon = _driver.FindElement(By.ClassName("RangedWeapon")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList();
-            if (IsElementPresent(By.ClassName("BludgeoningWeapon")))
-                d4BuildExport.BludgeoningWeapon = _driver.FindElement(By.ClassName("BludgeoningWeapon")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList();
-            if (IsElementPresent(By.ClassName("SlashingWeapon")))
-                d4BuildExport.SlashingWeapon = _driver.FindElement(By.ClassName("SlashingWeapon")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList();
-            if (IsElementPresent(By.ClassName("WieldWeapon1")))
-                d4BuildExport.WieldWeapon1 = _driver.FindElement(By.ClassName("WieldWeapon1")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList();
-            if (IsElementPresent(By.ClassName("WieldWeapon2")))
-                d4BuildExport.WieldWeapon2 = _driver.FindElement(By.ClassName("WieldWeapon2")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList();
+                // Weapons
+                Weapon = GetWeaponAffixes("Weapon"),
+                Offhand = GetWeaponAffixes("Offhand"),
+                RangedWeapon = GetWeaponAffixes("RangedWeapon"),
+                BludgeoningWeapon = GetWeaponAffixes("BludgeoningWeapon"),
+                SlashingWeapon = GetWeaponAffixes("SlashingWeapon"),
+                WieldWeapon1 = GetWeaponAffixes("WieldWeapon1"),
+                WieldWeapon2 = GetWeaponAffixes("WieldWeapon2"),
+            };
 
             // Reset Timeout
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromMilliseconds(10 * 1000);
@@ -138,6 +132,12 @@ namespace CSharp_Utils.Experiments
 
             // Create driver
             _driver = new ChromeDriver(options: options);
+        }
+
+        protected IEnumerable<string> GetWeaponAffixes(string itemType)
+        {
+            if (!IsElementPresent(By.ClassName(itemType))) return Enumerable.Empty<string>();
+            return _driver.FindElement(By.ClassName(itemType)).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList();
         }
 
         protected bool IsElementPresent(By by)
