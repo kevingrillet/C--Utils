@@ -13,6 +13,8 @@ namespace CSharp_Utils.Experiments
 {
     public class D4BuildsToD4CompanionScrapper
     {
+        private static readonly int SleepNavigate = 250;
+        private static readonly int SleepVariant = 100;
         private WebDriver _driver;
         private WebDriverWait _driverWait;
         protected virtual bool Headless { get; set; } = true;
@@ -31,7 +33,7 @@ namespace CSharp_Utils.Experiments
             for (int i = 0; i < cnt; i++)
             {
                 _ = _driver.ExecuteScript($"document.querySelectorAll('.variant__button')[{i}].click()");
-                Thread.Sleep(50);
+                Thread.Sleep(SleepVariant);
                 yield return Export();
             }
         }
@@ -44,34 +46,34 @@ namespace CSharp_Utils.Experiments
             D4BuildsExport d4BuildExport = new()
             {
                 // Name
-                Name = $"{_driver.FindElement(By.Id("renameBuild")).GetAttribute("value")} - {_driver.FindElement(By.CssSelector(".variant__button.active>:first-child>:first-child")).GetAttribute("value")}",
+                Name = GetName(),
 
                 // Class
-                D4Class = (D4Class)Enum.Parse(typeof(D4Class), _driver.FindElement(By.ClassName("builder__header__description")).GetAttribute("innerText").Split(" ")[^1]),
+                D4Class = GetClass(),
 
                 // Aspects
-                Aspects = _driver.FindElements(By.ClassName("builder__gear__name")).Select(e => e.GetAttribute("innerText")).Where(e => e.Contains("Aspect")).ToList(),
+                Aspects = GetAllAspects(),
 
                 // Armor
-                Helm = _driver.FindElement(By.ClassName("Helm")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList(),
-                ChestArmor = _driver.FindElement(By.ClassName("ChestArmor")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList(),
-                Gloves = _driver.FindElement(By.ClassName("Gloves")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList(),
-                Pants = _driver.FindElement(By.ClassName("Pants")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList(),
-                Boots = _driver.FindElement(By.ClassName("Boots")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList(),
+                Helm = GetAllAffixes("Helm"),
+                ChestArmor = GetAllAffixes("ChestArmor"),
+                Gloves = GetAllAffixes("Gloves"),
+                Pants = GetAllAffixes("Pants"),
+                Boots = GetAllAffixes("Boots"),
 
                 // Accessories
-                Amulet = _driver.FindElement(By.ClassName("Amulet")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList(),
-                Ring1 = _driver.FindElement(By.ClassName("Ring1")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList(),
-                Ring2 = _driver.FindElement(By.ClassName("Ring2")).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList(),
+                Amulet = GetAllAffixes("Amulet"),
+                Ring1 = GetAllAffixes("Ring1"),
+                Ring2 = GetAllAffixes("Ring2"),
 
                 // Weapons
-                Weapon = GetWeaponAffixes("Weapon"),
-                Offhand = GetWeaponAffixes("Offhand"),
-                RangedWeapon = GetWeaponAffixes("RangedWeapon"),
-                BludgeoningWeapon = GetWeaponAffixes("BludgeoningWeapon"),
-                SlashingWeapon = GetWeaponAffixes("SlashingWeapon"),
-                WieldWeapon1 = GetWeaponAffixes("WieldWeapon1"),
-                WieldWeapon2 = GetWeaponAffixes("WieldWeapon2"),
+                Weapon = GetAllAffixes("Weapon"),
+                Offhand = GetAllAffixes("Offhand"),
+                RangedWeapon = GetAllAffixes("RangedWeapon"),
+                BludgeoningWeapon = GetAllAffixes("BludgeoningWeapon"),
+                SlashingWeapon = GetAllAffixes("SlashingWeapon"),
+                WieldWeapon1 = GetAllAffixes("WieldWeapon1"),
+                WieldWeapon2 = GetAllAffixes("WieldWeapon2"),
             };
 
             // Reset Timeout
@@ -86,7 +88,7 @@ namespace CSharp_Utils.Experiments
             for (int i = 0; i < cnt; i++)
             {
                 _ = _driver.ExecuteScript($"document.querySelectorAll('.variant__button')[{i}].click()");
-                Thread.Sleep(50);
+                Thread.Sleep(SleepVariant);
                 yield return ExportVanilla();
             }
         }
@@ -95,7 +97,7 @@ namespace CSharp_Utils.Experiments
         {
             _driver.Navigate().GoToUrl($@"https://d4builds.gg/builds/{buildId}/?var=0");
             _driverWait.Until(e => !string.IsNullOrEmpty(e.FindElement(By.Id("renameBuild")).GetAttribute("value")));
-            Thread.Sleep(250);
+            Thread.Sleep(SleepNavigate);
         }
 
         public void Start()
@@ -134,15 +136,54 @@ namespace CSharp_Utils.Experiments
             _driver = new ChromeDriver(options: options);
         }
 
-        protected IEnumerable<string> GetWeaponAffixes(string itemType)
+        protected IEnumerable<string> GetAllAffixes(string itemType)
         {
             try
             {
-                return _driver.FindElement(By.ClassName(itemType)).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList(); ;
+                return _driver.FindElement(By.ClassName(itemType)).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList();
             }
             catch (NoSuchElementException)
             {
                 return Enumerable.Empty<string>();
+            }
+        }
+
+        protected IEnumerable<string> GetAllAspects()
+        {
+            try
+            {
+                return _driver.FindElements(By.ClassName("builder__gear__name")).Select(e => e.GetAttribute("innerText")).Where(e => e.Contains("Aspect")).ToList();
+            }
+            catch (NoSuchElementException)
+            {
+                return Enumerable.Empty<string>();
+            }
+        }
+
+        protected string GetName()
+        {
+            try
+            {
+                var buildName = _driver.FindElement(By.Id("renameBuild")).GetAttribute("value");
+                var variantName = _driver.FindElement(By.CssSelector(".variant__button.active>:first-child>:first-child")).GetAttribute("value");
+                return $"{buildName} - {variantName}";
+            }
+            catch (NoSuchElementException)
+            {
+                return string.Empty;
+            }
+        }
+
+        private D4Class GetClass()
+        {
+            try
+            {
+                var cls = _driver.FindElement(By.ClassName("builder__header__description")).GetAttribute("innerText").Split(" ")[^1];
+                return (D4Class)Enum.Parse(typeof(D4Class), cls);
+            }
+            catch (NoSuchElementException)
+            {
+                return default;
             }
         }
     }
