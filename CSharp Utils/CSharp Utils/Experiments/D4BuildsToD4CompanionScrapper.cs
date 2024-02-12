@@ -136,20 +136,13 @@ namespace CSharp_Utils.Experiments
 
         protected IEnumerable<string> GetWeaponAffixes(string itemType)
         {
-            if (!IsElementPresent(By.ClassName(itemType))) return Enumerable.Empty<string>();
-            return _driver.FindElement(By.ClassName(itemType)).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList();
-        }
-
-        protected bool IsElementPresent(By by)
-        {
             try
             {
-                _driver.FindElement(by);
-                return true;
+                return _driver.FindElement(By.ClassName(itemType)).FindElements(By.ClassName("filled")).Select(e => e.GetAttribute("innerText")).ToList(); ;
             }
             catch (NoSuchElementException)
             {
-                return false;
+                return Enumerable.Empty<string>();
             }
         }
     }
