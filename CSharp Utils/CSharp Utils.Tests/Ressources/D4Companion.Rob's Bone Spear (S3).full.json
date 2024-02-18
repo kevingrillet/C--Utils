@@ -1,0 +1,1270 @@
+[
+    {
+        "ItemAffixes": [
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "Armor",
+                "Type": "chest"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "DamageReduction",
+                "Type": "chest"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "DamageReductionDistant",
+                "Type": "chest"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "DamageReductionClose",
+                "Type": "chest"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "SkillRankBonus_Necro_Core_1",
+                "Type": "gloves"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "Luck",
+                "Type": "gloves"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "CritChance",
+                "Type": "gloves"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "Lucky_Hit_Resource",
+                "Type": "gloves"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "Armor",
+                "Type": "pants"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "DamageReductionDistant",
+                "Type": "pants"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "DamageReductionClose",
+                "Type": "pants"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "DamageReduction",
+                "Type": "pants"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "SkillRankBonus_Necro_Special_CorpseTendrils",
+                "Type": "boots"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "Movement_Speed",
+                "Type": "boots"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "CC_Duration_Reduction_Slow",
+                "Type": "boots"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "CoreStat_Intelligence",
+                "Type": "boots"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "PassiveRankBonus_Necro_Summoning_T1_N2_Evulsion",
+                "Type": "amulet"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "Resource_Cost_Reduction_Necromancer",
+                "Type": "amulet"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "Movement_Speed",
+                "Type": "amulet"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "CD_Reduction",
+                "Type": "amulet"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "Damage_to_Vulnerable",
+                "Type": "ring"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "CritDamage",
+                "Type": "ring"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "Life",
+                "Type": "ring"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "ResourceGain",
+                "Type": "ring"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "Damage_to_Vulnerable",
+                "Type": "ring"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "CritDamage",
+                "Type": "ring"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "ResourceGain",
+                "Type": "ring"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "Life",
+                "Type": "ring"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "CritDamage",
+                "Type": "weapon"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "Damage_to_Vulnerable",
+                "Type": "weapon"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "CoreStat_Intelligence",
+                "Type": "weapon"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "CritDamage_With_Bone",
+                "Type": "weapon"
+            }
+        ],
+        "ItemAspects": [
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "legendary_generic_036",
+                "Type": "aspect"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "legendary_necro_101",
+                "Type": "aspect"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "legendary_generic_117",
+                "Type": "aspect"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "legendary_generic_016",
+                "Type": "aspect"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "legendary_necro_012",
+                "Type": "aspect"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "legendary_necro_066",
+                "Type": "aspect"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "legendary_necro_125",
+                "Type": "aspect"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 128,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Green"
+                },
+                "Id": "legendary_generic_063",
+                "Type": "aspect"
+            }
+        ],
+        "ItemSigils": [],
+        "Name": "Rob\u0027s Bone Spear (S3) - No Uber Version"
+    },
+    {
+        "ItemAffixes": [],
+        "ItemAspects": [
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 0,
+                    "B": 255,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Blue"
+                },
+                "Id": "legendary_generic_009",
+                "Type": "aspect"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 0,
+                    "B": 255,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Blue"
+                },
+                "Id": "legendary_generic_036",
+                "Type": "aspect"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 0,
+                    "B": 255,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Blue"
+                },
+                "Id": "legendary_necro_012",
+                "Type": "aspect"
+            },
+            {
+                "Color": {
+                    "R": 0,
+                    "G": 0,
+                    "B": 255,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Blue"
+                },
+                "Id": "legendary_necro_101",
+                "Type": "aspect"
+            }
+        ],
+        "ItemSigils": [],
+        "Name": "Rob\u0027s Bone Spear (S3) - Leveling"
+    },
+    {
+        "ItemAffixes": [
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "Armor",
+                "Type": "chest"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "DamageReduction",
+                "Type": "chest"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "DamageReductionDistant",
+                "Type": "chest"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "DamageReductionClose",
+                "Type": "chest"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "SkillRankBonus_Necro_Core_1",
+                "Type": "gloves"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "Luck",
+                "Type": "gloves"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "CritChance",
+                "Type": "gloves"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "Lucky_Hit_Resource",
+                "Type": "gloves"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "Armor",
+                "Type": "pants"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "DamageReductionDistant",
+                "Type": "pants"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "DamageReductionClose",
+                "Type": "pants"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "DamageReduction",
+                "Type": "pants"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "SkillRankBonus_Necro_Special_CorpseTendrils",
+                "Type": "boots"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "Movement_Speed",
+                "Type": "boots"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "CC_Duration_Reduction_Slow",
+                "Type": "boots"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "CoreStat_Intelligence",
+                "Type": "boots"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "PassiveRankBonus_Necro_Summoning_T1_N2_Evulsion",
+                "Type": "amulet"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "Resource_Cost_Reduction_Necromancer",
+                "Type": "amulet"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "Movement_Speed",
+                "Type": "amulet"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "CD_Reduction",
+                "Type": "amulet"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "Damage_to_Vulnerable",
+                "Type": "ring"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "CritDamage",
+                "Type": "ring"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "Life",
+                "Type": "ring"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "ResourceGain",
+                "Type": "ring"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "Damage_to_Vulnerable",
+                "Type": "ring"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "CritDamage",
+                "Type": "ring"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "ResourceGain",
+                "Type": "ring"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "Life",
+                "Type": "ring"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "CritDamage",
+                "Type": "weapon"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "Damage_to_Vulnerable",
+                "Type": "weapon"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "CoreStat_Intelligence",
+                "Type": "weapon"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "CritDamage_With_Bone",
+                "Type": "weapon"
+            }
+        ],
+        "ItemAspects": [
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "legendary_generic_036",
+                "Type": "aspect"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "legendary_necro_101",
+                "Type": "aspect"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "legendary_generic_117",
+                "Type": "aspect"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "legendary_generic_100",
+                "Type": "aspect"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "legendary_necro_012",
+                "Type": "aspect"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "legendary_necro_066",
+                "Type": "aspect"
+            },
+            {
+                "Color": {
+                    "R": 255,
+                    "G": 215,
+                    "B": 0,
+                    "A": 255,
+                    "IsKnownColor": true,
+                    "IsEmpty": false,
+                    "IsNamedColor": true,
+                    "IsSystemColor": false,
+                    "Name": "Gold"
+                },
+                "Id": "legendary_necro_125",
+                "Type": "aspect"
+            }
+        ],
+        "ItemSigils": [],
+        "Name": "Rob\u0027s Bone Spear (S3) - Uber Version"
+    }
+]
