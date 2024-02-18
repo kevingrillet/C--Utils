@@ -31,6 +31,12 @@ Test things in .NET.
 - Ressources from [d4data](<https://github.com/blizzhackers/d4data>)
 - Ressources & entities from [Diablo4Companion](<https://github.com/josdemmers/Diablo4Companion>)
 
+## Tools
+
+- [Visual Studio](<https://visualstudio.microsoft.com/downloads/>)
+- [Visual Studio Code](<https://code.visualstudio.com/>)
+  - [Codiumate](<https://www.codium.ai/>)
+
 ## Licence
 
 ```text
