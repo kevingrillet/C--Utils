@@ -17,13 +17,14 @@ namespace CSharp_Utils.Tests.Experiments
         private D4CompanionPressetMerger _d4CompanionPressetMerger;
 
         [OneTimeSetUp]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1869:Mettre en cache et réutiliser les instances « JsonSerializerOptions »", Justification = "<En attente>")]
         public void OneTimeSetUp()
         {
             var json = File.ReadAllText("Ressources/D4Companion.Rob's Bone Spear (S3).full.json");
             var jsonSerializerOptions = new JsonSerializerOptions()
             {
                 AllowTrailingCommas = true,
-                WriteIndented = true
+                WriteIndented = true,
             };
             jsonSerializerOptions.Converters.Add(new CustomColorConverter());
             _affixePresets = JsonSerializer.Deserialize<List<AffixPreset>>(json, jsonSerializerOptions) ?? [];

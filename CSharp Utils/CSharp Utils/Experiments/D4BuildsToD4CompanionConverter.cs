@@ -9,6 +9,14 @@ using System.Text.Json;
 
 namespace CSharp_Utils.Experiments
 {
+    /// <summary>
+    /// Converts D4BuildsExport objects to AffixPreset objects for the D4Companion application.
+    /// </summary>
+    /// <remarks>
+    /// This class is responsible for converting D4BuildsExport objects, which represent Diablo 4 builds, into AffixPreset objects, which are used by the D4Companion application.
+    /// The conversion process involves extracting relevant information from the D4BuildsExport objects and mapping them to the corresponding properties of the AffixPreset objects.
+    /// The class uses lists of AffixInfo, AspectInfo, and D4ItemType objects to perform the conversion.
+    /// </remarks>
     public class D4BuildsToD4CompanionConverter
     {
         private readonly List<AffixInfo> _affixInfos;
@@ -31,20 +39,19 @@ namespace CSharp_Utils.Experiments
             var result = new AffixPreset
             {
                 Name = d4BuildsExport.Name,
+                ItemAspects = BuildAspects(d4BuildsExport.D4Class, d4BuildsExport.Aspects).ToList(),
+                ItemAffixes = BuildAffixes(d4BuildsExport.D4Class, d4BuildsExport.Helm, "helm", "Helm")
+                    .Concat(BuildAffixes(d4BuildsExport.D4Class, d4BuildsExport.ChestArmor, "chest", "ChestArmor"))
+                    .Concat(BuildAffixes(d4BuildsExport.D4Class, d4BuildsExport.Gloves, "gloves", "Gloves"))
+                    .Concat(BuildAffixes(d4BuildsExport.D4Class, d4BuildsExport.Pants, "pants", "Legs"))
+                    .Concat(BuildAffixes(d4BuildsExport.D4Class, d4BuildsExport.Boots, "boots", "Boots"))
+                    .Concat(BuildAffixes(d4BuildsExport.D4Class, d4BuildsExport.Amulet, "amulet", "Amulet"))
+                    .Concat(BuildAffixes(d4BuildsExport.D4Class, d4BuildsExport.Rings, "ring", "Ring"))
+                    .Concat(BuildAffixes(d4BuildsExport.D4Class, d4BuildsExport.Weapons, "weapon", "Weapon"))
+                    .Concat(BuildAffixes(d4BuildsExport.D4Class, d4BuildsExport.Offhand, "offhand", "Weapon"))
+                    .Concat(BuildAffixes(d4BuildsExport.D4Class, d4BuildsExport.RangedWeapon, "ranged", "Weapon"))
+                    .ToList()
             };
-
-            result.ItemAspects.AddRange(BuildAspects(d4BuildsExport.D4Class, d4BuildsExport.Aspects));
-
-            result.ItemAffixes.AddRange(BuildAffixes(d4BuildsExport.D4Class, d4BuildsExport.Helm, "helm", "Helm"));
-            result.ItemAffixes.AddRange(BuildAffixes(d4BuildsExport.D4Class, d4BuildsExport.ChestArmor, "chest", "ChestArmor"));
-            result.ItemAffixes.AddRange(BuildAffixes(d4BuildsExport.D4Class, d4BuildsExport.Gloves, "gloves", "Gloves"));
-            result.ItemAffixes.AddRange(BuildAffixes(d4BuildsExport.D4Class, d4BuildsExport.Pants, "pants", "Legs"));
-            result.ItemAffixes.AddRange(BuildAffixes(d4BuildsExport.D4Class, d4BuildsExport.Boots, "boots", "Boots"));
-            result.ItemAffixes.AddRange(BuildAffixes(d4BuildsExport.D4Class, d4BuildsExport.Amulet, "amulet", "Amulet"));
-            result.ItemAffixes.AddRange(BuildAffixes(d4BuildsExport.D4Class, d4BuildsExport.Rings, "ring", "Ring"));
-            result.ItemAffixes.AddRange(BuildAffixes(d4BuildsExport.D4Class, d4BuildsExport.Weapons, "weapon", "Weapon"));
-            result.ItemAffixes.AddRange(BuildAffixes(d4BuildsExport.D4Class, d4BuildsExport.Offhand, "offhand", "Weapon"));
-            result.ItemAffixes.AddRange(BuildAffixes(d4BuildsExport.D4Class, d4BuildsExport.RangedWeapon, "ranged", "Weapon"));
 
             return result;
         }
@@ -59,11 +66,9 @@ namespace CSharp_Utils.Experiments
 
         protected IEnumerable<ItemAffix> BuildAffixes(D4Class d4Class, IEnumerable<string> affixes, string type, string itemType = null)
         {
-            var description = string.Empty;
-            foreach (var affix in affixes)
+            foreach (var affix in affixes.Where(a => !string.IsNullOrWhiteSpace(a)))
             {
-                if (string.IsNullOrWhiteSpace(affix)) continue;
-
+                var description = string.Empty;
                 if (string.IsNullOrWhiteSpace(itemType))
                 {
                     description = Process.ExtractOne(
@@ -100,11 +105,9 @@ namespace CSharp_Utils.Experiments
 
         protected IEnumerable<ItemAffix> BuildAspects(D4Class d4Class, IEnumerable<string> aspects, string type = "aspect", string itemType = null)
         {
-            var Name = string.Empty;
-            foreach (var aspect in aspects)
+            foreach (var aspect in aspects.Where(a => !string.IsNullOrWhiteSpace(a)))
             {
-                if (string.IsNullOrWhiteSpace(aspect)) continue;
-
+                var Name = string.Empty;
                 if (string.IsNullOrWhiteSpace(itemType))
                 {
                     Name = Process.ExtractOne(

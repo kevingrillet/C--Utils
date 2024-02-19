@@ -11,6 +11,9 @@ using System.Threading;
 
 namespace CSharp_Utils.Experiments
 {
+    /// <summary>
+    /// Represents a class that is responsible for scraping D4 Builds and exporting them to D4 Companion format.
+    /// </summary>
     public class D4BuildsToD4CompanionScrapper
     {
         private static readonly int SleepNavigate = 250;
@@ -144,7 +147,7 @@ namespace CSharp_Utils.Experiments
             }
             catch (NoSuchElementException)
             {
-                return Enumerable.Empty<string>();
+                return [];
             }
         }
 
@@ -156,7 +159,7 @@ namespace CSharp_Utils.Experiments
             }
             catch (NoSuchElementException)
             {
-                return Enumerable.Empty<string>();
+                return [];
             }
         }
 
