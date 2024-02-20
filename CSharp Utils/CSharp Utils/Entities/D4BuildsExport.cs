@@ -21,35 +21,35 @@ namespace CSharp_Utils.Entities
         public IEnumerable<string> Ring2 { get; set; }
 
         public IEnumerable<string> Rings
-        { get { return Ring1.Concat(Ring2); } }
+        { get { return Ring1.Concat(Ring2).Distinct(); } }
 
         public IEnumerable<string> SlashingWeapon { get; set; }
         public IEnumerable<string> Weapon { get; set; }
 
         public IEnumerable<string> Weapons
-        { get { return BludgeoningWeapon.Concat(SlashingWeapon).Concat(Weapon).Concat(WieldWeapon1).Concat(WieldWeapon2); } }
+        { get { return BludgeoningWeapon.Concat(SlashingWeapon).Concat(Weapon).Concat(WieldWeapon1).Concat(WieldWeapon2).Distinct(); } }
 
         public IEnumerable<string> WieldWeapon1 { get; set; }
         public IEnumerable<string> WieldWeapon2 { get; set; }
 
         public D4BuildsExport()
         {
-            Amulet = Enumerable.Empty<string>();
-            Aspects = Enumerable.Empty<string>();
-            BludgeoningWeapon = Enumerable.Empty<string>();
-            Boots = Enumerable.Empty<string>();
-            ChestArmor = Enumerable.Empty<string>();
-            Gloves = Enumerable.Empty<string>();
-            Helm = Enumerable.Empty<string>();
-            Offhand = Enumerable.Empty<string>();
-            Pants = Enumerable.Empty<string>();
-            RangedWeapon = Enumerable.Empty<string>();
-            Ring1 = Enumerable.Empty<string>();
-            Ring2 = Enumerable.Empty<string>();
-            SlashingWeapon = Enumerable.Empty<string>();
-            Weapon = Enumerable.Empty<string>();
-            WieldWeapon1 = Enumerable.Empty<string>();
-            WieldWeapon2 = Enumerable.Empty<string>();
+            Amulet = [];
+            Aspects = [];
+            BludgeoningWeapon = [];
+            Boots = [];
+            ChestArmor = [];
+            Gloves = [];
+            Helm = [];
+            Offhand = [];
+            Pants = [];
+            RangedWeapon = [];
+            Ring1 = [];
+            Ring2 = [];
+            SlashingWeapon = [];
+            Weapon = [];
+            WieldWeapon1 = [];
+            WieldWeapon2 = [];
         }
     }
 }

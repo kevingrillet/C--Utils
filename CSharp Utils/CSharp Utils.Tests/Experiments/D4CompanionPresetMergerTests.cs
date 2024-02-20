@@ -11,10 +11,10 @@ using System.Text.Json;
 namespace CSharp_Utils.Tests.Experiments
 {
     [TestFixture]
-    internal class D4CompanionPressetMergerTests
+    internal class D4CompanionPresetMergerTests
     {
         private List<AffixPreset> _affixePresets;
-        private D4CompanionPressetMerger _d4CompanionPressetMerger;
+        private D4CompanionPresetMerger _d4CompanionPresetMerger;
 
         [OneTimeSetUp]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1869:Mettre en cache et réutiliser les instances « JsonSerializerOptions »", Justification = "<En attente>")]
@@ -30,14 +30,14 @@ namespace CSharp_Utils.Tests.Experiments
             _affixePresets = JsonSerializer.Deserialize<List<AffixPreset>>(json, jsonSerializerOptions) ?? [];
             _affixePresets = [.. _affixePresets.OrderByDescending(a => a.Name)];
 
-            _d4CompanionPressetMerger = new();
+            _d4CompanionPresetMerger = new();
         }
 
         [Test]
         public void Test_MergeAuto()
         {
-            _d4CompanionPressetMerger.Mode = D4CompanionPressetMergerMode.AUTO;
-            var result = _d4CompanionPressetMerger.Merge("Rob's Bone Spear (S3)", _affixePresets);
+            _d4CompanionPresetMerger.Mode = D4CompanionPresetMergerMode.AUTO;
+            var result = _d4CompanionPresetMerger.Merge("Rob's Bone Spear (S3)", _affixePresets);
 
             Assert.Multiple(() =>
             {
@@ -61,8 +61,8 @@ namespace CSharp_Utils.Tests.Experiments
         [Test]
         public void Test_MergeColor()
         {
-            _d4CompanionPressetMerger.Mode = D4CompanionPressetMergerMode.COLOR;
-            var result = _d4CompanionPressetMerger.Merge("Rob's Bone Spear (S3)", _affixePresets, [Color.Yellow, Color.Lime, Color.AliceBlue], Color.Orange);
+            _d4CompanionPresetMerger.Mode = D4CompanionPresetMergerMode.COLOR;
+            var result = _d4CompanionPresetMerger.Merge("Rob's Bone Spear (S3)", _affixePresets, [Color.Yellow, Color.Lime, Color.AliceBlue], Color.Orange);
 
             Assert.Multiple(() =>
             {

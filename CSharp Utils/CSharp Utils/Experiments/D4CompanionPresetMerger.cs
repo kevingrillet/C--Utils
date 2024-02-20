@@ -5,28 +5,28 @@ using System.Drawing;
 
 namespace CSharp_Utils.Experiments
 {
-    public enum D4CompanionPressetMergerMode
+    public enum D4CompanionPresetMergerMode
     {
         AUTO = 0,
         COLOR = 1,
     }
 
     /// <summary>
-    /// The <c>D4CompanionPressetMerger</c> class is responsible for merging multiple <c>AffixPreset</c> objects into a single <c>AffixPreset</c> object based on different merging modes.
+    /// The <c>D4CompanionPresetMerger</c> class is responsible for merging multiple <c>AffixPreset</c> objects into a single <c>AffixPreset</c> object based on different merging modes.
     /// </summary>
-    public class D4CompanionPressetMerger
+    public class D4CompanionPresetMerger
     {
         /// <summary>
         /// The current merging mode, which can be <c>AUTO</c> or <c>COLOR</c>.
         /// </summary>
-        public D4CompanionPressetMergerMode Mode { get; set; }
+        public D4CompanionPresetMergerMode Mode { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <c>D4CompanionPressetMerger</c> class with the default merging mode set to <c>AUTO</c>.
+        /// Initializes a new instance of the <c>D4CompanionPresetMerger</c> class with the default merging mode set to <c>AUTO</c>.
         /// </summary>
-        public D4CompanionPressetMerger()
+        public D4CompanionPresetMerger()
         {
-            Mode = D4CompanionPressetMergerMode.AUTO;
+            Mode = D4CompanionPresetMergerMode.AUTO;
         }
 
         /// <summary>
@@ -34,15 +34,15 @@ namespace CSharp_Utils.Experiments
         /// </summary>
         /// <param name="name">The name of the merged <c>AffixPreset</c> object.</param>
         /// <param name="affixPresets">The list of <c>AffixPreset</c> objects to merge.</param>
-        /// <param name="pressetColors">The list of colors corresponding to each <c>AffixPreset</c> object (required only in <c>COLOR</c> mode).</param>
+        /// <param name="presetColors">The list of colors corresponding to each <c>AffixPreset</c> object (required only in <c>COLOR</c> mode).</param>
         /// <param name="commonColor">The common color to use for duplicate objects (required only in <c>COLOR</c> mode).</param>
         /// <returns>The merged <c>AffixPreset</c> object.</returns>
-        public AffixPreset Merge(string name, IList<AffixPreset> affixPresets, IList<Color> pressetColors = null, Color? commonColor = null)
+        public AffixPreset Merge(string name, IList<AffixPreset> affixPresets, IList<Color> presetColors = null, Color? commonColor = null)
         {
             return Mode switch
             {
-                D4CompanionPressetMergerMode.AUTO => MergeAuto(name, affixPresets),
-                D4CompanionPressetMergerMode.COLOR => MergeColor(name, affixPresets, pressetColors, commonColor.Value),
+                D4CompanionPresetMergerMode.AUTO => MergeAuto(name, affixPresets),
+                D4CompanionPresetMergerMode.COLOR => MergeColor(name, affixPresets, presetColors, commonColor.Value),
                 _ => throw new NotImplementedException(),
             };
         }
@@ -75,10 +75,10 @@ namespace CSharp_Utils.Experiments
         /// </summary>
         /// <param name="name">The name of the merged <c>AffixPreset</c> object.</param>
         /// <param name="affixPresets">The list of <c>AffixPreset</c> objects to merge.</param>
-        /// <param name="pressetColors">The list of colors corresponding to each <c>AffixPreset</c> object.</param>
+        /// <param name="presetColors">The list of colors corresponding to each <c>AffixPreset</c> object.</param>
         /// <param name="commonColor">The common color to use for duplicate objects.</param>
         /// <returns>The merged <c>AffixPreset</c> object.</returns>
-        protected static AffixPreset MergeColor(string name, IList<AffixPreset> affixPresets, IList<Color> pressetColors, Color commonColor)
+        protected static AffixPreset MergeColor(string name, IList<AffixPreset> affixPresets, IList<Color> presetColors, Color commonColor)
         {
             var affixPreset = new AffixPreset()
             {
@@ -88,7 +88,7 @@ namespace CSharp_Utils.Experiments
             for (var i = 0; i < affixPresets.Count; i++)
             {
                 var preset = affixPresets[i];
-                var color = pressetColors[i];
+                var color = presetColors[i];
 
                 MergeItemsWithColor(preset.ItemAffixes, affixPreset.ItemAffixes, color, commonColor);
                 MergeItemsWithColor(preset.ItemAspects, affixPreset.ItemAspects, color, commonColor);

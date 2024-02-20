@@ -12,7 +12,7 @@ namespace CSharp_Utils.Entities.D4Companion
 
         public D4DataItemType()
         {
-            arItemLabels = Enumerable.Empty<int>();
+            arItemLabels = [];
         }
     }
 }
