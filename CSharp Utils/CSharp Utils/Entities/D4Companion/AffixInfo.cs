@@ -3,14 +3,14 @@
 // From https://github.com/josdemmers/Diablo4Companion
 namespace CSharp_Utils.Entities.D4Companion
 {
-    internal class AffixAttribute
+    public class AffixAttribute
     {
         public string Localisation { get; set; } = string.Empty;
         public string LocalisationId { get; set; } = string.Empty;
         public uint LocalisationParameter { get; set; }
     }
 
-    internal class AffixInfo
+    public class AffixInfo
     {
         public List<AffixAttribute> AffixAttributes { get; set; } = [];
         public List<int> AllowedForPlayerClass { get; set; } = [];

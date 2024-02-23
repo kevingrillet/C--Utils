@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace CSharp_Utils.Tests.Experiments
 {
-    [TestFixture]
+    [TestFixture, Parallelizable]
     internal class D4BuildsToD4CompanionConverterTests : D4BuildsToD4CompanionConverter
     {
         private AffixPreset _affixPreset;

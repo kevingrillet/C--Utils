@@ -7,7 +7,7 @@ using System.IO;
 
 namespace CSharp_Utils.Tests.Helpers
 {
-    [TestFixture]
+    [TestFixture, NonParallelizable]
     internal class NewtonsoftJsonHelpersTests
     {
         [Test]

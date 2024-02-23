@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace CSharp_Utils.Tests.Experiments
 {
-    [TestFixture]
+    [TestFixture, Parallelizable]
     internal class D4DataExtractItemTypeTests
     {
         protected bool Output { get; set; } = false;
@@ -20,7 +20,7 @@ namespace CSharp_Utils.Tests.Experiments
         }
 
         [Test]
-        public void Test_0_Extract()
+        public void Test_Extract()
         {
             foreach (string fileName in Directory.GetFiles("Ressources/d4data/ItemType", "*.json"))
             {

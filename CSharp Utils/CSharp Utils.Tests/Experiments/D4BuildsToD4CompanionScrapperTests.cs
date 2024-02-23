@@ -13,7 +13,7 @@ using System.Text;
 
 namespace CSharp_Utils.Tests.Experiments
 {
-    [TestFixture, Category("NotOnGitHub")]
+    [TestFixture, Parallelizable, Category("NotOnGitHub")]
     internal class D4BuildsToD4CompanionScrapperTests
     {
         private D4BuildsToD4CompanionConverter _converter;

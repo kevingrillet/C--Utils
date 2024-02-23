@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace CSharp_Utils.Tests.Helpers
 {
-    [TestFixture]
+    [TestFixture, Parallelizable]
     internal class JsonHelpersTests
     {
         [Test]

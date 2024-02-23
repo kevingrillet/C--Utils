@@ -3,7 +3,7 @@ using CSharp_Utils.Helpers;
 
 namespace CSharp_Utils.Tests.Helpers
 {
-    [TestFixture]
+    [TestFixture, NonParallelizable]
     internal class DocxComparerTests : DocxComparer
     {
         private DocxComparer _docxComparer;

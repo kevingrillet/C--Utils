@@ -5,7 +5,7 @@ using System.IO;
 
 namespace CSharp_Utils.Tests.Experiments
 {
-    [TestFixture]
+    [TestFixture, Parallelizable]
     internal class SyncfusionDocxComparerTests
     {
         [TestCase("document1", "document2", false)]

@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace CSharp_Utils.Tests.Experiments
 {
-    [TestFixture]
+    [TestFixture, Parallelizable]
     internal class D4CompanionPresetMergerTests
     {
         private List<AffixPreset> _affixePresets;
