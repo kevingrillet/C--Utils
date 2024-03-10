@@ -70,7 +70,7 @@ namespace CSharp_Utils.Tests.Experiments
                 Assert.That(d4BuildExport.Boots, Is.Not.Empty);
                 Assert.That(d4BuildExport.Amulet, Is.Not.Empty);
                 Assert.That(d4BuildExport.Ring1, Is.Not.Empty);
-                Assert.That(d4BuildExport.Ring2, Is.Empty);
+                Assert.That(d4BuildExport.Ring2, Is.Not.Empty);
                 Assert.That(d4BuildExport.Weapon, Is.Not.Empty);
                 Assert.That(d4BuildExport.Offhand, Is.Empty);
                 Assert.That(d4BuildExport.RangedWeapon, Is.Empty);
@@ -134,7 +134,7 @@ namespace CSharp_Utils.Tests.Experiments
                 Assert.That(d4BuildExport.Boots, Is.Not.Empty);
                 Assert.That(d4BuildExport.Amulet, Is.Not.Empty);
                 Assert.That(d4BuildExport.Ring1, Is.Not.Empty);
-                Assert.That(d4BuildExport.Ring2, Is.Empty);
+                Assert.That(d4BuildExport.Ring2, Is.Not.Empty);
                 Assert.That(d4BuildExport.Weapon, Is.Not.Empty);
                 Assert.That(d4BuildExport.Offhand, Is.Empty);
                 Assert.That(d4BuildExport.RangedWeapon, Is.Empty);
