@@ -13,19 +13,38 @@ namespace CSharp_Utils.Helpers
     public enum NumberFormat
     {
         General = 0,
-        Decimal = 2,
-        Integer = 1,
-        DateShort = 14,
-        DateTime = 22,
-        Time = 21,
+        Decimal = 1,
+        Decimal2 = 2,
+        Thousands = 3,
+        Thousands2 = 4,
         Percentage = 9,
-        Fraction = 10,
-        Currency = 164,
-        Scientific = 11
+        Percentage2 = 10,
+        Scientific = 11,
+        Fraction1 = 12,
+        Fraction2 = 13,
+        DateShort = 14,
+        DateLong = 15,
+        DateTimeLong = 16,
+        Time12Hour = 17,
+        Time12HourSeconds = 18,
+        Time24Hour = 19,
+        Time24HourSeconds = 20,
+        DateTime = 21,
+        DateTimeSeconds = 22,
+        Thousands3 = 37,
+        Thousands3Negative = 38,
+        Thousands3RedNegative = 39,
+        Thousands3RedNegativeParentheses = 40,
+        TimeMinutesSeconds = 45,
+        TimeMinutesSecondsTenths = 46,
+        TimeMinutesSecondsHundredths = 47,
+        Scientific2 = 48,
+        Text = 49
     }
 
     /// <summary>
-    /// Classe utilitaire pour lire les fichiers Excel (xlsx) en utilisant OpenXML.
+    /// Cette classe fournit des méthodes pour lire les cellules à partir de fichiers Excel (xlsx) en utilisant OpenXML.
+    /// Auteur : OpenAI ChatGPT
     /// </summary>
     public static class XlsxOpenXmlReader
     {
