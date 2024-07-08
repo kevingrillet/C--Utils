@@ -22,7 +22,7 @@ namespace CSharp_Utils.Tests.Helpers
                 new CellValue("D1", typeof(string), "Number"),
                 new CellValue("E1", typeof(string), "Long Number"),
                 new CellValue("F1", typeof(string), "Currency"),
-                new CellValue("G1", typeof(string), "Compatibility"),
+                new CellValue("G1", typeof(string), "Accounting"),
                 new CellValue("H1", typeof(string), "DateShort"),
                 new CellValue("I1", typeof(string), "DateTime"),
                 new CellValue("J1", typeof(string), "Time"),
