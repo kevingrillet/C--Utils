@@ -9,36 +9,176 @@ namespace CSharp_Utils.Helpers
 {
     /// <summary>
     /// Enumération représentant les formats numériques des cellules.
+    /// Documentation complète : https://docs.microsoft.com/en-us/office/open-xml/how-to-apply-number-formatting-to-cells-in-spreadsheets
     /// </summary>
     public enum NumberFormat
     {
+        /// <summary>
+        /// Format général (0).
+        /// Exemple : 1234.5678
+        /// </summary>
         General = 0,
+
+        /// <summary>
+        /// Format décimal (1).
+        /// Exemple : 1234.57
+        /// </summary>
         Decimal = 1,
+
+        /// <summary>
+        /// Format décimal avec 2 chiffres après la virgule (2).
+        /// Exemple : 1234.57
+        /// </summary>
         Decimal2 = 2,
+
+        /// <summary>
+        /// Format en milliers (3).
+        /// Exemple : 1,234
+        /// </summary>
         Thousands = 3,
+
+        /// <summary>
+        /// Format en milliers avec 2 chiffres après la virgule (4).
+        /// Exemple : 1,234.57
+        /// </summary>
         Thousands2 = 4,
+
+        /// <summary>
+        /// Format pourcentage (9).
+        /// Exemple : 123457%
+        /// </summary>
         Percentage = 9,
+
+        /// <summary>
+        /// Format pourcentage avec 2 chiffres après la virgule (10).
+        /// Exemple : 123456.78%
+        /// </summary>
         Percentage2 = 10,
+
+        /// <summary>
+        /// Format scientifique (11).
+        /// Exemple : 1.23E+03
+        /// </summary>
         Scientific = 11,
+
+        /// <summary>
+        /// Format fraction (12).
+        /// Exemple : 1234 1/2
+        /// </summary>
         Fraction1 = 12,
+
+        /// <summary>
+        /// Format fraction (13).
+        /// Exemple : 1234 2/3
+        /// </summary>
         Fraction2 = 13,
+
+        /// <summary>
+        /// Format date courte (14).
+        /// Exemple : 14-Mar
+        /// </summary>
         DateShort = 14,
+
+        /// <summary>
+        /// Format date longue (15).
+        /// Exemple : 14-Mars
+        /// </summary>
         DateLong = 15,
+
+        /// <summary>
+        /// Format date et heure longue (16).
+        /// Exemple : 14-Mar-01 01:30 PM
+        /// </summary>
         DateTimeLong = 16,
+
+        /// <summary>
+        /// Format heure 12 heures (17).
+        /// Exemple : 1:30 PM
+        /// </summary>
         Time12Hour = 17,
+
+        /// <summary>
+        /// Format heure 12 heures avec secondes (18).
+        /// Exemple : 1:30:55 PM
+        /// </summary>
         Time12HourSeconds = 18,
+
+        /// <summary>
+        /// Format heure 24 heures (19).
+        /// Exemple : 13:30
+        /// </summary>
         Time24Hour = 19,
+
+        /// <summary>
+        /// Format heure 24 heures avec secondes (20).
+        /// Exemple : 13:30:55
+        /// </summary>
         Time24HourSeconds = 20,
+
+        /// <summary>
+        /// Format date et heure (21).
+        /// Exemple : 14-Mar-01 13:30
+        /// </summary>
         DateTime = 21,
+
+        /// <summary>
+        /// Format date et heure avec secondes (22).
+        /// Exemple : 14-Mar-01 13:30:55
+        /// </summary>
         DateTimeSeconds = 22,
+
+        /// <summary>
+        /// Format milliers (37).
+        /// Exemple : (1,234)
+        /// </summary>
         Thousands3 = 37,
+
+        /// <summary>
+        /// Format milliers avec négatif (38).
+        /// Exemple : (1,234)
+        /// </summary>
         Thousands3Negative = 38,
+
+        /// <summary>
+        /// Format milliers avec négatif en rouge (39).
+        /// Exemple : (1,234)
+        /// </summary>
         Thousands3RedNegative = 39,
+
+        /// <summary>
+        /// Format milliers avec négatif en rouge entre parenthèses (40).
+        /// Exemple : (1,234)
+        /// </summary>
         Thousands3RedNegativeParentheses = 40,
+
+        /// <summary>
+        /// Format minutes et secondes (45).
+        /// Exemple : 13:30
+        /// </summary>
         TimeMinutesSeconds = 45,
+
+        /// <summary>
+        /// Format minutes et secondes avec dixièmes de seconde (46).
+        /// Exemple : 13:30.5
+        /// </summary>
         TimeMinutesSecondsTenths = 46,
+
+        /// <summary>
+        /// Format minutes et secondes avec centièmes de seconde (47).
+        /// Exemple : 13:30.55
+        /// </summary>
         TimeMinutesSecondsHundredths = 47,
+
+        /// <summary>
+        /// Format scientifique (48).
+        /// Exemple : 1.23E+03
+        /// </summary>
         Scientific2 = 48,
+
+        /// <summary>
+        /// Format texte (49).
+        /// Exemple : 1234
+        /// </summary>
         Text = 49
     }
 
@@ -84,7 +224,6 @@ namespace CSharp_Utils.Helpers
 
                 foreach (Row row in worksheetPart.Worksheet.Descendants<Row>())
                 {
-                    // Obtenez l'index de colonne maximal dans la ligne
                     int maxColumnIndex = row.Descendants<Cell>().Select(c => GetColumnIndexFromCellReference(c.CellReference)).Max();
 
                     for (int colIndex = 0; colIndex <= maxColumnIndex; colIndex++)
@@ -92,7 +231,6 @@ namespace CSharp_Utils.Helpers
                         Cell cell = row.Elements<Cell>().FirstOrDefault(c => GetColumnIndexFromCellReference(c.CellReference) == colIndex);
                         if (cell == null)
                         {
-                            // Créez une cellule vide si elle n'existe pas
                             cell = new Cell() { CellReference = GetCellReferenceFromIndexes(row.RowIndex, colIndex) };
                         }
                         cellValues.Add(GetCellValue(cell, stringTablePart, cellFormats));
@@ -104,6 +242,34 @@ namespace CSharp_Utils.Helpers
         }
 
         /// <summary>
+        /// Détermine le type de données attendu pour un format numérique personnalisé.
+        /// </summary>
+        /// <param name="cellReference">La référence de la cellule.</param>
+        /// <param name="cellInnerText">Le texte interne de la cellule.</param>
+        /// <param name="numberFormatId">L'ID du format numérique de la cellule.</param>
+        /// <param name="dataType">Le type de données de la cellule.</param>
+        /// <returns>Un objet CellValue représentant la valeur de la cellule formatée.</returns>
+        private static CellValue DetermineCustomNumberFormatType(string cellReference, string cellInnerText, uint? numberFormatId, CellValues? dataType)
+        {
+            // Implémentez ici la logique pour déterminer le type attendu pour les formats numériques personnalisés
+            // Par exemple, vous pouvez mapper certains IDs de format à des types spécifiques
+
+            if (double.TryParse(cellInnerText, NumberStyles.Any, CultureInfo.InvariantCulture, out double customValue))
+            {
+                if (IsWholeNumber(customValue))
+                {
+                    return new CellValue(cellReference, typeof(int), (int)customValue, cellInnerText, numberFormatId, dataType);
+                }
+                else
+                {
+                    return new CellValue(cellReference, typeof(double), customValue, cellInnerText, numberFormatId, dataType);
+                }
+            }
+
+            return new CellValue(cellReference, typeof(string), cellInnerText, cellInnerText, numberFormatId, dataType);
+        }
+
+        /// <summary>
         /// Formatte la valeur d'une cellule en fonction de son format numérique.
         /// </summary>
         /// <param name="cellReference">La référence de la cellule.</param>
@@ -111,38 +277,74 @@ namespace CSharp_Utils.Helpers
         /// <param name="numberFormat">Le format numérique de la cellule.</param>
         /// <param name="numberFormatId">L'ID du format numérique de la cellule.</param>
         /// <param name="dataType">Le type de données de la cellule.</param>
-        /// <returns>Un objet CellValue représentant la valeur de la cellule.</returns>
+        /// <returns>Un objet CellValue représentant la valeur de la cellule formatée.</returns>
         private static CellValue FormatCellValue(string cellReference, string cellInnerText, NumberFormat numberFormat, uint? numberFormatId, CellValues? dataType)
         {
-            if (numberFormat == NumberFormat.DateShort || numberFormat == NumberFormat.DateTime)
+            switch (numberFormat)
             {
-                if (double.TryParse(cellInnerText, NumberStyles.Any, CultureInfo.InvariantCulture, out double oaDate))
-                {
-                    DateTime dateValue = DateTime.FromOADate(oaDate);
-                    if (numberFormat == NumberFormat.DateShort)
+                case NumberFormat.General:
+                    return new CellValue(cellReference, typeof(string), cellInnerText, cellInnerText, numberFormatId, dataType);
+
+                case NumberFormat.Decimal:
+                case NumberFormat.Decimal2:
+                case NumberFormat.Thousands:
+                case NumberFormat.Thousands2:
+                case NumberFormat.Percentage:
+                case NumberFormat.Percentage2:
+                case NumberFormat.Scientific:
+                case NumberFormat.Scientific2:
+                    if (double.TryParse(cellInnerText, NumberStyles.Any, CultureInfo.InvariantCulture, out double numberValue))
                     {
-                        return new CellValue(cellReference, typeof(DateTime), dateValue.Date, cellInnerText, numberFormatId, dataType);
+                        if (IsWholeNumber(numberValue))
+                        {
+                            return new CellValue(cellReference, typeof(int), (int)numberValue, cellInnerText, numberFormatId, dataType);
+                        }
+                        else
+                        {
+                            return new CellValue(cellReference, typeof(double), numberValue, cellInnerText, numberFormatId, dataType);
+                        }
                     }
-                    else
+                    break;
+
+                case NumberFormat.DateShort:
+                case NumberFormat.DateLong:
+                case NumberFormat.DateTime:
+                case NumberFormat.DateTimeLong:
+                case NumberFormat.DateTimeSeconds:
+                    if (double.TryParse(cellInnerText, NumberStyles.Any, CultureInfo.InvariantCulture, out double oaDate))
                     {
+                        DateTime dateValue = DateTime.FromOADate(oaDate);
                         return new CellValue(cellReference, typeof(DateTime), dateValue, cellInnerText, numberFormatId, dataType);
                     }
-                }
-            }
+                    break;
 
-            if (double.TryParse(cellInnerText, NumberStyles.Any, CultureInfo.InvariantCulture, out double numberValue))
-            {
-                // Vérifiez si le nombre peut être converti en int
-                if (IsWholeNumber(numberValue))
-                {
-                    return new CellValue(cellReference, typeof(int), (int)numberValue, cellInnerText, numberFormatId, dataType);
-                }
-                else
-                {
-                    return new CellValue(cellReference, typeof(double), numberValue, cellInnerText, numberFormatId, dataType);
-                }
-            }
+                case NumberFormat.Time12Hour:
+                case NumberFormat.Time12HourSeconds:
+                case NumberFormat.Time24Hour:
+                case NumberFormat.Time24HourSeconds:
+                case NumberFormat.TimeMinutesSeconds:
+                case NumberFormat.TimeMinutesSecondsTenths:
+                case NumberFormat.TimeMinutesSecondsHundredths:
+                    if (TimeSpan.TryParse(cellInnerText, CultureInfo.InvariantCulture, out TimeSpan timeValue))
+                    {
+                        return new CellValue(cellReference, typeof(TimeSpan), timeValue, cellInnerText, numberFormatId, dataType);
+                    }
+                    break;
 
+                case NumberFormat.Fraction1:
+                case NumberFormat.Fraction2:
+                    if (double.TryParse(cellInnerText, NumberStyles.Any, CultureInfo.InvariantCulture, out double fractionValue))
+                    {
+                        return new CellValue(cellReference, typeof(double), fractionValue, cellInnerText, numberFormatId, dataType);
+                    }
+                    break;
+
+                case NumberFormat.Text:
+                    return new CellValue(cellReference, typeof(string), cellInnerText, cellInnerText, numberFormatId, dataType);
+
+                default:
+                    return new CellValue(cellReference, typeof(string), cellInnerText, cellInnerText, numberFormatId, dataType);
+            }
             return new CellValue(cellReference, typeof(string), cellInnerText, cellInnerText, numberFormatId, dataType);
         }
 
@@ -216,7 +418,6 @@ namespace CSharp_Utils.Helpers
             {
                 if (double.TryParse(cellInnerText, NumberStyles.Any, CultureInfo.InvariantCulture, out double numberValue))
                 {
-                    // Vérifiez si le nombre peut être converti en int
                     if (IsWholeNumber(numberValue))
                     {
                         return new CellValue(cellReference, typeof(int), (int)numberValue, cellInnerText, null, dataType);
@@ -257,14 +458,16 @@ namespace CSharp_Utils.Helpers
                 {
                     numberFormatId = cellFormat.NumberFormatId.Value;
                     NumberFormat numberFormat = (NumberFormat)cellFormat.NumberFormatId.Value;
+                    if (numberFormatId >= 164)
+                    {
+                        return DetermineCustomNumberFormatType(cellReference, cellInnerText, numberFormatId, cell.DataType?.Value);
+                    }
                     return FormatCellValue(cellReference, cellInnerText, numberFormat, numberFormatId, cell.DataType?.Value);
                 }
             }
 
-            // Vérifiez si la cellule est une valeur numérique même si DataType est null
             if (double.TryParse(cellInnerText, NumberStyles.Any, CultureInfo.InvariantCulture, out double numericValue))
             {
-                // Vérifiez si le nombre peut être converti en int
                 if (IsWholeNumber(numericValue))
                 {
                     return new CellValue(cellReference, typeof(int), (int)numericValue, cellInnerText, numberFormatId, cell.DataType?.Value);
@@ -275,7 +478,6 @@ namespace CSharp_Utils.Helpers
                 }
             }
 
-            // Gestion spécifique pour les chaînes partagées lorsque DataType est null
             if (stringTablePart != null && cell.CellValue != null && int.TryParse(cell.CellValue.Text, out int sharedStringIndex))
             {
                 return new CellValue(cellReference, typeof(string), stringTablePart.SharedStringTable.ElementAt(sharedStringIndex).InnerText, cellInnerText, numberFormatId, cell.DataType?.Value);
