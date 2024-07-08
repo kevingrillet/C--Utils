@@ -9,7 +9,6 @@ namespace CSharp_Utils.Helpers
 {
     /// <summary>
     /// Enumération représentant les formats numériques des cellules.
-    /// Documentation complète : https://docs.microsoft.com/en-us/office/open-xml/how-to-apply-number-formatting-to-cells-in-spreadsheets
     /// </summary>
     public enum NumberFormat
     {
@@ -152,6 +151,12 @@ namespace CSharp_Utils.Helpers
         Thousands3RedNegativeParentheses = 40,
 
         /// <summary>
+        /// Format comptabilité (44).
+        /// Exemple : (1,234)
+        /// </summary>
+        Accounting = 44,
+
+        /// <summary>
         /// Format minutes et secondes (45).
         /// Exemple : 13:30
         /// </summary>
@@ -184,7 +189,6 @@ namespace CSharp_Utils.Helpers
 
     /// <summary>
     /// Cette classe fournit des méthodes pour lire les cellules à partir de fichiers Excel (xlsx) en utilisant OpenXML.
-    /// Auteur : OpenAI ChatGPT
     /// </summary>
     public static class XlsxOpenXmlReader
     {
@@ -196,7 +200,7 @@ namespace CSharp_Utils.Helpers
         /// <returns>Une liste de CellValue contenant les valeurs des cellules.</returns>
         public static List<CellValue> ReadCells(string filePath, string sheetName = null)
         {
-            List<CellValue> cellValues = new List<CellValue>();
+            List<CellValue> cellValues = [];
 
             using (SpreadsheetDocument document = SpreadsheetDocument.Open(filePath, false))
             {
@@ -229,10 +233,7 @@ namespace CSharp_Utils.Helpers
                     for (int colIndex = 0; colIndex <= maxColumnIndex; colIndex++)
                     {
                         Cell cell = row.Elements<Cell>().FirstOrDefault(c => GetColumnIndexFromCellReference(c.CellReference) == colIndex);
-                        if (cell == null)
-                        {
-                            cell = new Cell() { CellReference = GetCellReferenceFromIndexes(row.RowIndex, colIndex) };
-                        }
+                        cell ??= new Cell() { CellReference = GetCellReferenceFromIndexes(row.RowIndex, colIndex) };
                         cellValues.Add(GetCellValue(cell, stringTablePart, cellFormats));
                     }
                 }
@@ -249,7 +250,7 @@ namespace CSharp_Utils.Helpers
         /// <param name="numberFormatId">L'ID du format numérique de la cellule.</param>
         /// <param name="dataType">Le type de données de la cellule.</param>
         /// <returns>Un objet CellValue représentant la valeur de la cellule formatée.</returns>
-        private static CellValue DetermineCustomNumberFormatType(string cellReference, string cellInnerText, uint? numberFormatId, CellValues? dataType)
+        private static CellValue DetermineCustomNumberFormatType(string cellReference, string cellInnerText, uint? numberFormatId, string dataType)
         {
             // Implémentez ici la logique pour déterminer le type attendu pour les formats numériques personnalisés
             // Par exemple, vous pouvez mapper certains IDs de format à des types spécifiques
@@ -278,7 +279,7 @@ namespace CSharp_Utils.Helpers
         /// <param name="numberFormatId">L'ID du format numérique de la cellule.</param>
         /// <param name="dataType">Le type de données de la cellule.</param>
         /// <returns>Un objet CellValue représentant la valeur de la cellule formatée.</returns>
-        private static CellValue FormatCellValue(string cellReference, string cellInnerText, NumberFormat numberFormat, uint? numberFormatId, CellValues? dataType)
+        private static CellValue FormatCellValue(string cellReference, string cellInnerText, NumberFormat numberFormat, uint? numberFormatId, string dataType)
         {
             switch (numberFormat)
             {
@@ -293,6 +294,7 @@ namespace CSharp_Utils.Helpers
                 case NumberFormat.Percentage2:
                 case NumberFormat.Scientific:
                 case NumberFormat.Scientific2:
+                case NumberFormat.Accounting:
                     if (double.TryParse(cellInnerText, NumberStyles.Any, CultureInfo.InvariantCulture, out double numberValue))
                     {
                         if (IsWholeNumber(numberValue))
@@ -394,24 +396,23 @@ namespace CSharp_Utils.Helpers
         {
             string cellInnerText = cell.InnerText;
             string cellReference = cell.CellReference;
-            CellValues? dataType = cell.DataType?.Value;
 
             if (cell.DataType.Value == CellValues.SharedString)
             {
                 if (stringTablePart != null && int.TryParse(cellInnerText, out int index))
                 {
-                    return new CellValue(cellReference, typeof(string), stringTablePart.SharedStringTable.ElementAt(index).InnerText, cellInnerText, null, dataType);
+                    return new CellValue(cellReference, typeof(string), stringTablePart.SharedStringTable.ElementAt(index).InnerText, cellInnerText, null, cell.DataType?.InnerText);
                 }
             }
             else if (cell.DataType.Value == CellValues.Boolean)
             {
-                return new CellValue(cellReference, typeof(bool), cellInnerText == "1", cellInnerText, null, dataType);
+                return new CellValue(cellReference, typeof(bool), cellInnerText == "1", cellInnerText, null, cell.DataType?.InnerText);
             }
             else if (cell.DataType.Value == CellValues.Date)
             {
                 if (DateTime.TryParse(cellInnerText, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime dateValue))
                 {
-                    return new CellValue(cellReference, typeof(DateTime), dateValue.Date, cellInnerText, null, dataType);
+                    return new CellValue(cellReference, typeof(DateTime), dateValue.Date, cellInnerText, null, cell.DataType?.InnerText);
                 }
             }
             else if (cell.DataType.Value == CellValues.Number)
@@ -420,20 +421,20 @@ namespace CSharp_Utils.Helpers
                 {
                     if (IsWholeNumber(numberValue))
                     {
-                        return new CellValue(cellReference, typeof(int), (int)numberValue, cellInnerText, null, dataType);
+                        return new CellValue(cellReference, typeof(int), (int)numberValue, cellInnerText, null, cell.DataType?.InnerText);
                     }
                     else
                     {
-                        return new CellValue(cellReference, typeof(double), numberValue, cellInnerText, null, dataType);
+                        return new CellValue(cellReference, typeof(double), numberValue, cellInnerText, null, cell.DataType?.InnerText);
                     }
                 }
             }
             else if (cell.DataType.Value == CellValues.Error)
             {
-                return new CellValue(cellReference, typeof(string), "ERROR: " + cellInnerText, cellInnerText, null, dataType);
+                return new CellValue(cellReference, typeof(string), "ERROR: " + cellInnerText, cellInnerText, null, cell.DataType?.InnerText);
             }
 
-            return new CellValue(cellReference, typeof(string), cellInnerText, cellInnerText, null, dataType);
+            return new CellValue(cellReference, typeof(string), cellInnerText, cellInnerText, null, cell.DataType?.InnerText);
         }
 
         /// <summary>
@@ -460,9 +461,9 @@ namespace CSharp_Utils.Helpers
                     NumberFormat numberFormat = (NumberFormat)cellFormat.NumberFormatId.Value;
                     if (numberFormatId >= 164)
                     {
-                        return DetermineCustomNumberFormatType(cellReference, cellInnerText, numberFormatId, cell.DataType?.Value);
+                        return DetermineCustomNumberFormatType(cellReference, cellInnerText, numberFormatId, cell.DataType?.InnerText);
                     }
-                    return FormatCellValue(cellReference, cellInnerText, numberFormat, numberFormatId, cell.DataType?.Value);
+                    return FormatCellValue(cellReference, cellInnerText, numberFormat, numberFormatId, cell.DataType?.InnerText);
                 }
             }
 
@@ -470,20 +471,20 @@ namespace CSharp_Utils.Helpers
             {
                 if (IsWholeNumber(numericValue))
                 {
-                    return new CellValue(cellReference, typeof(int), (int)numericValue, cellInnerText, numberFormatId, cell.DataType?.Value);
+                    return new CellValue(cellReference, typeof(int), (int)numericValue, cellInnerText, numberFormatId, cell.DataType?.InnerText);
                 }
                 else
                 {
-                    return new CellValue(cellReference, typeof(double), numericValue, cellInnerText, numberFormatId, cell.DataType?.Value);
+                    return new CellValue(cellReference, typeof(double), numericValue, cellInnerText, numberFormatId, cell.DataType?.InnerText);
                 }
             }
 
             if (stringTablePart != null && cell.CellValue != null && int.TryParse(cell.CellValue.Text, out int sharedStringIndex))
             {
-                return new CellValue(cellReference, typeof(string), stringTablePart.SharedStringTable.ElementAt(sharedStringIndex).InnerText, cellInnerText, numberFormatId, cell.DataType?.Value);
+                return new CellValue(cellReference, typeof(string), stringTablePart.SharedStringTable.ElementAt(sharedStringIndex).InnerText, cellInnerText, numberFormatId, cell.DataType?.InnerText);
             }
 
-            return new CellValue(cellReference, typeof(string), cellInnerText, cellInnerText, numberFormatId, cell.DataType?.Value);
+            return new CellValue(cellReference, typeof(string), cellInnerText, cellInnerText, numberFormatId, cell.DataType?.InnerText);
         }
 
         /// <summary>
@@ -494,13 +495,11 @@ namespace CSharp_Utils.Helpers
         private static int GetColumnIndexFromCellReference(string cellReference)
         {
             int columnIndex = 0;
-            foreach (char ch in cellReference)
+            foreach (var ch in cellReference.Where(ch => char.IsLetter(ch)))
             {
-                if (char.IsLetter(ch))
-                {
-                    columnIndex = (columnIndex * 26) + (ch - 'A' + 1);
-                }
+                columnIndex = (columnIndex * 26) + (ch - 'A' + 1);
             }
+
             return columnIndex - 1;
         }
 
@@ -515,7 +514,7 @@ namespace CSharp_Utils.Helpers
             while (columnIndex >= 0)
             {
                 int remainder = columnIndex % 26;
-                columnName = (char)(remainder + 'A') + columnName;
+                columnName = $"{(char)(remainder + 'A')}{columnName}";
                 columnIndex = (columnIndex / 26) - 1;
             }
             return columnName;
@@ -538,7 +537,7 @@ namespace CSharp_Utils.Helpers
     public class CellValue
     {
         public string CellReference { get; set; }
-        public CellValues? DataType { get; set; }
+        public string DataType { get; set; }
         public string InnerText { get; set; }
         public uint? NumberFormat { get; set; }
         public object Value { get; set; }
@@ -553,7 +552,7 @@ namespace CSharp_Utils.Helpers
         /// <param name="innerText">Le texte interne de la cellule.</param>
         /// <param name="numberFormat">Le format numérique de la cellule.</param>
         /// <param name="dataType">Le type de données de la cellule.</param>
-        public CellValue(string cellReference, Type valueType, object value, string innerText = null, uint? numberFormat = null, CellValues? dataType = null)
+        public CellValue(string cellReference, Type valueType, object value, string innerText = null, uint? numberFormat = null, string dataType = null)
         {
             CellReference = cellReference;
             ValueType = valueType;

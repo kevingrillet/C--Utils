@@ -36,12 +36,12 @@ namespace CSharp_Utils.Tests.Helpers
                 new CellValue("B2", typeof(string), "Lorem"),
                 new CellValue("C2", typeof(int), 1),
                 new CellValue("D2", typeof(int), 123456789),
-                new CellValue("E2", typeof(double), 123456789.123456789),
+                new CellValue("E2", typeof(string), "123456789.123456789"), // Double trop long géré comme string par Excel??
                 new CellValue("F2", typeof(double), 123456789.123456),
                 new CellValue("G2", typeof(double), 123456789.123456),
                 new CellValue("H2", typeof(DateTime), DateTime.FromOADate(1)),
-                new CellValue("I2", typeof(DateTime), DateTime.FromOADate(1)),
-                new CellValue("J2", typeof(TimeSpan), TimeSpan.FromDays(12)),
+                new CellValue("I2", typeof(DateTime), DateTime.FromOADate(1)), // Custom format?
+                new CellValue("J2", typeof(TimeSpan), TimeSpan.FromDays(12)), // Custom format?
                 new CellValue("K2", typeof(double), 0.5),
                 new CellValue("L2", typeof(double), 0.5),
                 new CellValue("M2", typeof(double), 123456789.123456),
