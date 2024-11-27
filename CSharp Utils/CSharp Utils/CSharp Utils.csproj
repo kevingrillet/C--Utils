@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Ressources\D4BuildsScrapper.js">
+    <None Update="D4Companion\Ressources\D4BuildsScrapper.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

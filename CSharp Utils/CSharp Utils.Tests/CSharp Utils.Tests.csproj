@@ -26,304 +26,304 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Ressources\colors.json">
+    <None Update="Json\Ressources\colors.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\config.json">
+    <None Update="Json\Ressources\config.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\D4Builds.affixes.json">
+    <None Update="D4Companion\Ressources\D4Builds.affixes.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\D4Companion.Rob's Bone Spear (S3).full.json">
+    <None Update="D4Companion\Ressources\D4Companion.Rob's Bone Spear (S3).full.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\D4Builds.Rob%27s Bone Spear %28S3%29.json">
+    <None Update="D4Companion\Ressources\D4Builds.Rob's Bone Spear (S3).json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\D4Companion\Affixes.enUS.json">
+    <None Update="D4Companion\Ressources\D4Companion\Affixes.enUS.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\D4Companion\Aspects.enUS.json">
+    <None Update="D4Companion\Ressources\D4Companion\Aspects.enUS.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemTypes.json">
+    <None Update="D4Companion\Ressources\d4data\ItemTypes.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\.gitkeep">
+    <None Update="D4Companion\Ressources\d4data\ItemType\.gitkeep">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Amulet.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Amulet.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Axe Bad Data.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Axe Bad Data.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Axe.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Axe.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Axe2H.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Axe2H.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Bauble.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Bauble.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\BodyMarking_UseOnPickup.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\BodyMarking_UseOnPickup.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Boots.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Boots.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\BossSummoning.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\BossSummoning.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\BountyCache.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\BountyCache.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\BountyMetaCache.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\BountyMetaCache.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Bow.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Bow.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\ChestArmor.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\ChestArmor.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\CollectiblePower_GoverningStone.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\CollectiblePower_GoverningStone.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\CollectiblePower_TuningStone.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\CollectiblePower_TuningStone.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Consumable.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Consumable.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\CosmeticBack.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\CosmeticBack.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\CraftedCache.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\CraftedCache.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\CraftingReagent.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\CraftingReagent.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\CraftingRecipe.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\CraftingRecipe.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Crossbow.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Crossbow.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Crossbow2H.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Crossbow2H.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Currency.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Currency.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Dagger.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Dagger.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\DaggerOffHand.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\DaggerOffHand.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\DemonScroll.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\DemonScroll.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\DungeonCache.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\DungeonCache.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\DungeonKey.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\DungeonKey.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\DungeonKeyBlank.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\DungeonKeyBlank.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Ear.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Ear.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Elixir.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Elixir.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Essence.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Essence.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\EventCache.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\EventCache.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\EventReagent.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\EventReagent.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Focus.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Focus.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\FocusBookOffHand.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\FocusBookOffHand.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\GamblingCurrency_Key.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\GamblingCurrency_Key.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\GearItem.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\GearItem.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Gem.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Gem.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Gloves.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Gloves.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Gold.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Gold.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\HealthPotion.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\HealthPotion.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\HealthPotionDosePickUp.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\HealthPotionDosePickUp.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Helm.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Helm.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\HeroBody.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\HeroBody.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\HorseArmor.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\HorseArmor.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Incense.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Incense.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\InInventoryCrafter.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\InInventoryCrafter.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\InstanceQuest.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\InstanceQuest.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\JourneyCache.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\JourneyCache.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Legs.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Legs.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Lorebook.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Lorebook.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\LTE_Hibernal_Cache.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\LTE_Hibernal_Cache.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\LTE_LNY_Cache.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\LTE_LNY_Cache.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Mace.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Mace.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Mace2H.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Mace2H.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Mace2HDruid.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Mace2HDruid.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\MalignantCage.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\MalignantCage.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\MalignantInvoker.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\MalignantInvoker.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\MountItem.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\MountItem.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Natural.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Natural.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\NoElementalBuffsViz.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\NoElementalBuffsViz.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\OffHandTotem.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\OffHandTotem.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\ParagonGlyph.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\ParagonGlyph.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\PassivePowerContainer.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\PassivePowerContainer.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Polearm.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Polearm.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\PowerUp.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\PowerUp.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Quest.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Quest.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\QuestCache.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\QuestCache.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\QuestGlyph.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\QuestGlyph.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Ring.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Ring.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\S2_BloodHarvest_Cache.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\S2_BloodHarvest_Cache.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Scroll.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Scroll.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Scythe.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Scythe.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Scythe2H.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Scythe2H.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Shield.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Shield.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\SJCache.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\SJCache.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Staff.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Staff.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\StaffDruid.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\StaffDruid.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\StaffSorcerer.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\StaffSorcerer.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Sword.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Sword.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Sword2H.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Sword2H.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Tome.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Tome.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Treasure.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Treasure.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Trophy.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Trophy.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\d4data\ItemType\Wand.itt.json">
+    <None Update="D4Companion\Ressources\d4data\ItemType\Wand.itt.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\document1.docx">
+    <None Update="Word\Ressources\document1.docx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\document2.docx">
+    <None Update="Word\Ressources\document2.docx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\document3.docx">
+    <None Update="Word\Ressources\document3.docx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\readonly.json">
+    <None Update="Json\Ressources\readonly.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\TestXlsxOpenXmlReader.xlsx">
+    <None Update="Excel\Ressources\TestXlsxOpenXmlReader.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Ressources\valid.json">
+    <None Update="Json\Ressources\valid.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

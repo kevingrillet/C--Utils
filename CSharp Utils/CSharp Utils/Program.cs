@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace CSharp_AzureDevopsNotifier
+namespace CSharp_Utils;
+
+[ExcludeFromCodeCoverage]
+internal static class Program
 {
-    [ExcludeFromCodeCoverage]
-    internal static class Program
+    [STAThread]
+    private static void Main()
     {
-        [STAThread]
-        private static void Main()
-        {
-            // Method intentionally left empty.
-        }
+        // Method intentionally left empty.
     }
 }
