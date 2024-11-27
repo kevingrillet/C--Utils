@@ -17,7 +17,6 @@ internal class D4CompanionPresetMergerTests
     private D4CompanionPresetMerger _d4CompanionPresetMerger;
 
     [OneTimeSetUp]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1869:Mettre en cache et réutiliser les instances « JsonSerializerOptions »", Justification = "<En attente>")]
     public void OneTimeSetUp()
     {
         var json = File.ReadAllText("D4Companion/Ressources/D4Companion.Rob's Bone Spear (S3).full.json");
