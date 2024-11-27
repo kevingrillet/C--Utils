@@ -1,6 +1,8 @@
-﻿using FuzzySharp;
-using FuzzySharp.SimilarityRatio.Scorer.StrategySensitive;
+﻿using CSharp_Utils.D4Companion.Entities.D4Companion;
+using FuzzySharp;
 using FuzzySharp.SimilarityRatio;
+using FuzzySharp.SimilarityRatio.Scorer;
+using FuzzySharp.SimilarityRatio.Scorer.StrategySensitive;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -9,8 +11,6 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using FuzzySharp.SimilarityRatio.Scorer;
-using CSharp_Utils.D4Companion.Entities.D4Companion;
 
 namespace CSharp_Utils.Tests.D4Companion;
 

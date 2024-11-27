@@ -1,5 +1,5 @@
-﻿using NUnit.Framework;
-using CSharp_Utils.Word;
+﻿using CSharp_Utils.Word;
+using NUnit.Framework;
 
 namespace CSharp_Utils.Tests.Word;
 
