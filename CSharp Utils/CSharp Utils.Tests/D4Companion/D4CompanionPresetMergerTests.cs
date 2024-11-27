@@ -13,6 +13,7 @@ namespace CSharp_Utils.Tests.D4Companion;
 [TestFixture, Parallelizable]
 internal class D4CompanionPresetMergerTests
 {
+    private static readonly JsonSerializerOptions jsonSerializerOptions = new() { AllowTrailingCommas = true, WriteIndented = true, };
     private List<AffixPreset> _affixePresets;
     private D4CompanionPresetMerger _d4CompanionPresetMerger;
 
@@ -20,11 +21,6 @@ internal class D4CompanionPresetMergerTests
     public void OneTimeSetUp()
     {
         var json = File.ReadAllText("D4Companion/Ressources/D4Companion.Rob's Bone Spear (S3).full.json");
-        var jsonSerializerOptions = new JsonSerializerOptions()
-        {
-            AllowTrailingCommas = true,
-            WriteIndented = true,
-        };
         jsonSerializerOptions.Converters.Add(new CustomColorConverter());
         _affixePresets = JsonSerializer.Deserialize<List<AffixPreset>>(json, jsonSerializerOptions) ?? [];
         _affixePresets = [.. _affixePresets.OrderByDescending(a => a.Name)];
