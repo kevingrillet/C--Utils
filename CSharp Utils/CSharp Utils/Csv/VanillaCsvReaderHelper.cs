@@ -1,5 +1,4 @@
 ﻿using CSharp_Utils.Csv.Entities;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,7 +7,7 @@ namespace CSharp_Utils.Csv;
 
 public static class VanillaCsvReaderHelper
 {
-    public static (List<string> Headers, List<CsvCell> Cells) ReadCsv(string filePath, char delimiter = ',')
+    public static (List<string> Headers, List<List<CsvCell>> Cells) ReadCsv(string filePath, char delimiter = ',')
     {
         var lines = File.ReadAllLines(filePath);
 
@@ -16,19 +15,20 @@ public static class VanillaCsvReaderHelper
             .Split(delimiter)
             .ToList();
 
-        var cells = lines
+        var rows = lines
             .Skip(1)
-            .Where(line => !string.IsNullOrWhiteSpace(line) && Array.Exists(line.Split(delimiter), value => !string.IsNullOrWhiteSpace(value)))
-            .SelectMany((line, rowIndex) => line.Split(delimiter)
-            .Select((value, colIndex) => new CsvCell
-            {
-                RowIndex = rowIndex + 1,
-                ColIndex = colIndex,
-                Value = value
-            }))
-            .Where(c => !string.IsNullOrWhiteSpace(c.Value))
+            .Select((line, rowIndex) => line.Split(delimiter)
+                .Select((value, colIndex) => new CsvCell
+                {
+                    RowIndex = rowIndex + 1,
+                    ColIndex = colIndex,
+                    Value = value
+                })
+                .Where(c => !string.IsNullOrWhiteSpace(c.Value))
+                .ToList())
+            .Where(r => r.Count != 0)
             .ToList();
 
-        return (headers, cells);
+        return (headers, rows);
     }
 }

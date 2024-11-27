@@ -26,7 +26,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Csv\Ressources\personnes_import.csv">
+    <None Update="Csv\Ressources\personnes_import_100k.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Csv\Ressources\personnes_import_10k.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Json\Ressources\colors.json">
@@ -329,10 +332,6 @@
     <None Update="Json\Ressources\valid.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Csv\Ressources\" />
   </ItemGroup>
 
 </Project>
