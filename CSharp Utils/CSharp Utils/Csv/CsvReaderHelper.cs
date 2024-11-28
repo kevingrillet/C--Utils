@@ -10,7 +10,7 @@ namespace CSharp_Utils.Csv;
 
 public static class CsvReaderHelper
 {
-    public static (List<string> Headers, List<List<CsvCell>> Cells) ReadCsv(string filePath, char delimiter = ',')
+    public static (List<string> Headers, List<CsvRow> Cells) ReadCsv(string filePath, char delimiter = ',')
     {
         using var reader = new StreamReader(filePath);
         using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)
@@ -30,15 +30,19 @@ public static class CsvReaderHelper
                 Values = ((IDictionary<string, object>)record).Values.ToArray()
             })
             .Select(row =>
-                row.Values.Select((value, colIndex) => new CsvCell
+                new CsvRow
                 {
-                    RowIndex = row.RowIndex,
-                    ColIndex = colIndex,
-                    Value = value?.ToString()
+                    Columns = row.Values.Select((value, colIndex) =>
+                        new CsvCell
+                        {
+                            ColIndex = colIndex + 1,
+                            Value = value?.ToString()
+                        })
+                        .Where(c => !string.IsNullOrWhiteSpace(c.Value))
+                        .ToList(),
+                    RowIndex = row.RowIndex + 1
                 })
-                .Where(c => !string.IsNullOrWhiteSpace(c.Value))
-                .ToList())
-            .Where(r => r.Count != 0)
+            .Where(r => !r.IsEmpty)
             .ToList();
 
         return (headers, rows);
