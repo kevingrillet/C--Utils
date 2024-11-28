@@ -14,4 +14,9 @@ public class CsvRow
     {
         Columns = [];
     }
+
+    public override string ToString()
+    {
+        return $"RowIndex: {RowIndex}, Columns: [{SerializedColumns}]";
+    }
 }

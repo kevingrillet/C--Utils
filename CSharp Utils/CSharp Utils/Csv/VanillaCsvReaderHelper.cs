@@ -20,12 +20,13 @@ public static class VanillaCsvReaderHelper
             .Select((line, rowIndex) =>
                 new CsvRow
                 {
-                    Columns = line.Split(delimiter).Select((value, colIndex) =>
-                        new CsvCell
-                        {
-                            ColIndex = colIndex + 1,
-                            Value = value
-                        })
+                    Columns = line.Split(delimiter)
+                        .Select((value, colIndex) =>
+                            new CsvCell
+                            {
+                                ColIndex = colIndex,
+                                Value = value
+                            })
                         .Where(c => !string.IsNullOrWhiteSpace(c.Value))
                         .ToList(),
                     RowIndex = rowIndex + 1

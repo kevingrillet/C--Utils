@@ -23,7 +23,7 @@ public static class CsvReaderHelper
         csv.ReadHeader();
         var headers = csv.HeaderRecord.ToList();
 
-        var rows = csv.GetRecords<dynamic>() // Lire les lignes en tant qu'objets dynamiques
+        var rows = csv.GetRecords<dynamic>()
             .Select((record, rowIndex) => new
             {
                 RowIndex = rowIndex + 1,
@@ -32,12 +32,13 @@ public static class CsvReaderHelper
             .Select(row =>
                 new CsvRow
                 {
-                    Columns = row.Values.Select((value, colIndex) =>
-                        new CsvCell
-                        {
-                            ColIndex = colIndex + 1,
-                            Value = value?.ToString()
-                        })
+                    Columns = row.Values
+                        .Select((value, colIndex) =>
+                            new CsvCell
+                            {
+                                ColIndex = colIndex,
+                                Value = value?.ToString()
+                            })
                         .Where(c => !string.IsNullOrWhiteSpace(c.Value))
                         .ToList(),
                     RowIndex = row.RowIndex + 1
