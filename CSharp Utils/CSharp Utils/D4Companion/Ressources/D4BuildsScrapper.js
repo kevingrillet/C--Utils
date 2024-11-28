@@ -1,11 +1,11 @@
 ﻿function getAllAffixes(category) {
-    var res = [];
+    let res = [];
     document.querySelectorAll(`:scope .${category} .filled`).forEach((e) => res.push(e.innerText));
     return res;
 }
 
 function getAllAspects() {
-    var res = [];
+    let res = [];
     document.querySelectorAll(`.builder__gear__name`).forEach((e) => res.push(e.innerText));
     res = res.filter(function (e) {
         return e.includes('Aspect');
@@ -14,7 +14,7 @@ function getAllAspects() {
 }
 
 function getClass() {
-    var cls = document.querySelector('.builder__header__description').lastChild.textContent;
+    let cls = document.querySelector('.builder__header__description').lastChild.textContent;
     switch (cls) {
         case 'Sorcerer':
             return 0;
@@ -37,12 +37,12 @@ function getClass() {
 }
 
 function getName() {
-    var buildName = document.querySelector('#renameBuild').value;
-    var variantName = document.querySelector('.variant__button.active').firstElementChild.firstElementChild.value;
+    let buildName = document.querySelector('#renameBuild').value;
+    let variantName = document.querySelector('.variant__button.active').firstElementChild.firstElementChild.value;
     return `${buildName} - ${variantName}`;
 }
 
-var result = {};
+let result = {};
 
 // Name
 result.Name = getName();
