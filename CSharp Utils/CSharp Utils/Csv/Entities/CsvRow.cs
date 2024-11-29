@@ -6,7 +6,7 @@ namespace CSharp_Utils.Csv.Entities;
 public class CsvRow
 {
     public List<CsvCell> Columns { get; set; }
-    public bool IsEmpty => !Columns.Exists(c => !string.IsNullOrWhiteSpace(c.Value));
+    public bool IsEmpty => !Columns.Exists(c => !c.IsEmpty);
     public int RowIndex { get; set; }
     public string SerializedColumns => JsonSerializer.Serialize(Columns);
 
