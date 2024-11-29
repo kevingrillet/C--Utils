@@ -1,4 +1,5 @@
 ﻿using CSharp_Utils.Excel;
+using CSharp_Utils.Excel.Entities;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ namespace CSharp_Utils.Tests.Excel;
 [TestFixture, Parallelizable]
 internal class XlsxOpenXmlReaderTests
 {
-    private List<CellValue> expectedCells;
+    private List<ExcelCellDebug> expectedCells;
 
     [OneTimeSetUp]
     public void AA_OneTimeSetUp()
@@ -16,36 +17,36 @@ internal class XlsxOpenXmlReaderTests
         expectedCells =
         [
             // Row 1 (Headers)
-            new CellValue("A1", typeof(string), "Empty"),
-            new CellValue("B1", typeof(string), "General Text"),
-            new CellValue("C1", typeof(string), "General Number"),
-            new CellValue("D1", typeof(string), "Number"),
-            new CellValue("E1", typeof(string), "Long Number"),
-            new CellValue("F1", typeof(string), "Currency"),
-            new CellValue("G1", typeof(string), "Accounting"),
-            new CellValue("H1", typeof(string), "DateShort"),
-            new CellValue("I1", typeof(string), "DateTime"),
-            new CellValue("J1", typeof(string), "Time"),
-            new CellValue("K1", typeof(string), "Percentage"),
-            new CellValue("L1", typeof(string), "Fraction"),
-            new CellValue("M1", typeof(string), "Scientific"),
-            new CellValue("N1", typeof(string), "Text"),
+            new ExcelCellDebug("A1", typeof(string), "Empty"),
+            new ExcelCellDebug("B1", typeof(string), "General Text"),
+            new ExcelCellDebug("C1", typeof(string), "General Number"),
+            new ExcelCellDebug("D1", typeof(string), "Number"),
+            new ExcelCellDebug("E1", typeof(string), "Long Number"),
+            new ExcelCellDebug("F1", typeof(string), "Currency"),
+            new ExcelCellDebug("G1", typeof(string), "Accounting"),
+            new ExcelCellDebug("H1", typeof(string), "DateShort"),
+            new ExcelCellDebug("I1", typeof(string), "DateTime"),
+            new ExcelCellDebug("J1", typeof(string), "Time"),
+            new ExcelCellDebug("K1", typeof(string), "Percentage"),
+            new ExcelCellDebug("L1", typeof(string), "Fraction"),
+            new ExcelCellDebug("M1", typeof(string), "Scientific"),
+            new ExcelCellDebug("N1", typeof(string), "Text"),
 
             // Row 2
-            new CellValue("A2", typeof(string), string.Empty),
-            new CellValue("B2", typeof(string), "Lorem"),
-            new CellValue("C2", typeof(int), 1),
-            new CellValue("D2", typeof(int), 123456789),
-            new CellValue("E2", typeof(string), "123456789.123456789"), // Double trop long géré comme string par Excel??
-            new CellValue("F2", typeof(double), 123456789.123456),
-            new CellValue("G2", typeof(double), 123456789.123456),
-            new CellValue("H2", typeof(DateTime), DateTime.FromOADate(1)),
-            new CellValue("I2", typeof(DateTime), DateTime.FromOADate(1)), // Custom format?
-            new CellValue("J2", typeof(TimeSpan), TimeSpan.FromDays(12)), // Custom format?
-            new CellValue("K2", typeof(double), 0.5),
-            new CellValue("L2", typeof(double), 0.5),
-            new CellValue("M2", typeof(double), 123456789.123456),
-            new CellValue("N2", typeof(string), "Lorem"),
+            new ExcelCellDebug("A2", typeof(string), string.Empty),
+            new ExcelCellDebug("B2", typeof(string), "Lorem"),
+            new ExcelCellDebug("C2", typeof(int), 1),
+            new ExcelCellDebug("D2", typeof(int), 123456789),
+            new ExcelCellDebug("E2", typeof(string), "123456789.123456789"), // Double trop long géré comme string par Excel??
+            new ExcelCellDebug("F2", typeof(double), 123456789.123456),
+            new ExcelCellDebug("G2", typeof(double), 123456789.123456),
+            new ExcelCellDebug("H2", typeof(DateTime), DateTime.FromOADate(1)),
+            new ExcelCellDebug("I2", typeof(DateTime), DateTime.FromOADate(1)), // Custom format?
+            new ExcelCellDebug("J2", typeof(TimeSpan), TimeSpan.FromDays(12)), // Custom format?
+            new ExcelCellDebug("K2", typeof(double), 0.5),
+            new ExcelCellDebug("L2", typeof(double), 0.5),
+            new ExcelCellDebug("M2", typeof(double), 123456789.123456),
+            new ExcelCellDebug("N2", typeof(string), "Lorem"),
         ];
     }
 
@@ -61,7 +62,7 @@ internal class XlsxOpenXmlReaderTests
             {
                 Assert.That(cells[i].CellReference, Is.EqualTo(expectedCells[i].CellReference), $@"CellReference of {i} -> {cells[i]}");
                 Assert.That(cells[i].Value, Is.EqualTo(expectedCells[i].Value), $@"Value of {i} -> {cells[i]}");
-                Assert.That(cells[i].ValueType, Is.EqualTo(expectedCells[i].ValueType), $@"ValueType of {i} -> {cells[i]}");
+                Assert.That(cells[i].Type, Is.EqualTo(expectedCells[i].Type), $@"Type of {i} -> {cells[i]}");
             }
         });
     }
