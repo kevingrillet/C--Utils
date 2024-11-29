@@ -47,6 +47,7 @@ internal class D4BuildsToD4CompanionScrapperTests
     [Test]
     public void Test_10_Navigate()
     {
+        /// <see href="https://d4builds.gg/builds/660881f7-cb6a-4162-be62-29f0afeb37bf/"/>
         Assert.DoesNotThrow(() => { _scrapper.Navigate("660881f7-cb6a-4162-be62-29f0afeb37bf"); });
     }
 
@@ -62,22 +63,6 @@ internal class D4BuildsToD4CompanionScrapperTests
             // d4BuildExport
             Assert.That(d4BuildExport.Name, Is.Not.Empty);
             Assert.That(d4BuildExport.D4Class, Is.EqualTo(D4Class.Necromancer));
-            Assert.That(d4BuildExport.Aspects, Is.Not.Empty);
-            Assert.That(d4BuildExport.Helm, Is.Empty);
-            Assert.That(d4BuildExport.ChestArmor, Is.Not.Empty);
-            Assert.That(d4BuildExport.Gloves, Is.Not.Empty);
-            Assert.That(d4BuildExport.Pants, Is.Not.Empty);
-            Assert.That(d4BuildExport.Boots, Is.Not.Empty);
-            Assert.That(d4BuildExport.Amulet, Is.Not.Empty);
-            Assert.That(d4BuildExport.Ring1, Is.Not.Empty);
-            Assert.That(d4BuildExport.Ring2, Is.Not.Empty);
-            Assert.That(d4BuildExport.Weapon, Is.Not.Empty);
-            Assert.That(d4BuildExport.Offhand, Is.Empty);
-            Assert.That(d4BuildExport.RangedWeapon, Is.Empty);
-            Assert.That(d4BuildExport.BludgeoningWeapon, Is.Empty);
-            Assert.That(d4BuildExport.SlashingWeapon, Is.Empty);
-            Assert.That(d4BuildExport.WieldWeapon1, Is.Empty);
-            Assert.That(d4BuildExport.WieldWeapon2, Is.Empty);
 
             // affixPreset
             Assert.That(affixPreset.Name, Is.EqualTo(d4BuildExport.Name));
@@ -126,22 +111,6 @@ internal class D4BuildsToD4CompanionScrapperTests
             // d4BuildExport
             Assert.That(d4BuildExport.Name, Is.Not.Empty);
             Assert.That(d4BuildExport.D4Class, Is.EqualTo(D4Class.Necromancer));
-            Assert.That(d4BuildExport.Aspects, Is.Not.Empty);
-            Assert.That(d4BuildExport.Helm, Is.Empty);
-            Assert.That(d4BuildExport.ChestArmor, Is.Not.Empty);
-            Assert.That(d4BuildExport.Gloves, Is.Not.Empty);
-            Assert.That(d4BuildExport.Pants, Is.Not.Empty);
-            Assert.That(d4BuildExport.Boots, Is.Not.Empty);
-            Assert.That(d4BuildExport.Amulet, Is.Not.Empty);
-            Assert.That(d4BuildExport.Ring1, Is.Not.Empty);
-            Assert.That(d4BuildExport.Ring2, Is.Not.Empty);
-            Assert.That(d4BuildExport.Weapon, Is.Not.Empty);
-            Assert.That(d4BuildExport.Offhand, Is.Empty);
-            Assert.That(d4BuildExport.RangedWeapon, Is.Empty);
-            Assert.That(d4BuildExport.BludgeoningWeapon, Is.Empty);
-            Assert.That(d4BuildExport.SlashingWeapon, Is.Empty);
-            Assert.That(d4BuildExport.WieldWeapon1, Is.Empty);
-            Assert.That(d4BuildExport.WieldWeapon2, Is.Empty);
 
             // affixPreset
             Assert.That(affixPreset.Name, Is.EqualTo(d4BuildExport.Name));

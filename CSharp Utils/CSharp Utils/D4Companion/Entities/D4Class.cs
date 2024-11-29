@@ -6,5 +6,6 @@ public enum D4Class
     Druid = 1,
     Barbarian = 2,
     Rogue = 3,
-    Necromancer = 4
+    Necromancer = 4,
+    Spiritborn = 5
 }

@@ -16,11 +16,11 @@ namespace CSharp_Utils.D4Companion;
 /// </summary>
 public class D4BuildsToD4CompanionScrapper
 {
-    private static readonly int SleepNavigate = 250;
-    private static readonly int SleepVariant = 100;
+    protected static readonly bool Headless = true;
+    private static readonly int SleepNavigate = 5000;
+    private static readonly int SleepVariant = 1000;
     private WebDriver _driver;
     private WebDriverWait _driverWait;
-    protected virtual bool Headless { get; set; } = true;
     private string JsExportScript { get; } = File.ReadAllText("D4Companion/Ressources/D4BuildsScrapper.js");
 
     public D4BuildsExport Export()
@@ -32,10 +32,13 @@ public class D4BuildsToD4CompanionScrapper
 
     public IEnumerable<D4BuildsExport> ExportAll()
     {
-        var cnt = _driver.FindElements(By.ClassName("variant__button")).Count;
+        _ = _driver.ExecuteScript($"document.getElementsByClassName('item__arrow__icon--variant')[0].click()");
+        var cnt = _driver.FindElements(By.ClassName("dropdown__option")).Count;
+        _ = _driver.ExecuteScript($"document.getElementsByClassName('item__arrow__icon--variant')[0].click()");
         for (int i = 0; i < cnt; i++)
         {
-            _ = _driver.ExecuteScript($"document.querySelectorAll('.variant__button')[{i}].click()");
+            _ = _driver.ExecuteScript($"document.getElementsByClassName('item__arrow__icon--variant')[0].click()");
+            _ = _driver.ExecuteScript($"document.querySelectorAll('.dropdown__option')[{i}].click()");
             Thread.Sleep(SleepVariant);
             yield return Export();
         }
@@ -87,10 +90,13 @@ public class D4BuildsToD4CompanionScrapper
 
     public IEnumerable<D4BuildsExport> ExportVanillaAll()
     {
-        var cnt = _driver.FindElements(By.ClassName("variant__button")).Count;
+        _ = _driver.ExecuteScript($"document.getElementsByClassName('item__arrow__icon--variant')[0].click()");
+        var cnt = _driver.FindElements(By.ClassName("dropdown__option")).Count;
+        _ = _driver.ExecuteScript($"document.getElementsByClassName('item__arrow__icon--variant')[0].click()");
         for (int i = 0; i < cnt; i++)
         {
-            _ = _driver.ExecuteScript($"document.querySelectorAll('.variant__button')[{i}].click()");
+            _ = _driver.ExecuteScript($"document.getElementsByClassName('item__arrow__icon--variant')[0].click()");
+            _ = _driver.ExecuteScript($"document.querySelectorAll('.dropdown__option')[{i}].click()");
             Thread.Sleep(SleepVariant);
             yield return ExportVanilla();
         }
@@ -167,8 +173,8 @@ public class D4BuildsToD4CompanionScrapper
     {
         try
         {
-            var buildName = _driver.FindElement(By.Id("renameBuild")).GetAttribute("value");
-            var variantName = _driver.FindElement(By.CssSelector(".variant__button.active>:first-child>:first-child")).GetAttribute("value");
+            var buildName = _driver.FindElement(By.Id("renameBuild"))?.GetAttribute("value") ?? "Unnamed Build";
+            var variantName = _driver.FindElement(By.ClassName("builder__variant__input"))?.GetAttribute("value") ?? "Default Variant";
             return $"{buildName} - {variantName}";
         }
         catch (NoSuchElementException)
@@ -181,7 +187,7 @@ public class D4BuildsToD4CompanionScrapper
     {
         try
         {
-            var cls = _driver.FindElement(By.ClassName("builder__header__description")).GetAttribute("innerText").Split(" ")[^1];
+            var cls = _driver.FindElement(By.ClassName("builder__header__description")).GetAttribute("innerText").Split(" ")[0];
             return (D4Class)Enum.Parse(typeof(D4Class), cls);
         }
         catch (NoSuchElementException)

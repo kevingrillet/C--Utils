@@ -19,16 +19,10 @@ public class D4BuildsExport
     public IEnumerable<string> RangedWeapon { get; set; }
     public IEnumerable<string> Ring1 { get; set; }
     public IEnumerable<string> Ring2 { get; set; }
-
-    public IEnumerable<string> Rings
-    { get { return Ring1.Concat(Ring2).Distinct(); } }
-
+    public IEnumerable<string> Rings => Ring1.Concat(Ring2).Distinct();
     public IEnumerable<string> SlashingWeapon { get; set; }
     public IEnumerable<string> Weapon { get; set; }
-
-    public IEnumerable<string> Weapons
-    { get { return BludgeoningWeapon.Concat(SlashingWeapon).Concat(Weapon).Concat(WieldWeapon1).Concat(WieldWeapon2).Distinct(); } }
-
+    public IEnumerable<string> Weapons => BludgeoningWeapon.Concat(SlashingWeapon).Concat(Weapon).Concat(WieldWeapon1).Concat(WieldWeapon2).Distinct();
     public IEnumerable<string> WieldWeapon1 { get; set; }
     public IEnumerable<string> WieldWeapon2 { get; set; }
 
