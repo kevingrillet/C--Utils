@@ -24,4 +24,9 @@ public sealed class CsvCell : IEquatable<CsvCell>
     {
         return HashCode.Combine(ColIndex, Value);
     }
+
+    public override string ToString()
+    {
+        return $"ColIndex: {ColIndex}, Value: '{Value}'";
+    }
 }

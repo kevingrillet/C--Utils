@@ -1,4 +1,5 @@
 ﻿using CSharp_Utils.Csv;
+using CSharp_Utils.Csv.Entities;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -53,8 +54,8 @@ internal class VanillaCsvReaderHelperTest
             Assert.That(rows[0].Columns, Has.Count.EqualTo(3));
             Assert.That(rows[1].Columns, Has.Count.EqualTo(2));
 
-            Assert.That(rows[0].Columns[0].Value, Is.EqualTo("Value1"), rows[0].Columns[0].ToString());
-            Assert.That(rows[1].Columns[1].Value, Is.EqualTo("Value6"), rows[1].Columns[1].ToString());
+            Assert.That(rows[0].Columns[0], Is.EqualTo(new CsvCell { ColIndex = 0, Value = "Value1" }), rows[0].Columns[0].ToString());
+            Assert.That(rows[1].Columns[1], Is.EqualTo(new CsvCell { ColIndex = 2, Value = "Value6" }), rows[1].Columns[1].ToString());
         });
     }
 
