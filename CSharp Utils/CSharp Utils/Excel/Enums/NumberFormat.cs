@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CSharp_Utils.Excel.Enums;
+﻿namespace CSharp_Utils.Excel.Enums;
 
 /// <summary>
 /// Enumération représentant les formats numériques des cellules.

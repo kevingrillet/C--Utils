@@ -29,8 +29,8 @@ internal class VanillaCsvReaderHelperTests
         Console.WriteLine($"Execution time without CsvHelper: {stopwatch.Elapsed.TotalSeconds} seconds");
         Assert.Multiple(() =>
         {
-            Assert.That(headers, Has.Count.EqualTo(nbHeaders), $"Headers Read: {headers.Count}");
-            Assert.That(rows, Has.Count.EqualTo(nbRows), $"Rows Read: {rows.Count}");
+            Assert.That(headers, Has.Count.EqualTo(nbHeaders), $"Headers read: {headers.Count}");
+            Assert.That(rows, Has.Count.EqualTo(nbRows), $"Rows read: {rows.Count}");
         });
     }
 

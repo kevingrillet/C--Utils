@@ -34,6 +34,6 @@ public class ExcelCellDebug : ExcelCell
     /// <returns>Une chaîne représentant l'objet ExcelCellDebug.</returns>
     public override string ToString()
     {
-        return $"{CellReference}: {Value?.ToString() ?? string.Empty} ({Type.Name}), InnerText: {InnerText}, NumberFormat: {NumberFormat}, DataType: {DataType}";
+        return $"{CellReference} ({ColIndex}): {Value?.ToString() ?? string.Empty} ({Type.Name}), InnerText: {InnerText}, NumberFormat: {NumberFormat}, DataType: {DataType}";
     }
 }

@@ -1,6 +1,6 @@
 ﻿using CSharp_Utils.Excel.Entities;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 
 namespace CSharp_Utils.Excel.EqualityComparers;
 

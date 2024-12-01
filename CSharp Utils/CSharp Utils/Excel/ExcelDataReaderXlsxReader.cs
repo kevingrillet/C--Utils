@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using CSharp_Utils.Excel.Entities;
+using CSharp_Utils.Excel.Utils;
+using ExcelDataReader;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using ExcelDataReader;
-using CSharp_Utils.Excel.Entities;
-using CSharp_Utils.Excel.Utils;
 
 namespace CSharp_Utils.Excel;
 
@@ -35,12 +35,12 @@ public static class ExcelDataReaderXlsxReader
             .Skip(1)
             .Select((row, rowIndex) => new ExcelRow
             {
-                RowIndex = rowIndex + 1,
+                RowIndex = rowIndex + 2,
                 Columns = row.ItemArray.Select((cellValue, colIndex) =>
                 {
                     if (includeDebugInfo == true)
                     {
-                        var cellReference = ExcelUtils.GetCellReferenceFromIndexes((uint)rowIndex, colIndex);
+                        var cellReference = ExcelUtils.GetCellReferenceFromIndexes(rowIndex + 2, colIndex);
                         return new ExcelCellDebug(
                             cellReference,
                             cellValue?.GetType(),
@@ -48,7 +48,8 @@ public static class ExcelDataReaderXlsxReader
                             innerText: cellValue?.ToString(),
                             numberFormat: null,
                             dataType: cellValue?.GetType().Name
-                        );
+                        )
+                        { ColIndex = colIndex };
                     }
 
                     return new ExcelCell

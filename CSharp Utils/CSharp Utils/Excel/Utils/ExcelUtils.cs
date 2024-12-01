@@ -18,6 +18,18 @@ public static class ExcelUtils
     }
 
     /// <summary>
+    /// Récupère la référence de la cellule à partir des index de la ligne et de la colonne.
+    /// </summary>
+    /// <param name="rowIndex">L'index de la ligne.</param>
+    /// <param name="columnIndex">L'index de la colonne.</param>
+    /// <returns>La référence de la cellule.</returns>
+    public static string GetCellReferenceFromIndexes(int rowIndex, int columnIndex)
+    {
+        string columnName = GetColumnNameFromIndex(columnIndex);
+        return columnName + rowIndex.ToString();
+    }
+
+    /// <summary>
     /// Récupère l'index de la colonne à partir de la référence de la cellule.
     /// </summary>
     /// <param name="cellReference">La référence de la cellule.</param>

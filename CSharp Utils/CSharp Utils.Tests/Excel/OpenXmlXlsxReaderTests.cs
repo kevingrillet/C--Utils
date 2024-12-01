@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace CSharp_Utils.Tests.Excel;
 
-[TestFixture, Parallelizable]
+[TestFixture, NonParallelizable]
 internal class OpenXmlXlsxReaderTests
 {
     private List<ExcelCellDebug> expectedCells;
@@ -50,7 +50,22 @@ internal class OpenXmlXlsxReaderTests
         ];
     }
 
-    [TestCase("Excel/Ressources/TestXlsxOpenXmlReader.xlsx")]
+    [TestCase("Excel/Ressources/personnes_import_10k.xlsx", 12, 10000)]
+    [TestCase("Excel/Ressources/personnes_import_100k.xlsx", 12, 100000)]
+    public void MeasureExecutionTime(string filePath, int nbHeaders, int nbRows)
+    {
+        var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+        var cells = OpenXmlXlsxReader.ReadCells(filePath);
+        stopwatch.Stop();
+
+        Console.WriteLine($"Execution time with CsvHelper: {stopwatch.Elapsed.TotalSeconds} seconds");
+        Assert.Multiple(() =>
+        {
+            Assert.That(cells, Has.Count.EqualTo(nbHeaders * (nbRows + 1)), $"Cells read: {cells.Count}");
+        });
+    }
+
+    [TestCase("Excel/Ressources/XlsxReader.xlsx")]
     public void Test(string path)
     {
         var cells = OpenXmlXlsxReader.ReadCells(path);
