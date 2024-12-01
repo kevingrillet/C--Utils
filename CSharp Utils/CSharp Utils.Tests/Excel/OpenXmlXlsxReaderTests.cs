@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace CSharp_Utils.Tests.Excel;
 
 [TestFixture, Parallelizable]
-internal class XlsxOpenXmlReaderTests
+internal class OpenXmlXlsxReaderTests
 {
     private List<ExcelCellDebug> expectedCells;
 
@@ -53,7 +53,7 @@ internal class XlsxOpenXmlReaderTests
     [TestCase("Excel/Ressources/TestXlsxOpenXmlReader.xlsx")]
     public void Test(string path)
     {
-        var cells = XlsxOpenXmlReader.ReadCells(path);
+        var cells = OpenXmlXlsxReader.ReadCells(path);
 
         Assert.Multiple(() =>
         {

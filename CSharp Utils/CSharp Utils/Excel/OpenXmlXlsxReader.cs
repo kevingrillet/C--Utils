@@ -13,7 +13,7 @@ namespace CSharp_Utils.Excel;
 /// <summary>
 /// Cette classe fournit des méthodes pour lire les cellules à partir de fichiers Excel (xlsx) en utilisant OpenXML.
 /// </summary>
-public static class XlsxOpenXmlReader
+public static class OpenXmlXlsxReader
 {
     /// <summary>
     /// Lit les cellules d'un fichier Excel (xlsx) et renvoie une liste de ExcelCellDebug.
@@ -37,7 +37,7 @@ public static class XlsxOpenXmlReader
             else
             {
                 sheet = workbookPart.Workbook.Descendants<Sheet>()
-                                .FirstOrDefault(s => s.Name == sheetName);
+                    .FirstOrDefault(s => s.Name == sheetName);
             }
 
             if (sheet == null)

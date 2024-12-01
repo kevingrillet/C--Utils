@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace CSharp_Utils.Excel.Entities;
 
-internal class ExcelRow
+public class ExcelRow
 {
     public List<ExcelCell> Columns { get; set; }
     public bool IsEmpty => !Columns.Exists(c => c.IsEmpty);
