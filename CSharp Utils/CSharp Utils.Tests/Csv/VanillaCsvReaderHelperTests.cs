@@ -8,7 +8,7 @@ using System.IO;
 namespace CSharp_Utils.Tests.Csv;
 
 [TestFixture, NonParallelizable]
-internal class CsvReaderHelperTest
+internal class VanillaCsvReaderHelperTests
 {
     private const string SampleCsv =
         "Col1;Col2;Col3\n" +
@@ -22,11 +22,11 @@ internal class CsvReaderHelperTest
     {
         // Act
         var stopwatch = System.Diagnostics.Stopwatch.StartNew();
-        var (headers, rows) = CsvReaderHelper.ReadCsv(filePath, ';');
+        var (headers, rows) = VanillaCsvReaderHelper.ReadCsv(filePath, ';');
         stopwatch.Stop();
 
         // Print results
-        Console.WriteLine($"Execution time with CsvHelper: {stopwatch.Elapsed.TotalSeconds} seconds");
+        Console.WriteLine($"Execution time without CsvHelper: {stopwatch.Elapsed.TotalSeconds} seconds");
         Assert.Multiple(() =>
         {
             Assert.That(headers, Has.Count.EqualTo(nbHeaders), $"Headers Read: {headers.Count}");
@@ -41,7 +41,7 @@ internal class CsvReaderHelperTest
         string filePath = WriteTempCsv(SampleCsv);
 
         // Act
-        var (headers, rows) = CsvReaderHelper.ReadCsv(filePath, ';');
+        var (headers, rows) = VanillaCsvReaderHelper.ReadCsv(filePath, ';');
 
         Assert.Multiple(() =>
         {
