@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CSharp_Utils.Excel.Utils;
+using System;
 
 namespace CSharp_Utils.Excel.Entities;
 
@@ -18,7 +19,7 @@ public class ExcelCellDebug : ExcelCell
     /// <param name="innerText">Le texte interne de la cellule.</param>
     /// <param name="numberFormat">Le format numérique de la cellule.</param>
     /// <param name="dataType">Le type de données de la cellule.</param>
-    public ExcelCellDebug(string cellReference, Type valueType, object value, string innerText = null, uint? numberFormat = null, string dataType = null)
+    public ExcelCellDebug(string cellReference, Type valueType, object value, string innerText, uint? numberFormat, string dataType, int? colIndex = null)
     {
         CellReference = cellReference;
         Type = valueType;
@@ -26,7 +27,17 @@ public class ExcelCellDebug : ExcelCell
         InnerText = innerText;
         NumberFormat = numberFormat;
         DataType = dataType;
+        ColIndex = colIndex ?? ExcelUtils.GetColumnIndexFromCellReference(cellReference);
     }
+
+    public ExcelCellDebug(string cellReference, Type valueType, object value, uint? numberFormat)
+        : this(cellReference, valueType, value, value?.ToString() ?? string.Empty, numberFormat, valueType?.Name, ExcelUtils.GetColumnIndexFromCellReference(cellReference)) { }
+
+    public ExcelCellDebug(string cellReference, Type valueType, object value, int? numberFormat)
+        : this(cellReference, valueType, value, (uint?)numberFormat) { }
+
+    public ExcelCellDebug(string cellReference, Type valueType, object value)
+        : this(cellReference, valueType, value, null) { }
 
     /// <summary>
     /// Retourne une chaîne représentant l'objet ExcelCellDebug.
@@ -34,6 +45,6 @@ public class ExcelCellDebug : ExcelCell
     /// <returns>Une chaîne représentant l'objet ExcelCellDebug.</returns>
     public override string ToString()
     {
-        return $"{CellReference} ({ColIndex}): {Value?.ToString() ?? string.Empty} ({Type.Name}), InnerText: {InnerText}, NumberFormat: {NumberFormat}, DataType: {DataType}";
+        return $"{CellReference} ({ColIndex}): {Value?.ToString() ?? string.Empty} ({Type?.Name ?? string.Empty}), InnerText: {InnerText}, NumberFormat: {NumberFormat}, DataType: {DataType}";
     }
 }

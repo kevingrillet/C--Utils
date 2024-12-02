@@ -5,7 +5,7 @@ namespace CSharp_Utils.Excel.Entities;
 public class ExcelCell
 {
     public int ColIndex { get; set; }
-    public bool IsEmpty => !(Value is null || (Type == typeof(string) && string.IsNullOrWhiteSpace((string)Value)));
+    public bool IsEmpty => !(Value is null || (Type == typeof(string) && !string.IsNullOrWhiteSpace((string)Value)));
     public Type Type { get; set; }
     public object Value { get; set; }
 

@@ -15,12 +15,13 @@ public static class ClosedXmlXlsxReader
     /// </summary>
     /// <param name="filePath">Chemin du fichier Excel.</param>
     /// <param name="includeDebugInfo">Indique si des informations de débogage doivent être incluses.</param>
+    /// <param name="includeNumberFormat">Indique si le NumberFormat doit être inclus (debug).</param>
     /// <returns>
     /// Un tuple contenant :
     /// - Une liste des en-têtes (List<string>).
     /// - Une liste des lignes (List<ExcelRow> ou List<ExcelRowDebug> selon le mode).
     /// </returns>
-    public static (List<string> Headers, List<ExcelRow> Rows) ReadExcelFile(string filePath, bool? includeDebugInfo = false)
+    public static (List<string> Headers, List<ExcelRow> Rows) ReadExcelFile(string filePath, bool includeDebugInfo = false, bool includeNumberFormat = false)
     {
         if (!File.Exists(filePath))
             throw new FileNotFoundException("Le fichier spécifié est introuvable.", filePath);
@@ -38,30 +39,45 @@ public static class ClosedXmlXlsxReader
                 RowIndex = dataRow.RowNumber(),
                 Columns = dataRow.Cells().Select(cell =>
                 {
-                    if (includeDebugInfo == true)
+                    if (includeDebugInfo)
                     {
                         return new ExcelCellDebug(
                             cellReference: cell.Address.ToString(),
                             valueType: cell.DataType.ToSystemType(),
-                            value: cell.Value,
+                            value: cell.ToObject(),
                             innerText: cell.GetString(),
-                            numberFormat: null, // (uint?)cell.Style.NumberFormat.NumberFormatId,
-                            dataType: cell.DataType.ToString()
-                        )
-                        { ColIndex = cell.Address.ColumnNumber };
+                            numberFormat: includeNumberFormat ? (uint?)cell.Style.NumberFormat.NumberFormatId : null,
+                            dataType: cell.DataType.ToSystemType().Name,
+                            cell.Address.ColumnNumber - 1
+                        );
                     }
                     return new ExcelCell
                     {
-                        ColIndex = cell.Address.ColumnNumber,
+                        ColIndex = cell.Address.ColumnNumber - 1,
                         Type = cell.DataType.ToSystemType(),
-                        Value = cell.Value
+                        Value = cell.ToObject()
                     };
                 }).ToList()
             })
-            //.Where(row => !row.IsEmpty)
+            .Where(row => !row.IsEmpty)
             .ToList();
 
         return (headers, rows);
+    }
+
+    private static object ToObject(this IXLCell cell)
+    {
+        return cell.DataType switch
+        {
+            XLDataType.Blank => null,
+            XLDataType.Boolean => cell.Value.GetBoolean(),
+            XLDataType.Number => cell.Value.GetNumber(),
+            XLDataType.Text => cell.Value.GetText(),
+            XLDataType.Error => cell.Value.GetError(),
+            XLDataType.DateTime => cell.Value.GetDateTime(),
+            XLDataType.TimeSpan => cell.Value.GetTimeSpan(),
+            _ => throw new InvalidCastException()
+        };
     }
 
     /// <summary>
@@ -71,10 +87,11 @@ public static class ClosedXmlXlsxReader
     {
         return dataType switch
         {
-            XLDataType.Text => typeof(string),
-            XLDataType.Number => typeof(double),
             XLDataType.Boolean => typeof(bool),
             XLDataType.DateTime => typeof(DateTime),
+            XLDataType.Number => typeof(double),
+            XLDataType.Text => typeof(string),
+            XLDataType.TimeSpan => typeof(TimeSpan),
             _ => typeof(object),
         };
     }

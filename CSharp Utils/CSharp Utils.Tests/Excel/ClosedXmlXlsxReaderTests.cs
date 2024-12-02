@@ -36,32 +36,30 @@ internal class ClosedXmlXlsxReaderTests
 
         expectedDebugRows = [
             new ExcelRow {
+                RowIndex = 1,
                 Columns =[
-                    new ExcelCellDebug("A2", null, string.Empty, "", null, null) {ColIndex = 0},
-                    new ExcelCellDebug("B2", typeof(string), "Lorem", "Lorem", null, "String") {ColIndex = 1},
-                    new ExcelCellDebug("C2", typeof(int), 1, "1", null, null) {ColIndex = 2},
-                    new ExcelCellDebug("D2", typeof(int), 123456789, "123456789", null, null) {ColIndex = 3},
-                    new ExcelCellDebug("E2", typeof(string), "123456789.123456789", "123456789.123456789", null, "String") {ColIndex = 4},
-                    new ExcelCellDebug("F2", typeof(double), 123456789.123456, "123456789.123456", null, "Double") {ColIndex = 5},
-                    new ExcelCellDebug("G2", typeof(double), 123456789.123456, "123456789.123456", null, "Double") {ColIndex = 6},
-                    new ExcelCellDebug("H2", typeof(DateTime), DateTime.FromOADate(1), "", null, "DateTime") {ColIndex = 7},
-                    new ExcelCellDebug("I2", typeof(DateTime), DateTime.FromOADate(1), "", null, "DateTime") {ColIndex = 8},
-                    new ExcelCellDebug("J2", typeof(TimeSpan), TimeSpan.FromDays(12), "", null, null) {ColIndex = 9},
-                    new ExcelCellDebug("K2", typeof(double), 0.5, "0.5", null, "Double") {ColIndex = 10},
-                    new ExcelCellDebug("L2", typeof(double), 0.5, "0.5", null, "Double") {ColIndex = 11},
-                    new ExcelCellDebug("M2", typeof(double), 123456789.123456, "123456789.123456", null, "Double") {ColIndex = 12},
-                    new ExcelCellDebug("N2", typeof(string), "Lorem", "Lorem", null, "String") {ColIndex = 13},
-                ],
-                RowIndex = 1
-            }
-            ];
+                    new ExcelCellDebug("A2", null, null),
+                    new ExcelCellDebug("B2", typeof(string), "Lorem"),
+                    new ExcelCellDebug("C2", typeof(double), (double)1),
+                    new ExcelCellDebug("D2", typeof(double), (double)123456789),
+                    new ExcelCellDebug("E2", typeof(string), "123456789.123456789"),
+                    new ExcelCellDebug("F2", typeof(double), 123456789.123456),
+                    new ExcelCellDebug("G2", typeof(double), 123456789.123456),
+                    new ExcelCellDebug("H2", typeof(DateTime), DateTime.FromOADate(2)),
+                    new ExcelCellDebug("I2", typeof(DateTime), DateTime.FromOADate(2.5)),
+                    new ExcelCellDebug("J2", typeof(TimeSpan), TimeSpan.FromHours(12)),
+                    new ExcelCellDebug("K2", typeof(double), 0.5),
+                    new ExcelCellDebug("L2", typeof(double), 0.5),
+                    new ExcelCellDebug("M2", typeof(double), 123456789.123456),
+                    new ExcelCellDebug("N2", typeof(string), "Lorem"),
+                ]
+            }];
 
         expectedRows = [
             new ExcelRow{
                 Columns= expectedDebugRows[0].Columns.Select(c => new ExcelCell(c.ColIndex, c.Type, c.Value)).ToList(),
                 RowIndex = 1
-            }
-            ];
+            }];
     }
 
     [TestCase("Excel/Ressources/personnes_import_10k.xlsx", 12, 10000)]
@@ -96,18 +94,26 @@ internal class ClosedXmlXlsxReaderTests
 
             Assert.That(rows, Has.Count.EqualTo(expectedRows.Count));
             var excelCellComparer = new ExcelCellEqualityComparer();
-            Assert.That(rows[0].Columns, Has.Count.EqualTo(expectedRows[0].Columns.Count));
+            Assert.That(rows[0].Columns, Has.Count.EqualTo(expectedRows[0].Columns.Count),
+                $"More: {string.Join(",", rows[0].Columns.Where(c => !expectedRows[0].Columns.Exists(cc => cc.ColIndex == c.ColIndex)))}\n" +
+                $"Missing: {string.Join(",", expectedRows[0].Columns.Where(c => !rows[0].Columns.Exists(cc => cc.ColIndex == c.ColIndex)))}");
             for (int i = 0; i < rows[0].Columns.Count; i++)
             {
-                Assert.That(rows[0].Columns[i], Is.EqualTo(expectedRows[0].Columns[i]).Using<ExcelCell>(excelCellComparer), rows[0].Columns[i].ToString());
+                var col = rows[0].Columns[i];
+                var expectedCol = expectedRows[0].Columns.Find(c => c.ColIndex == col.ColIndex);
+                Assert.That(col, Is.EqualTo(expectedCol).Using<ExcelCell>(excelCellComparer), col.ToString());
             }
 
             Assert.That(debugRows, Has.Count.EqualTo(expectedDebugRows.Count));
             var debugExcelCellComparer = new ExcelCellDebugEqualityComparer();
-            Assert.That(debugRows[0].Columns, Has.Count.EqualTo(expectedDebugRows[0].Columns.Count));
+            Assert.That(debugRows[0].Columns, Has.Count.EqualTo(expectedDebugRows[0].Columns.Count),
+                $"More: {string.Join(",", debugRows[0].Columns.Where(c => !expectedDebugRows[0].Columns.Exists(cc => cc.ColIndex == c.ColIndex)))}\n" +
+                $"Missing: {string.Join(",", expectedDebugRows[0].Columns.Where(c => !debugRows[0].Columns.Exists(cc => cc.ColIndex == c.ColIndex)))}");
             for (int i = 0; i < debugRows[0].Columns.Count; i++)
             {
-                Assert.That(debugRows[0].Columns[i], Is.EqualTo(expectedDebugRows[0].Columns[i]).Using<ExcelCellDebug>(debugExcelCellComparer), debugRows[0].Columns[i].ToString());
+                var col = debugRows[0].Columns[i];
+                var expectedCol = expectedDebugRows[0].Columns.Find(c => c.ColIndex == col.ColIndex);
+                Assert.That(col, Is.EqualTo(expectedCol).Using<ExcelCellDebug>(debugExcelCellComparer), col.ToString());
             }
         });
     }
