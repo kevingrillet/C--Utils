@@ -10,6 +10,16 @@ namespace CSharp_Utils.Excel;
 
 public static class ExcelDataReaderXlsxReader
 {
+    /// <summary>
+    /// Lit un fichier Excel et retourne les en-têtes et les lignes sous forme de tuple.
+    /// </summary>
+    /// <param name="filePath">Chemin du fichier Excel.</param>
+    /// <param name="includeDebugInfo">Indique si des informations de débogage doivent être incluses.</param>
+    /// <returns>
+    /// Un tuple contenant :
+    /// - Une liste des en-têtes (List<string>).
+    /// - Une liste des lignes (List<ExcelRow>).
+    /// </returns>
     public static (List<string> headers, List<ExcelRow> rows) ReadExcelFile(string filePath, bool? includeDebugInfo = false)
     {
         System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
