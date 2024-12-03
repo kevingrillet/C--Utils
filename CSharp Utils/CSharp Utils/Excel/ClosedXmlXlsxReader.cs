@@ -18,8 +18,10 @@ public static class ClosedXmlXlsxReader
     /// <param name="includeNumberFormat">Indique si le NumberFormat doit être inclus (debug).</param>
     /// <returns>
     /// Un tuple contenant :
-    /// - Une liste des en-têtes (List<string>).
-    /// - Une liste des lignes (List<ExcelRow> ou List<ExcelRowDebug> selon le mode).
+    /// <list type="bullet">
+    /// <item>Une liste des en-têtes.</item>
+    /// <item>Une liste des lignes.</item>
+    /// </list>
     /// </returns>
     public static (List<string> Headers, List<ExcelRow> Rows) ReadExcelFile(string filePath, bool includeDebugInfo = false, bool includeNumberFormat = false)
     {
@@ -28,12 +30,18 @@ public static class ClosedXmlXlsxReader
 
         using var workbook = new XLWorkbook(filePath);
         var worksheet = workbook.Worksheet(1);
+        if (worksheet == null || !worksheet.RowsUsed().Any())
+            throw new InvalidOperationException("La feuille de calcul est vide ou introuvable.");
 
         var firstRow = worksheet.FirstRowUsed();
+        if (firstRow == null || !firstRow.CellsUsed().Any())
+            throw new InvalidOperationException("Aucun en-tête trouvé dans la première ligne.");
+
         var headers = firstRow.Cells().Select(cell => cell.GetValue<string>()).ToList();
 
         var rows = worksheet.RowsUsed()
             .Skip(1)
+            .Where(row => row.CellsUsed().Any())
             .Select(dataRow => new ExcelRow
             {
                 RowIndex = dataRow.RowNumber(),
@@ -47,8 +55,7 @@ public static class ClosedXmlXlsxReader
                             value: cell.ToObject(),
                             innerText: cell.GetString(),
                             numberFormat: includeNumberFormat ? (uint?)cell.Style.NumberFormat.NumberFormatId : null,
-                            dataType: cell.DataType.ToSystemType().Name,
-                            cell.Address.ColumnNumber - 1
+                            colIndex: cell.Address.ColumnNumber - 1
                         );
                     }
                     return new ExcelCell
@@ -57,9 +64,11 @@ public static class ClosedXmlXlsxReader
                         Type = cell.DataType.ToSystemType(),
                         Value = cell.ToObject()
                     };
-                }).ToList()
+                })
+                .Where(c => !c.IsEmpty)
+                .ToList()
             })
-            .Where(row => !row.IsEmpty)
+            .Where(r => !r.IsEmpty)
             .ToList();
 
         return (headers, rows);
@@ -76,7 +85,7 @@ public static class ClosedXmlXlsxReader
             XLDataType.Error => cell.Value.GetError(),
             XLDataType.DateTime => cell.Value.GetDateTime(),
             XLDataType.TimeSpan => cell.Value.GetTimeSpan(),
-            _ => throw new InvalidCastException()
+            _ => cell.GetValue<object>()
         };
     }
 

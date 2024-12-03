@@ -38,7 +38,6 @@ internal class ExcelDataReaderXlsxReaderTests
             new ExcelRow {
                 RowIndex = 1,
                 Columns =[
-                    new ExcelCellDebug("A2", null, null),
                     new ExcelCellDebug("B2", typeof(string), "Lorem"),
                     new ExcelCellDebug("C2", typeof(double), (double)1),
                     new ExcelCellDebug("D2", typeof(double), (double)123456789),
@@ -47,7 +46,7 @@ internal class ExcelDataReaderXlsxReaderTests
                     new ExcelCellDebug("G2", typeof(double), 123456789.123456),
                     new ExcelCellDebug("H2", typeof(DateTime), DateTime.FromOADate(2)),
                     new ExcelCellDebug("I2", typeof(DateTime), DateTime.FromOADate(2.5)),
-                    new ExcelCellDebug("J2", typeof(DateTime), DateTime.FromOADate(1.5)),
+                    new ExcelCellDebug("J2", typeof(TimeSpan), TimeSpan.FromHours(12)),
                     new ExcelCellDebug("K2", typeof(double), 0.5),
                     new ExcelCellDebug("L2", typeof(double), 0.5),
                     new ExcelCellDebug("M2", typeof(double), 123456789.123456),

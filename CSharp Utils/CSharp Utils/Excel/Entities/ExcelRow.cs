@@ -6,7 +6,7 @@ namespace CSharp_Utils.Excel.Entities;
 public class ExcelRow
 {
     public List<ExcelCell> Columns { get; set; }
-    public bool IsEmpty => !Columns.Exists(c => c.IsEmpty);
+    public bool IsEmpty => !Columns.Exists(c => !c.IsEmpty);
     public int RowIndex { get; set; }
     public string SerializedColumns => JsonSerializer.Serialize(Columns);
 

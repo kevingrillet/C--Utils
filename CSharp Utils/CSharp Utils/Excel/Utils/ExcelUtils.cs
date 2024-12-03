@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 namespace CSharp_Utils.Excel.Utils;
 
@@ -60,15 +59,5 @@ public static class ExcelUtils
             columnIndex = columnIndex / 26 - 1;
         }
         return columnName;
-    }
-
-    /// <summary>
-    /// Vérifie si un nombre est un nombre entier.
-    /// </summary>
-    /// <param name="number">Le nombre à vérifier.</param>
-    /// <returns>Vrai si le nombre est un nombre entier, sinon faux.</returns>
-    public static bool IsWholeNumber(double number)
-    {
-        return Math.Abs(number % 1) < double.Epsilon * 100;
     }
 }

@@ -15,7 +15,6 @@ public class ExcelCellDebugEqualityComparer : EqualityComparer<ExcelCellDebug>
                x.Type == y.Type &&
                Equals(x.Value, y.Value) &&
                x.CellReference == y.CellReference &&
-               x.DataType == y.DataType &&
                x.InnerText == y.InnerText &&
                x.NumberFormat == y.NumberFormat;
     }
@@ -30,7 +29,6 @@ public class ExcelCellDebugEqualityComparer : EqualityComparer<ExcelCellDebug>
             obj.Type,
             obj.Value,
             obj.CellReference,
-            obj.DataType,
             obj.InnerText,
             obj.NumberFormat
         );

@@ -16,13 +16,14 @@ public static class ExcelDataReaderXlsxReader
     /// </summary>
     /// <param name="filePath">Chemin du fichier Excel.</param>
     /// <param name="includeDebugInfo">Indique si des informations de débogage doivent être incluses.</param>
-    /// <param name="includeNumberFormat">Indique si le NumberFormat doit être inclus (debug).</param>
     /// <returns>
     /// Un tuple contenant :
-    /// - Une liste des en-têtes (List<string>).
-    /// - Une liste des lignes (List<ExcelRow>).
+    /// <list type="bullet">
+    /// <item>Une liste des en-têtes.</item>
+    /// <item>Une liste des lignes.</item>
+    /// </list>
     /// </returns>
-    public static (List<string> headers, List<ExcelRow> rows) ReadExcelFile(string filePath, bool includeDebugInfo = false, bool includeNumberFormat = false)
+    public static (List<string> headers, List<ExcelRow> rows) ReadExcelFile(string filePath, bool includeDebugInfo = false)
     {
         System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 
@@ -58,10 +59,9 @@ public static class ExcelDataReaderXlsxReader
                             cellValue?.GetType() != typeof(DBNull) ? cellValue?.GetType() : null,
                             cellValue?.GetType() != typeof(DBNull) ? cellValue : null,
                             innerText: cellValue?.ToString(),
-                            numberFormat: includeNumberFormat ? null : null,
-                            dataType: cellValue?.GetType() != typeof(DBNull) ? cellValue?.GetType().Name : null
-                        )
-                        { ColIndex = colIndex };
+                            numberFormat: null,
+                            colIndex: colIndex
+                        );
                     }
 
                     return new ExcelCell(
@@ -69,7 +69,9 @@ public static class ExcelDataReaderXlsxReader
                         cellValue?.GetType() != typeof(DBNull) ? cellValue?.GetType() : null,
                         cellValue?.GetType() != typeof(DBNull) ? cellValue : null
                     );
-                }).ToList()
+                })
+                .Where(c => !c.IsEmpty)
+                .ToList()
             })
             .Where(row => !row.IsEmpty)
             .ToList();
